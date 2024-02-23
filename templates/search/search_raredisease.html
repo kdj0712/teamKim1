@@ -1,0 +1,228 @@
+{% extends "mainpage.html"%}
+
+{% block main_container %}
+
+<style>
+  li.col-3 {
+    padding: 5px;
+    margin: 10px;
+  }
+
+  li.col-3:hover {
+    background-color: deepskyblue;
+  }
+
+  .btn-4 {
+    background-color: #4dccc6;
+  background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+    line-height: 42px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+  }
+  .btn-4:hover{
+    background-color: #89d8d3;
+  background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+  }
+  .btn-4 span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .btn-4:before,
+  .btn-4:after {
+    position: absolute;
+    content: "";
+    right: 0;
+    top: 0;
+     box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.9),
+      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+    transition: all 0.3s ease;
+  }
+  .btn-4:before {
+    height: 0%;
+    width: .1px;
+  }
+  .btn-4:after {
+    width: 0%;
+    height: .1px;
+  }
+  .btn-4:hover:before {
+    height: 100%;
+  }
+  .btn-4:hover:after {
+    width: 100%;
+  }
+  .btn-4 span:before,
+  .btn-4 span:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.9),
+      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+    transition: all 0.3s ease;
+  }
+  .btn-4 span:before {
+    width: .1px;
+    height: 0%;
+  }
+  .btn-4 span:after {
+    width: 0%;
+    height: .1px;
+  }
+  .btn-4 span:hover:before {
+    height: 100%;
+  }
+  .btn-4 span:hover:after {
+    width: 100%;
+  }
+</style>
+
+<h2>희귀질환정보</h2>
+
+<table border="1" class="" style="text-align: center;">
+  <tr class="row">
+    <td class="col-2" style="font-size: x-large;">
+      <br><br><br><br>항목분류
+    </td>
+    <td class="col-10 row">
+      <ul class="row col list-unstyled justify-content-center">
+        <li class="col-3 btn btn-primary mt-4"><a href="#" style="color: aliceblue;">전체질환</a></li>
+        <li class="col-3 btn btn-primary mt-4"><a href="#" style="color: aliceblue;">특정감염성(A00-B99)</a></li>
+        <li class="col-3 btn btn-primary mt-4"><a href="#" style="color: aliceblue;">신생물(C00-D48)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">혈액조혈기관(D50-D89)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">내분비,영양(E00-E90)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">정신및행동(F00-F99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">신경계통질환(G00-G99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">눈및부속기관(H00-H59)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">순환기계통(I00-I99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">호흡기계통(J00-J99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">소화기계통(K00-K93)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">피부및조직(L00-L99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">근육골격계통(M00-M99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">비뇨생식(N00-N99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">출생전후기(P00-P96)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">선천기형변형(Q00-Q99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">코드 없음</a></li>
+        <div class="col-3" style="padding: 5px; margin: 10px;"></div>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<div> ※ 희귀질환정보는 참고사항으로 내용에 대한 법적인 책임이 없음을 알려드립니다. 자세한 내용은 전문의와 상의하시기 바랍니다. </div>
+<div> 희귀질환정보에 게재된 질환명은 [한국표준질병 사인분류]에 의거하여 기록하였습니다. </div>
+
+<div>
+  <div>특정 감염성 및 기생충성 질환(A00-B99)</div>
+
+
+  <form action="">
+    <!-- 검색 항목 추가 필요 -->
+    <br>
+    <br>
+    <br>
+    <h2>희귀병 리스트</h2>
+    <div class="justify-content-center row">
+      <div class="row col-7">
+        <div class="col-3">
+          <select class="form-control" name="key_name">
+            <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>희귀질환 명</option>
+            <option value="dise_KCD_code" {{ 'selected' if request._query_params.key_name=='dise_KCD_code' else '' }}>
+              KCD코드</option>
+            <option value="dise_spc_code" {{ 'selected' if request._query_params.key_name=='dise_spc_code' else '' }}>
+              산정특례
+              특정기호</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <input class="form-control" placeholder="Enter Search!" name="search_word"
+            value="{{request._query_params.word}}">
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary" formaction="/search/search_raredisease"
+            formmethod="get">검색</button>
+        </div>
+      </div>
+    </div>
+    <div class="text-end">
+      <button class="btn-4">엑셀다운로드</button>
+    </div>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>병명(한국어)</th>
+          <th>병명(영어)</th>
+          <th>KCD코드</th>
+          <th>산정특례<br>특정기호</th>
+          <th>항목분류</th>
+          <th>의료비지원</th>
+          <th>상세정보</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for dise in dises %}
+        <tr>
+          <td class="text-center">{{pagination.start_record_number + loop.index0}}</td>
+          <td>{{dise.dise_name_kr}}</td>
+          <td>{{dise.dise_name_en}}</td>
+          <td class="text-center">{{dise.dise_KDC_code}}</td>
+          <td class="text-center">{{dise.dise_spc_code}}</td>
+          <td class="text-center">{{dise.dise_group}}</td>
+          <td class="text-center">{{dise.dise_support}}</td>
+          <td>
+            <a class="btn btn-primary" href="{{dise.dise_url}}">상세정보 이동</a>
+            <!-- <button formaction={{dise.dise_url}}>read</button> -->
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div>
+      <h5>전체리스트: {{pagination.total_records}}</h5>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
+            <button type="submit" class="page-link"
+              formaction="/search/search_raredisease/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">맨
+              처음</button>
+
+          </li>
+          <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
+            <button type="submit" class="page-link"
+              formaction="/search/search_raredisease/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
+          </li>
+          {% for page_num in pagination.current_page_range %}
+          <li class="page-item {{ 'active' if page_num == pagination.current_page else '' }}">
+            <button type="submit" class="page-link"
+              formaction="/search/search_raredisease/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word}}">{{
+              page_num }}</button>
+
+
+          </li>
+          {% endfor %}
+          <li class="page-item {{ '' if pagination.has_next_page else 'disabled' }}">
+            <button type="submit" class="page-link"
+              formaction="/search/search_raredisease/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
+          </li>
+          <li class="page-item {{ '' if pagination.has_next_block else 'disabled' }}">
+            <button type="submit" class="page-link"
+              formaction="/search/search_raredisease/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+              맨 끝
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </form>
+</div>
+{% endblock %}

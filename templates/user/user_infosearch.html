@@ -1,0 +1,34 @@
+{% extends "mainpage.html"%}
+
+{% block main_container %}
+
+<div class="container">
+    <div id="search-id" class="justify-content-center col-10">
+        <p class="mb-5">아이디 / 비밀번호 찾기</p>
+        <form method="POST" action="" class="search-form">
+            <div class="regi-input input-group mb-3 row">
+                <label for="iduseremail" class="m-0 regi-title col-3">이메일</label>
+                <div class="col-8">
+                    <input class="regi-input-area col-md-3 m-1" type="email" placeholder="you@example.com" id="iduseremail" required>
+                    <button class="btn btn-primary col-md-2 m-1" type="button"  onclick="window.open('/user/user_searchcheck_email', 'email찾기창', 'width=430, height=500, location=no, status=no, scrollbars=yes');">찾기</button>
+                </div>
+            </div>
+            <div class="regi-input regi-phone-check input-group" id="authPhoneBox">
+                <p class="regi-title col-3">전화번호 확인</p>
+                <div class="col-8 row">
+                    <input class="phoneNum col-md-3 m-1" id="phoneNum" type="text" placeholder="핸드폰번호">
+                    <button class="btn btn-primary col-md-2 m-1" type="submit">인증</button>
+                </div>
+            </div>
+            <div class="mb-3"></div>
+            <div class="regi-input input-group mb-3 ">
+                <p class="m-0 regi-title col-3 col-md-3 m-1">인증번호 입력</p>
+                <input class="register-input regi-input-area" id="phoneIdAuthNum" type="text" placeholder="인증번호입력">
+                <button class="btn btn-primary search-check-btn" id="nextSearchId" type="submit" formaction=""
+                formmethod="post">확인</button>
+            </div>
+        
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "mainpage.html"%}
+
+
+{% block main_container %}
+<div class="container justify-content-center" style="padding: 100px 400px 100px 400px;">
+    <form>
+        <h1 class="h3 mb-3 fw-normal">로그인</h1>
+        <div class="form-floating">
+            <input type="id" class="form-control" name="user_ID" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">ID</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name="user_pswd" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+        <div class="form-check text-start my-3">
+            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Remember me
+            </label>
+            <div class="mt-2">
+                <a href="/user/user_privacypolicy">회원가입</a>
+                <span> | </span>
+                <a href="/user/user_infosearch">아이디 찾기/비밀번호 찾기</a>
+            </div>
+        </div>
+        <button class="btn btn-primary w-100 py-2" type="submit" formaction="/user/user_logincheck" formmethod="post">LOGIN</button>
+    </form>
+</div>
+{% endblock %}

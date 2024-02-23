@@ -1,0 +1,16 @@
+{% extends "mainpage.html"%}
+{% block main_container %}
+<form action="" method="POST" id="myForm">
+    <div class="mb-3">
+      <label for="title">제목</label>
+      <input type="" class="form-control" name="ques_title" id="title" required>
+      <label for="writer">글쓴이</label>
+      <input type="" class="form-control" name="ques_writer" id="writer" required>
+      <label for="content">내용</label>
+      <textarea type="" class="form-control text-box" name="ques_content" id="content" placeholder="내용을 입력하세요." required></textarea>
+      <button class="btn btn-primary" type="submit" formaction="/other/other_QnA" formmethod="post">글쓰기</button>
+      <a href="/other/other_FAQ" class="btn btn-danger">취소</a>
+  </div>
+</form>
+{% endblock %}
+
