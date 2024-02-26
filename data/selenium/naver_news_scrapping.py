@@ -36,11 +36,14 @@ def scrappingnews(browser_name) :
     element_body = browser.find_elements(by=By.CSS_SELECTOR, value="#main_pack > section > div.api_subject_bx > div.group_news >ul >li")
     # 뉴스명 ====> (개인별 수정 필요!)
     news_comany = '연합뉴스'
+    coll_newsscrap = dbconnect("rare_disease_news_2")
+    coll_newsscrap.delete_many({})
     for element in element_body :
         try :
             element.find_element(by=By.CSS_SELECTOR, value="div.news_contents > a.news_tit").click()
             browser.switch_to.window(browser.window_handles[1])
             # 스크래핑 시작 ----> (개인별 수정 필요!)
+            time.sleep(1)
             news_title = browser.find_element(by=By.CSS_SELECTOR, value="#articleWrap > div.content03 > header > h1").text
             news_description_body = browser.find_elements(by=By.CSS_SELECTOR, value="#articleWrap > div.content01.scroll-article-zone01 > div > div > article > p")
             news_description = ''
@@ -54,7 +57,6 @@ def scrappingnews(browser_name) :
         except NoSuchElementException:
             pass
 
-        coll_newsscrap = dbconnect("rare_disease_news_2")
         coll_newsscrap.insert_one({'news_company' : news_comany, 'news_time' : news_time, 'news_title' : news_title, 'news_description' : news_description})
         browser.close()
         browser.switch_to.window(origin_tab)
