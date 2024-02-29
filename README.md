@@ -12,7 +12,11 @@
 
 
 ### ✔️프로젝트 설명
-어쩌고 저쩌고 설명입니다링
+희귀병에 대한 관심 증가와 발전 가능성에 매력을 느꼈음....
+
+### ✔️프로젝트 스케줄링
+
+[Jira_software](https://kdj0712.atlassian.net/jira/software/projects/RDS/boards/3/timeline?selectedIssue=RDS-50)
 
 #### 📌 프로젝트 주요 기능
 - 현위치/추천 기반의 의료기관 지도검색
@@ -38,14 +42,14 @@
 
 #### 2차
 - 특이사항 
-  - 국민청원 파일 찾을 수 없음
+  - 국민청원 데이터 분석 파일 찾을 수 없음
   - 헬프라인-질병정보 데이터 수집 파일 찾을 수 없음
 
 |카테고리|조유경|김하늘|김덕재|오지수|한동철|
 |--|--|--|--|--|--|
-|데이터수집|[헬프라인-게시글 데이터 수집(1)](./data/selenium/Helpline.py)[(2)](./data/selenium/Helpline_info.py)[(3)](./data/selenium/helpline_support.py) / [국민청원 데이터 수집]() / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_healthjosun.py)|[뉴스 데이터 수집](./data/selenium/naver_news_scrapping_yunhab.py)/[rarenote 앱 리뷰 데이터 수집](./data/selenium/rarenote_review.py) |[지식인 데이터 수집(1)](./data/selenium/naver_kin_rare_diseases.py)[(2)](./data/selenium/naver_kin_symptom.py) / [헬프라인-질병정보 데이터 수집]()|[디시인사이드 게시글 데이터 수집](./data/selenium/dcinside_subfunction.py) / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_komedi.py)|동철|
-|데이터분석|[헬프라인-게시글 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/Helpline.ipynb) / [국민청원 데이터 수집 및 자연어 분석]()|[뉴스 자연어 분석-타이틀](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease-title.ipynb) / [뉴스 자연어 분석-전체내용](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease.ipynb)/ [rarenote 앱 리뷰 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/sky_rarenote.ipynb)||[디시인사이드 게시글 자연어 분석]()/[희귀질환 관련 인구 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/kosis_population.ipynb)|데이터 분석 학습|
-|모델링|유경|하늘|[헬프라인-질병정보 데이터 수집 및 자연어 기반 모델링](https://github.com/kdj0712/teamKim1/blob/main/data/search_insite.ipynb) / [ 및 자연어 기반 모델링]()|지수|동철|
+|데이터수집|[헬프라인-게시글 데이터 수집(1)](./data/selenium/Helpline.py)[(3)](./data/selenium/helpline_support.py) / [국민청원 데이터 수집]() / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_healthjosun.py)|[뉴스 데이터 수집](./data/selenium/naver_news_scrapping_yunhab.py)/[rarenote 앱 리뷰 데이터 수집](./data/selenium/rarenote_review.py) |[지식인 데이터 수집(1)](./data/selenium/naver_kin_rare_diseases.py)[(2)](./data/selenium/naver_kin_symptom.py) / [헬프라인-질병정보 데이터 수집](./data/selenium/Helpline_info.py)|[디시인사이드 게시글 데이터 수집](./data/selenium/dcinside_subfunction.py) / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_komedi.py)|동철|
+|데이터분석|[헬프라인-게시글 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/Helpline.ipynb) / [국민청원 데이터 수집 및 자연어 분석]()|[뉴스 자연어 분석-타이틀](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease-title.ipynb) / [뉴스 자연어 분석-전체내용](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease.ipynb)/ [rarenote 앱 리뷰 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/sky_rarenote.ipynb)||[디시인사이드 게시글 자연어 분석](https://nbviewer.org/https://github.com/kdj0712/teamKim1/blob/main/data/dcinside.ipynb)/[희귀질환 관련 인구 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/kosis_population.ipynb)|데이터 분석 학습|
+|모델링|유경|하늘|[헬프라인-질병정보 자연어 기반 모델링](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/search_insite.ipynb) /|지수|동철|
 
 
 <details>
