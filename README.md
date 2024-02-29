@@ -5,7 +5,6 @@
 ### 프로젝트 발표
 - 수주제안서 : https://drive.google.com/file/d/-1YmUQKVRzeXReqGQ6nQSMrjkwI1SmuzNg/view?usp=drive_link
 - 1차 프로젝트 발표 : https://docs.google.com/presentation/d/1YTpxuy2uYwYFA3kO9mQ3rrTPeRXCOuXx8J9yCxwjoxQ/edit#slide=id.p9
-  - 1차 프로젝트 결과물 :  https://www.youtube.com/watch?v=3PTxsHhATEk 
 -----
 #### <<멤버변경 : 박요한, 김경하, 조유경  -> 조유경, 김하늘, 김덕재, 오지수, 한동철>>
 -----
@@ -30,6 +29,23 @@
 
 - 1차 : 2023.01.08 ~ 2023.01.17
 - 2차 : 2023.02. ~ 2023.03.
+
+### ✔️구현 영상
+
+- [1차 프로젝트 결과물](https://www.youtube.com/watch?v=3PTxsHhATEk)
+   
+### ✔️팀원 및 구현 기능
+
+#### 2차
+- 특이사항 
+  - 국민청원 파일 찾을 수 없음
+  - 헬프라인-질병정보 데이터 수집 파일 찾을 수 없음
+
+|카테고리|조유경|김하늘|김덕재|오지수|한동철|
+|--|--|--|--|--|--|
+|데이터수집|[헬프라인-게시글 데이터 수집(1)](./data/selenium/Helpline.py)[(2)](./data/selenium/Helpline_info.py)[(3)](./data/selenium/helpline_support.py) / [국민청원 데이터 수집]() / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_healthjosun.py)|[뉴스 데이터 수집](./data/selenium/naver_news_scrapping_yunhab.py)/[rarenote 앱 리뷰 데이터 수집](./data/selenium/rarenote_review.py) |[지식인 데이터 수집(1)](./data/selenium/naver_kin_rare_diseases.py)[(2)](./data/selenium/naver_kin_symptom.py) / [헬프라인-질병정보 데이터 수집]()|[디시인사이드 게시글 데이터 수집](./data/selenium/dcinside_subfunction.py) / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_komedi.py)|동철|
+|데이터분석|[헬프라인-게시글 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/Helpline.ipynb) / [국민청원 데이터 수집 및 자연어 분석]()|[뉴스 자연어 분석-타이틀](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease-title.ipynb) / [뉴스 자연어 분석-전체내용](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease.ipynb)/ [rarenote 앱 리뷰 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/sky_rarenote.ipynb)||[디시인사이드 게시글 자연어 분석]()/[희귀질환 관련 인구 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/kosis_population.ipynb)|데이터 분석 학습|
+|모델링|유경|하늘|[헬프라인-질병정보 데이터 수집 및 자연어 기반 모델링](https://github.com/kdj0712/teamKim1/blob/main/data/search_insite.ipynb) / [ 및 자연어 기반 모델링]()|지수|동철|
 
 
 <details>
