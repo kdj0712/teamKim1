@@ -28,3 +28,4 @@ email-validator
 pydantic
 python-dotenv
 pydantic[email]
+transformers

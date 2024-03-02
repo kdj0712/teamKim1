@@ -78,6 +78,7 @@
 ~$ pip install pydantic-settings
 ~$ pip install pydantic[email]
 ~$ pip install python-dotenv
+~$ pip install transformers
 ```
 
 
