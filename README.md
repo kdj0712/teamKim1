@@ -79,6 +79,9 @@
 ~$ pip install pydantic[email]
 ~$ pip install python-dotenv
 ~$ pip install transformers
+~$ pip install torch
+~$ pip install tensorflow
+~$ pip install --upgrade jupyter ipywidgets
 ```
 
 

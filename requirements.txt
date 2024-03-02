@@ -29,3 +29,5 @@ pydantic
 python-dotenv
 pydantic[email]
 transformers
+torch
+tensorflow
