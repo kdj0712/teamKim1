@@ -3,7 +3,7 @@
 희귀질환 환자 및 보호자들의 정보 검색을 돕고 관련 서비스를 제공하는 웹 사이트 입니다.
 
 ### 프로젝트 발표
-- 수주제안서 : https://drive.google.com/file/d/-1YmUQKVRzeXReqGQ6nQSMrjkwI1SmuzNg/view?usp=drive_link
+- [수주제안서](https://drive.google.com/file/d/-1YmUQKVRzeXReqGQ6nQSMrjkwI1SmuzNg/view?usp=drive_link)
 - 1차 프로젝트 발표 : https://docs.google.com/presentation/d/1YTpxuy2uYwYFA3kO9mQ3rrTPeRXCOuXx8J9yCxwjoxQ/edit#slide=id.p9
 -----
 #### <<멤버변경 : 박요한, 김경하, 조유경  -> 조유경, 김하늘, 김덕재, 오지수, 한동철>>
