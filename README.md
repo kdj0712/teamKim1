@@ -4,11 +4,11 @@
 
 ### 프로젝트 발표
 - [수주제안서](https://drive.google.com/file/d/-1YmUQKVRzeXReqGQ6nQSMrjkwI1SmuzNg/view?usp=drive_link)
-- 1차 프로젝트 발표 : https://docs.google.com/presentation/d/1YTpxuy2uYwYFA3kO9mQ3rrTPeRXCOuXx8J9yCxwjoxQ/edit#slide=id.p9
+- [1차 프로젝트 발표](https://docs.google.com/presentation/d/1YTpxuy2uYwYFA3kO9mQ3rrTPeRXCOuXx8J9yCxwjoxQ/edit#slide=id.p9)
 -----
 #### <<멤버변경 : 박요한, 김경하, 조유경  -> 조유경, 김하늘, 김덕재, 오지수, 한동철>>
 -----
-- 1-2차 프로젝트 발표 : https://docs.google.com/presentation/d/10ToEiSMfQi9CtyLagILXsOWYHhO6hikPNPoPLa_-MuY/edit
+- [1-2차 프로젝트 발표](https://docs.google.com/presentation/d/10ToEiSMfQi9CtyLagILXsOWYHhO6hikPNPoPLa_-MuY/edit)
 
 
 ### ✔️프로젝트 설명
