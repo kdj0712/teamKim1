@@ -13,6 +13,7 @@ from route.other import router as other_router
 from route.search import router as search_router
 from route.user import router as user_router
 
+
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 app.include_router(info_router, prefix="/info")
