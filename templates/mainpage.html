@@ -158,13 +158,20 @@
     <main class="container">
 
         {% block main_container %}
-        <div style="text-align: center;">
-            <a class="btn btn-primary d-inline-flex align-items-center" href="/search/search_raredisease">
+        <div style="text-align: center   align-items-center row ">
+
+            <a class="btn btn-primary d-inline-flex col-2" href="/search/search_raredisease">
                 희귀질환 검색
                 <svg class="bi ms-1" width="20" height="20">
                     <use xlink:href="#arrow-right-short"></use>
                 </svg>
             </a>
+            <div class="col-6">
+                <input class="form-control" placeholder="Enter Search!" name="search_word" value="{{request._query_params.word}}">
+              </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary" formaction="/search/search_raredisease"
+                  formmethod="get" >검색</button>
             <a class="btn btn-primary d-inline-flex align-items-center" href="/search/search_institution">
                 의료기관 검색
                 <svg class="bi ms-1" width="20" height="20">
@@ -177,21 +184,6 @@
                 <img src="data/img/unnamed.png" alt="">
 
             </div>
-
-            <a class="btn btn-primary d-inline-flex align-items-center" href="/info/info_academicinfo">
-                학술정보
-                <svg class="bi ms-1" width="20" height="20">
-                    <use xlink:href="#arrow-right-short"></use>
-                </svg>
-            </a>
-
-
-            <a href="/info/info_trend" class="btn btn-primary d-inline-flex align-items-center">
-                최신동향
-                <svg class="bi ms-1" width="20" height="20">
-                    <use xlink:href="#arrow-right-short"></use>
-                </svg>
-            </a>
         </div>
         {% endblock %}
 
