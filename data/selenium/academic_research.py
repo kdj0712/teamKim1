@@ -19,31 +19,31 @@ def Riss(browser):
 
     collection.delete_many({})
 
-    num_button = browser.find_elements(by=By.CSS_SELECTOR, value="div > div.paging > a.num")
-    next1_button = browser.find_elements(by=By.CSS_SELECTOR, value="div > div.paging > a.next1")
+    num_button = browser.find_elements(by=By.CSS_SELECTOR, value="#divContent > div > div.rightContent.wd756 > div > div.paging > a")
+    # next1_button = browser.find_element(by=By.CSS_SELECTOR, value="div > div.paging > a.next1")
 
     while True:
         try : 
-            for i in range(len(num_button)): 
-                num_button.click()
+            for i in range(2,12): 
                 time.sleep(2)
-                pages_elements = browser.find_elements(by=By.CSS_SELECTOR, value="#divContent > div > div.rightContent.wd756 > div > div.srchResultW > div.srchResultListW")
-                posts_elements = browser.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child > div.cont.ml60")
-                for x in range(len(posts_elements)):
-                    pages_elements.find_elements(by=By.CSS_SELECTOR, value="div.cont.ml60 > p.title > a").click()
+                # pages_elements = browser.find_elements(by=By.CSS_SELECTOR, value="#divContent > div > div.rightContent.wd756 > div > div.srchResultW > div.srchResultListW")
+                posts_elements = browser.find_elements(by=By.CSS_SELECTOR, value="div.cont.ml60 > p.title > a")
+                for element in posts_elements:
+                    time.sleep(1)
+                    element.click()
                     time.sleep(2)
-                    research_title = pages_elements.find_elements(by=By.CSS_SELECTOR, value="#thesisInfoDiv > div.thesisInfoTop > h3")
-                    research_url = pages_elements.find_elements(by=By.CSS_SELECTOR, value="#thesisInfoDiv > div.infoDetail.on > p")
-                    research_author = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(1) > div > p")
-                    research_institution = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(2) > div > p > a")
-                    research_name = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(3) > div > p > a")
-                    research_volumn = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(4) > div > p")
-                    research_year = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(5) > div > p")
-                    research_language = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(6) > div > p")
-                    research_subject = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(7) > div > p")
-                    research_type = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(8) > div > p")
-                    research_page = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(9) > div > p")
-                    research_where = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(10) > div > ul > li > a:nth-child(1)")
+                    research_title = browser.find_element(by=By.CSS_SELECTOR, value="#thesisInfoDiv > div.thesisInfoTop > h3").text
+                    research_url = browser.find_element(by=By.CSS_SELECTOR, value="#thesisInfoDiv > div.infoDetail.on > p").text
+                    research_author = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(1) > div > p").text
+                    research_institution = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(2) > div > p > a").text
+                    research_name = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(3) > div > p > a").text
+                    research_volumn = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(4) > div > p").text
+                    research_year = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(5) > div > p").text
+                    research_language = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(6) > div > p").text
+                    research_subject = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(7) > div > p").text
+                    research_type = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(8) > div > p").text
+                    research_page = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(9) > div > p").text
+                    research_where = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(10) > div > ul > li > a:nth-child(1)").text
                     browser.back()
                     time.sleep(2)
                     
@@ -60,7 +60,8 @@ def Riss(browser):
                                         , 'research_page': research_page
                                         , 'research_where': research_where
                                         })
-            next1_button.click()
+                num_button[i].click()
+            # next1_button.click()
         except : 
             break
 
