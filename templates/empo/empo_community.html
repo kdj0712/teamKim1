@@ -1,9 +1,79 @@
 {% extends "mainpage.html"%}
 
 {% block main_container %}
-
 <div class="container">
-    <p>안녕하세요</p>
-</div>
+    <div class="row">
+    
+        <div class="col-7">
+            <input class="form-control" placeholder="Enter Search!" name="search_word"
+                value="{{request._query_params.word}}">
+        </div>
+        <div class="col-5">
+            <button type="submit" class="btn btn-primary" formaction="/other/other_QnA" formmethod="get">검색</button>
+        </div>
+    </div>
+    <div style="text-align: start;">
 
-{% endblock %}
+        <button type="button" class="btn btn-none chip-btn filter-btn">
+            <span>서비스</span>
+        </button>
+
+        <button type="button" class="btn btn-none chip-btn filter-btn">
+            <span>지역</span>
+        </button>
+
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <p class="col-md-8 fs-10">추천해요 | 의료기관정보</p>
+                <P class="display-6 fw-bold">부산 인제대학교 백병원</P>
+                <p class="col-md-8 fs-10">질환명 : 클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)</p>
+            </div>
+        </div>
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <p class="col-md-8 fs-10">궁금해요 | 질병정보</p>
+                <P class="display-6 fw-bold">궁금증이 생겼는데요</P>
+                <p class="col-md-8 fs-10">질환명 : 클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)</p>
+            </div>
+        </div>
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <p class="col-md-8 fs-10">자랑해요 | 취업성공</p>
+                <P class="display-6 fw-bold">서울시장애인일자리통합지원센터 재택 근로인 양성과정</P>
+                <p class="col-md-8 fs-10">질환명 : 선천성 수두증, 아놀드 키아리 증후군</p>
+            </div>
+        </div>
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <p class="col-md-8 fs-10">찾아요 | 간병인찾기</p>
+                <P class="display-6 fw-bold">루게릭병 환자 경험있는 간병인 찾아요</P>
+                <p class="col-md-8 fs-10">질환명 : 루게릭병</p>
+            </div>
+        </div>
+        <!-- 페이지네이션 -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <button type="submit" class="page-link" formaction="">
+                        맨 처음
+                    </button>
+                </li>
+                <li class="page-item ">
+                    <button type="submit" class="page-link" formaction="">이전</button>
+                </li>
+                <li class="page-item ">
+                    <button type="submit" class="page-link" formaction="">
+                    </button>
+                </li>
+                <li class="">
+                    <button type="submit" class="page-link" formaction="">다음</button>
+                </li>
+                <li class="page-item ">
+                    <button type="submit" class="page-link" formaction="{}}">
+                        맨 끝
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endblock %}
