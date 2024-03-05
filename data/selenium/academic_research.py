@@ -1,0 +1,69 @@
+from selenium import webdriver
+import time
+
+# mongodb 연결
+from pymongo import MongoClient
+mongoClient = MongoClient("mongodb://192.168.10.236:27017")
+database = mongoClient["Seleniums"]
+collection = database['academic_research']
+
+# chrome browser 열기
+browser = webdriver.Chrome()
+# 주소 입력
+def getBrowserFromURI(uri):
+    browser.get(uri)
+    return browser
+
+def Riss(browser):
+    from selenium.webdriver.common.by import By
+
+    collection.delete_many({})
+
+    num_button = browser.find_elements(by=By.CSS_SELECTOR, value="div > div.paging > a.num")
+    next1_button = browser.find_elements(by=By.CSS_SELECTOR, value="div > div.paging > a.next1")
+
+    while True:
+        try : 
+            for i in range(len(num_button)): 
+                num_button.click()
+                time.sleep(2)
+                pages_elements = browser.find_elements(by=By.CSS_SELECTOR, value="#divContent > div > div.rightContent.wd756 > div > div.srchResultW > div.srchResultListW")
+                posts_elements = browser.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child > div.cont.ml60")
+                for x in range(len(posts_elements)):
+                    pages_elements.find_elements(by=By.CSS_SELECTOR, value="div.cont.ml60 > p.title > a").click()
+                    time.sleep(2)
+                    research_title = pages_elements.find_elements(by=By.CSS_SELECTOR, value="#thesisInfoDiv > div.thesisInfoTop > h3")
+                    research_url = pages_elements.find_elements(by=By.CSS_SELECTOR, value="#thesisInfoDiv > div.infoDetail.on > p")
+                    research_author = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(1) > div > p")
+                    research_institution = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(2) > div > p > a")
+                    research_name = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(3) > div > p > a")
+                    research_volumn = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(4) > div > p")
+                    research_year = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(5) > div > p")
+                    research_language = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(6) > div > p")
+                    research_subject = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(7) > div > p")
+                    research_type = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(8) > div > p")
+                    research_page = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(9) > div > p")
+                    research_where = pages_elements.find_elements(by=By.CSS_SELECTOR, value="ul > li:nth-child(10) > div > ul > li > a:nth-child(1)")
+                    browser.back()
+                    time.sleep(2)
+                    
+                    collection.insert_one({'research_title': research_title
+                                        , 'research_url': research_url
+                                        , 'research_author': research_author
+                                        , 'research_institution': research_institution
+                                        , 'research_name': research_name
+                                        , 'research_volumn': research_volumn
+                                        , 'research_year': research_year
+                                        , 'research_language': research_language
+                                        , 'research_subject': research_subject
+                                        , 'research_type': research_type
+                                        , 'research_page': research_page
+                                        , 'research_where': research_where
+                                        })
+            next1_button.click()
+        except : 
+            break
+
+if __name__ == "__main__" :
+    Riss(getBrowserFromURI(uri="https://www.riss.kr/search/Search.do?isDetailSearch=N&searchGubun=true&viewYn=OP&queryText=&strQuery=%ED%9D%AC%EA%B7%80%EC%A7%88%ED%99%98&exQuery=&exQueryText=&order=%2FDESC&onHanja=false&strSort=RANK&p_year1=&p_year2=&iStartCount=0&orderBy=&mat_type=&mat_subtype=&fulltext_kind=&t_gubun=&learning_type=&ccl_code=&inside_outside=&fric_yn=&db_type=&image_yn=&gubun=&kdc=&ttsUseYn=&l_sub_code=&fsearchMethod=search&sflag=1&isFDetailSearch=N&pageNumber=1&resultKeyword=%ED%9D%AC%EA%B7%80%EC%A7%88%ED%99%98&fsearchSort=&fsearchOrder=&limiterList=&limiterListText=&facetList=&facetListText=&fsearchDB=&icate=re_a_kor&colName=re_a_kor&pageScale=10&isTab=Y&regnm=&dorg_storage=&language=&language_code=&clickKeyword=&relationKeyword=&query=%ED%9D%AC%EA%B7%80%EC%A7%88%ED%99%98"))
+    
