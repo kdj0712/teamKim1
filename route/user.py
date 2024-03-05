@@ -6,10 +6,7 @@ from fastapi import Request
 from fastapi import FastAPI
 
 app = FastAPI()
-
-
 router = APIRouter()
-
 
 from database.connection import Database
 
@@ -33,9 +30,6 @@ async def user_join(request:Request):
 async def user_join(request:Request):
     # email_list = await collection_member.get('user_email')
     # ID_list = await collection_member.get('user_ID')
-
-
-
     return templates.TemplateResponse(name="user/user_join.html", context={'request':request})
 
 # 회원가입 ID 중복확인 페이지
