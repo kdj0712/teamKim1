@@ -28,3 +28,6 @@ email-validator
 pydantic
 python-dotenv
 pydantic[email]
+transformers
+torch
+tensorflow

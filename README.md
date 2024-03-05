@@ -1,4 +1,57 @@
-# co_data_engineers
+
+## 📃프로젝트: 희귀질환 정보 검색 사이트
+희귀질환 환자 및 보호자들의 정보 검색을 돕고 관련 서비스를 제공하는 웹 사이트 입니다.
+
+### 프로젝트 발표
+- [수주제안서](https://drive.google.com/file/d/-1YmUQKVRzeXReqGQ6nQSMrjkwI1SmuzNg/view?usp=drive_link)
+- [1차 프로젝트 발표](https://docs.google.com/presentation/d/1YTpxuy2uYwYFA3kO9mQ3rrTPeRXCOuXx8J9yCxwjoxQ/edit#slide=id.p9)
+-----
+#### <<멤버변경 : 박요한, 김경하, 조유경  -> 조유경, 김하늘, 김덕재, 오지수, 한동철>>
+-----
+- [1-2차 프로젝트 발표](https://docs.google.com/presentation/d/10ToEiSMfQi9CtyLagILXsOWYHhO6hikPNPoPLa_-MuY/edit)
+
+
+### ✔️프로젝트 설명
+희귀병에 대한 관심 증가와 발전 가능성에 매력을 느꼈음....
+
+### ✔️프로젝트 스케줄링
+
+[Jira_software](https://kdj0712.atlassian.net/jira/software/projects/RDS/boards/3/timeline?selectedIssue=RDS-50)
+
+#### 📌 프로젝트 주요 기능
+- 현위치/추천 기반의 의료기관 지도검색
+- 증상 별 희귀질환 검색
+- 질문, 후기 및 추천글 공유가 가능한 커뮤니티
+- 복지, 법체계 변경사항 등 최신동향을 아카이빙한 페이지
+- 희귀질환자 대상 프로그램 서비스 페이지 
+- 데이터 분석을 기반으로 각 서비스의 의도를 설명하는 회사설명 페이지
+- 나의 기록을 저장하는 마이페이지
+- 회원을 관리하는 기능의 관리자 페이지
+
+### ✔️개발 기간
+총 n개월
+
+- 1차 : 2023.01.08 ~ 2023.01.17
+- 2차 : 2023.02.21 ~ 2023.03.20
+
+### ✔️구현 영상
+
+- [1차 프로젝트 결과물](https://www.youtube.com/watch?v=3PTxsHhATEk)
+   
+### ✔️팀원 및 구현 기능
+
+#### 2차
+
+|카테고리|조유경|김하늘|김덕재|오지수|한동철|
+|--|--|--|--|--|--|
+|데이터수집|[헬프라인-게시글 데이터 수집(1)](./data/selenium/Helpline.py)[(3)](./data/selenium/helpline_support.py) / [국민청원 데이터 수집](https://github.com/kdj0712/teamKim1/blob/main/data/dummy/%EA%B5%AD%EB%AF%BC%EC%B2%AD%EC%9B%90%20DATA.csv) / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_healthjosun.py)|[뉴스 데이터 수집](./data/selenium/naver_news_scrapping_yunhab.py)/[rarenote 앱 리뷰 데이터 수집](./data/selenium/rarenote_review.py) |[지식인 데이터 수집(1)](./data/selenium/naver_kin_rare_diseases.py)[(2)](./data/selenium/naver_kin_symptom.py) / [헬프라인-질병정보 데이터 수집(1)](./data/selenium/Helpline_info.py)[(2)](./data/teamplays.diseases.json)[(3)](./data/csv/djkim_helpline_Symptom.csv)|[디시인사이드 게시글 데이터 수집](./data/selenium/dcinside_subfunction.py) / [뉴스 데이터 수집](./data/selenium/naver_news_scrapping_komedi.py)|동철|
+|데이터분석|[헬프라인-게시글 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/Helpline.ipynb)|[뉴스 자연어 분석-타이틀](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease-title.ipynb) / [뉴스 자연어 분석-전체내용](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/news_rare_disease.ipynb)/ [rarenote 앱 리뷰 자연어 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/sky_rarenote.ipynb)||[디시인사이드 게시글 자연어 분석](https://nbviewer.org/https://github.com/kdj0712/teamKim1/blob/main/data/dcinside.ipynb)/[희귀질환 관련 인구 분석](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/kosis_population.ipynb)|데이터 분석 학습|
+|모델링|유경|하늘|[헬프라인-질병정보 자연어 기반 모델링](https://nbviewer.org/github/kdj0712/teamKim1/blob/main/data/search_insite_TFIDF.ipynb) /|지수|동철|
+
+
+<details>
+    <summary>pip 등 필요 코드</summary>
+
 #### CLI with Dockerfile and compose.xml : duration 150.4s
 ```
 ~$ docker-compose up -d --build
@@ -11,6 +64,34 @@
 ```
 #### samples
 - connect mongodb : [samples\sample_mongodb_connection.ipynb](./samples/sample_mongodb_connection.ipynb)
+
+
+
+```
+~$ pip install fastapi uvicorn jinja2
+~$ pip install python-multipart
+~$ pip install beanie
+~$ pip install pydantic
+~$ pip install pydantic-settings
+~$ pip install pydantic[email]
+~$ pip install python-dotenv
+~$ pip install transformers
+~$ pip install torch
+~$ pip install tensorflow
+~$ pip install --upgrade jupyter ipywidgets
+```
+
+
+
+
+</details>
+
+
+
+
+
+<details>
+<summary>프로젝트 1차</summary>
 
 프로젝트명 :RDS
 프로젝트 기간: 2023.01.08~2023.01.17
@@ -73,19 +154,13 @@
 
 
 
+</details>
 
 
 
 
 
 
-```
-~$ pip install fastapi uvicorn jinja2
-~$ pip install python-multipart
-~$ pip install beanie
-~$ pip install pydantic
-~$ pip install pydantic-settings
-~$ pip install pydantic[email]
-~$ pip install python-dotenv
-```
+
+
 
