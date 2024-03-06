@@ -7,10 +7,17 @@ from datetime import datetime
 from database.connection import Database
 from beanie import PydanticObjectId
 
-
+from models.academicinfo import academicinfo
+from models.disease import diseases
+from models.institution import Institutions
+from models.trend import trends
 from models.member import members
-collection_member = Database(members)
 from models.QnA import QnA
+collection_acade = Database(academicinfo)
+collection_dise = Database(diseases)
+collection_insti = Database(Institutions)
+collection_trend = Database(trends)
+collection_member = Database(members)    
 collection_QnA = Database(QnA)
 
 router = APIRouter()
@@ -66,7 +73,7 @@ async def FAQ(request:Request,     page_number: Optional[int] = 1,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager.html",
+        name="/manag/QnA/manag_QnA_manager.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word' : search_word},
     )
 
@@ -80,11 +87,11 @@ async def FAQ(request:Request,     page_number: Optional[int] = 1,
 
 @router.get("/manag_QnA/manag_manager_nonpage", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="manag/QnA/manag_manager_nonpage.html", context={'request':request})
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_manager_nonpage.html", context={'request':request})
 
 @router.post("/manag_QnA/manag_manager_nonpage", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="manag/QnA/manag_manager_nonpage.html", context={'request':request})
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_manager_nonpage.html", context={'request':request})
 
 
 @router.get("/manag_QnA/{page_number}")
@@ -131,13 +138,13 @@ async def list(
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager.html",
+        name="/manag/QnA/manag_QnA_manager.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word' : search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager_nonpage.html",
+        name="/manag/QnA/manag_QnA_manager_nonpage.html",
         context={'request': request})
         pass
     
@@ -152,11 +159,11 @@ async def list(
 # 글쓰기 창
 @router.get("/manag_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="manag/QnA/manag_write.html", context={'request':request})
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_write.html", context={'request':request})
 
 @router.post("/manag_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="manag/QnA/manag_write.html", context={'request':request})
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_write.html", context={'request':request})
 
 # 글 확인
 
@@ -164,14 +171,14 @@ async def FAQ(request:Request):
 async def FAQ(request:Request, object_id:PydanticObjectId):
     dict(request._query_params)
     QnA = await collection_QnA.get(object_id)
-    return templates.TemplateResponse(name="manag/QnA/manag_read.html", context={'request':request,'QnAs' : QnA})
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request,'QnAs' : QnA})
 
 
 @router.post("/manag_read/{object_id}", response_class=HTMLResponse) 
 async def FAQ(request:Request, object_id:PydanticObjectId):
     await request.form()
     QnA = await collection_QnA.get(object_id)
-    return templates.TemplateResponse(name="manag/QnA/manag_read.html", context={'request':request ,'QnAs' : QnA})
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request ,'QnAs' : QnA})
 
 
 # 답글 달기
@@ -210,13 +217,13 @@ async def FAQ(request:Request, object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager.htmll",
+        name="/manag/QnA/manag_QnA_manager.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager_nonpage.html",
+        name="/manag/QnA/manag_QnA_manager_nonpage.html",
         context={'request': request},
     )
 # 글 삭제
@@ -258,13 +265,13 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager.html",
+        name="/manag/QnA/manag_QnA_manager.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager_nonpage.html",
+        name="/manag/QnA/manag_QnA_manager_nonpage.html",
         context={'request': request},
     )
 
@@ -288,10 +295,6 @@ async def community(request:Request):
 async def program(request:Request):
     return templates.TemplateResponse(name="manag/program/program_main.html", context={'request':request})
 
-@router.get("/academi_main", response_class=HTMLResponse) 
+@router.get("/notice_main", response_class=HTMLResponse) 
 async def academic(request:Request):
-    return templates.TemplateResponse(name="manag/academic/academic_main.html", context={'request':request})
-
-@router.get("/trend_main", response_class=HTMLResponse) 
-async def trend(request:Request):
-    return templates.TemplateResponse(name="manag/trend/trend_main.html", context={'request':request})
+    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request})
