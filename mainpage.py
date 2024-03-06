@@ -12,6 +12,7 @@ from route.manag import router as manag_router
 from route.other import router as other_router
 from route.search import router as search_router
 from route.user import router as user_router
+from route.empo import router as empo_router
 
 
 from fastapi import Request
@@ -21,6 +22,7 @@ app.include_router(manag_router, prefix="/manag")
 app.include_router(other_router, prefix="/other")
 app.include_router(search_router, prefix="/search")
 app.include_router(user_router, prefix="/user")
+app.include_router(empo_router, prefix="/empo")
 
 templates = Jinja2Templates(directory="templates/")
 
