@@ -40,8 +40,8 @@
 <textarea type="" class="form-control text-box" name="ques_answer" id="content" placeholder="답글은 최대 1개씩만 달 수 있습니다. 이 부분은 나중에 관리자 페이지로 이동할 예정"></textarea>
 <br>
 <div style="text-align: end;">
-<button class="btn btn-primary" type="submit" formaction="/manag/manag_reply/{{QnAs.id}}" formmethod="post">답글달기</button>
-<button class="btn btn-danger" type="submit" formaction="/manag/manag_delete/{{QnAs.id}}" formmethod="post">글 삭제</button>
+<button class="btn btn-primary" type="submit" formaction="/manag/QnA/manag_reply/{{QnAs.id}}" formmethod="post">답글달기</button>
+<button class="btn btn-danger" type="submit" formaction="/manag/QnA/manag_delete/{{QnAs.id}}" formmethod="post">글 삭제</button>
 </div>
 </form>
 {% endblock %}
