@@ -1,6 +1,6 @@
 {% extends "manag_template.html"%}
 {% block title%}
-RDS: 관리자마당
+RDS: 관리자마당 회원관리
 {% endblock title%}
 
 
@@ -20,7 +20,7 @@ RDS: 관리자마당
         {% for User in user_list %}
           <td>{{pagination.start_record_number + loop.index0}}</td>
           <td >{{User.user_ID}}</td>
-          <td><button formaction="/manag/user/{{User.id}}">정보 보기</button></td>
+          <td><button formaction="/manag/user/user_detail/{{User.id}}">정보 보기</button></td>
         </tr>
         {% endfor %}
       </tbody>

@@ -269,7 +269,7 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
     )
 
 @router.get("/user/main") # 펑션 호출 방식
-async def list(request:Request):
+async def User_list(request:Request):
     user_list = await collection_member.get_all()
     return templates.TemplateResponse(name="user/main.html", context={'request':request, "users" :user_list})
 
