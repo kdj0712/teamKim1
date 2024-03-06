@@ -2,9 +2,101 @@
 
 {% block main_container %}
 
-<div class="container">
-    <p>마이페이지</p>
-    
-</div>
+<body>
+    <div class="m-5 justify-content-start"><a href="/user/user_mypage">마이페이지</a></div>
+    <div class="row ms-5">
+        <ul class="col-3 list-unstyled ps-0">
+        
+            <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#like-collapse" aria-expanded="false">
+                    찜 목록
+                </button>
+                <div class="collapse" id="like-collapse" >
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="/user/user_mypage"
+                                class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">희귀질환검색내용</a></li>
+                        <li><a href="/user/user_mypage"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">병원</a></li>
+                    </ul>
+                </div>
+            </li>
+        
+            <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#post-collapse" aria-expanded="false">
+                    내가 쓴 글
+                </button>
+                <div class="collapse" id="post-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="/user/user_mypage"
+                                class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">병원후기</a>
+                        </li>
+                        <li><a href="/user/user_mypage"
+                                class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">커뮤니티</a>
+                        </li>
+                        <li><a href="/user/user_mypage"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">QnA</a>
+                    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#program-collapse" aria-expanded="false">
+                    프로그램신청현황
+                </button>
+                <div class="collapse" id="program-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="/user/user_mypage" class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">신청내역조회</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                    계정관리
+                </button>
+                <div class="collapse" id="account-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="/user/user_mypage" class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">계정정보 조회 및 삭제</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+        </ul>   
+        <main class="col-9 container ">
+            {% block user_main %}
+            <div class="container row">
+                <div class="row">
+                    
+                    <div class="col-4">
+                        <div>찜한 질환</div>
+                        <div><span>5</span><span>개</span></div>
+                    </div>
+                    <div class="col-4">
+                        <div>찜한 병원</div>
+                        <div><span>5</span><span>개</span></div>
+                    </div>
+                    <div class="col-4">
+                        <div>신청한 프로그램</div>
+                        <div><span>5</span><span>개</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            {% endblock user_main %}
+        </main>
+    </div>
+
+
+
+
+
+</body>
+
 
 {% endblock %}
