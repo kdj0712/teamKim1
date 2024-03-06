@@ -1,6 +1,6 @@
-{% extends "mainpage.html"%}
+{% extends "manag_template.html"%}
 
-{% block main_container %}
+{% block main %}
 <form action="">
 <div><h2>{{ QnAs.ques_title }}</h2></div>
 <div>
@@ -44,4 +44,4 @@
 <button class="btn btn-danger" type="submit" formaction="/manag/QnA/manag_delete/{{QnAs.id}}" formmethod="post">글 삭제</button>
 </div>
 </form>
-{% endblock %}
+{% endblock main %}
