@@ -274,4 +274,11 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
         context={'request': request},
     )
 
+# 글쓰기 창
+@router.get("/other_notice", response_class=HTMLResponse) 
+async def FAQ(request:Request):
+    return templates.TemplateResponse(name="other/other_notice.html", context={'request':request})
 
+@router.post("/other_notice", response_class=HTMLResponse) 
+async def FAQ(request:Request):
+    return templates.TemplateResponse(name="other/other_notice.html", context={'request':request})

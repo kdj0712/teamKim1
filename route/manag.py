@@ -278,4 +278,20 @@ async def list(request:Request):
 async def FAQ(request:Request, object_id:PydanticObjectId):
     dict(request._query_params)
     user_list = await collection_member.get(object_id)
-    return templates.TemplateResponse(name="user/user_detail.html", context={'request':request,'users' : user_list})
+    return templates.TemplateResponse(name="manag/user/user_detail.html", context={'request':request,'users' : user_list})
+
+@router.get("/community_main", response_class=HTMLResponse) 
+async def community(request:Request):
+    return templates.TemplateResponse(name="manag/community/community_main.html", context={'request':request})
+
+@router.get("/program_main", response_class=HTMLResponse) 
+async def program(request:Request):
+    return templates.TemplateResponse(name="manag/program/program_main.html", context={'request':request})
+
+@router.get("/academi_main", response_class=HTMLResponse) 
+async def academic(request:Request):
+    return templates.TemplateResponse(name="manag/academic/academic_main.html", context={'request':request})
+
+@router.get("/trend_main", response_class=HTMLResponse) 
+async def trend(request:Request):
+    return templates.TemplateResponse(name="manag/trend/trend_main.html", context={'request':request})
