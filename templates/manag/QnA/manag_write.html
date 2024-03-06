@@ -1,5 +1,5 @@
-{% extends "mainpage.html"%}
-{% block main_container %}
+{% extends "manag_template.html"%}
+{% block main %}
 <form action="" method="POST" id="myForm">
     <div class="mb-3">
       <label for="title">제목</label>
@@ -12,5 +12,4 @@
       <a href="/manag/QnA/manag_FAQ" class="btn btn-danger">취소</a>
   </div>
 </form>
-{% endblock %}
-
+{% endblock main %}

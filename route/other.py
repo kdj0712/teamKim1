@@ -16,6 +16,14 @@ collection_QnA = Database(QnA)
 templates = Jinja2Templates(directory="templates/")
 
 
+@router.get("/other_notice", response_class=HTMLResponse)
+async def NOTICE(request:Request):
+    return templates.TemplateResponse(name="other/other_notice.html", context={'request' :request})
+
+@router.post("/notice", response_class=HTMLResponse)
+async def NOTICE(request:Request):
+    return templates.TemplateResponse(name="other/other_notice.html", context={'request' :request})
+
 
 @router.get("/other_FAQ", response_class=HTMLResponse) 
 async def FAQ(request:Request):
@@ -266,4 +274,11 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
         context={'request': request},
     )
 
+# 글쓰기 창
+@router.get("/other_notice", response_class=HTMLResponse) 
+async def FAQ(request:Request):
+    return templates.TemplateResponse(name="other/other_notice.html", context={'request':request})
 
+@router.post("/other_notice", response_class=HTMLResponse) 
+async def FAQ(request:Request):
+    return templates.TemplateResponse(name="other/other_notice.html", context={'request':request})
