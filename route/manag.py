@@ -267,3 +267,15 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
         name="/manag/QnA/manag_manager_nonpage.html",
         context={'request': request},
     )
+
+@router.get("/user/main") # 펑션 호출 방식
+async def list(request:Request):
+    user_list = await collection_member.get_all()
+    return templates.TemplateResponse(name="user/main.html", context={'request':request, "users" :user_list})
+
+
+@router.get("/user/{object_id}", response_class=HTMLResponse) 
+async def FAQ(request:Request, object_id:PydanticObjectId):
+    dict(request._query_params)
+    user_list = await collection_member.get(object_id)
+    return templates.TemplateResponse(name="user/user_detail.html", context={'request':request,'users' : user_list})
