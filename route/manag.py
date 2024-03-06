@@ -17,7 +17,11 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
 
-@router.post("/manag_manager", response_class=HTMLResponse) 
+@router.get("/", response_class=HTMLResponse) 
+async def FAQ(request:Request):
+    return templates.TemplateResponse(name="manag/manag_main.html", context={'request':request})
+
+@router.post("/manag_qna", response_class=HTMLResponse) 
 async def FAQ(request:Request,     page_number: Optional[int] = 1, 
     ques_title: Optional[str] = None,
     ques_writer: Optional[str] = None,
@@ -62,7 +66,7 @@ async def FAQ(request:Request,     page_number: Optional[int] = 1,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/manag_manager.html",
+        name="/manag/qna/manag_qna.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word' : search_word},
     )
 
