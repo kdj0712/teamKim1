@@ -2,7 +2,28 @@
 
 {% block user_main %}
 
-
+<div class="d-flex gap-2 justify-content-start py-5">
+    <a href="/" >
+        <span class="badge d-flex p-2 align-items-center text-emphasis bg-primary rounded-pill" >
+            <span class="px-1">전체</span>
+        </span>
+    </a>
+    <a href="/">
+        <span class="badge d-flex p-2 align-items-center text-primary-emphasis bg-light rounded-pill">
+            <span class="px-1" name="type" value="download_app">병원후기</span>
+        </span>
+    </a>
+    <a href="/">
+        <span class="badge d-flex p-2 align-items-center text-primary-emphasis bg-light rounded-pill">
+            <span class="px-1" name="type"  value="join">커뮤니티</span>
+        </span>
+    </a>
+    <a href="/">
+        <span class="badge d-flex p-2 align-items-center text-primary-emphasis bg-light rounded-pill">
+            <span class="px-1" name="type"  value="newsletter">QnA</span>
+        </span>
+    </a>
+</div>
 
 <table class="table">
     <thead>
