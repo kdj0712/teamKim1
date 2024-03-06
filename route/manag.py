@@ -7,11 +7,7 @@ from datetime import datetime
 from database.connection import Database
 from beanie import PydanticObjectId
 
-from models import academicinfo,disease,institution,trend
-collection_acade = Database(academicinfo)
-collection_dise = Database(disease)
-collection_insti = Database(institution)
-collection_trend = Database(trend)
+
 from models.member import members
 collection_member = Database(members)
 from models.QnA import QnA
@@ -146,6 +142,13 @@ async def list(
         pass
     
 
+
+
+
+
+
+
+
 # 글쓰기 창
 @router.get("/manag_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
@@ -207,7 +210,7 @@ async def FAQ(request:Request, object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_manager.html",
+        name="/manag/QnA/manag_manager.htmll",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
@@ -266,29 +269,13 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
     )
 
 @router.get("/user/main") # 펑션 호출 방식
-async def User_list(request:Request):
+async def list(request:Request):
     user_list = await collection_member.get_all()
-    return templates.TemplateResponse(name="manag/user/main.html", context={'request':request, "users" :user_list})
+    return templates.TemplateResponse(name="user/main.html", context={'request':request, "users" :user_list})
 
 
 @router.get("/user/{object_id}", response_class=HTMLResponse) 
 async def FAQ(request:Request, object_id:PydanticObjectId):
     dict(request._query_params)
     user_list = await collection_member.get(object_id)
-    return templates.TemplateResponse(name="manag/user/user_detail.html", context={'request':request,'users' : user_list})
-
-@router.get("/community_main", response_class=HTMLResponse) 
-async def community(request:Request):
-    return templates.TemplateResponse(name="manag/community/community_main.html", context={'request':request})
-
-@router.get("/program_main", response_class=HTMLResponse) 
-async def program(request:Request):
-    return templates.TemplateResponse(name="manag/program/program_main.html", context={'request':request})
-
-@router.get("/academi_main", response_class=HTMLResponse) 
-async def academic(request:Request):
-    return templates.TemplateResponse(name="manag/academic/academic_main.html", context={'request':request})
-
-@router.get("/trend_main", response_class=HTMLResponse) 
-async def trend(request:Request):
-    return templates.TemplateResponse(name="manag/trend/trend_main.html", context={'request':request})
+    return templates.TemplateResponse(name="user/user_detail.html", context={'request':request,'users' : user_list})
