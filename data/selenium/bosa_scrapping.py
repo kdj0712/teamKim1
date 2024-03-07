@@ -3,6 +3,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.keys import Keys
 import time
 from selenium.webdriver.support.ui import WebDriverWait
@@ -33,50 +34,64 @@ def bosascrapping(browser_name, keyword) :
     bosa_news_coll.delete_many({})
     # 위에서부터 스크래핑하기
     # 첫 페이지
-    for page_num in range(2,12):
-        contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
+    for page_num in range(2,13):
         browser.find_element(By.CSS_SELECTOR, f"#sections > section > nav > ul > li:nth-child({page_num})").click()
+        contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
         time.sleep(1)
         for content in contents :
-            news_title = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > h4").text
-            news_url = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").get_attribute("href")
-            news_when = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.dated").text
-            news_topic = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.category").text
-            content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > a").click() # 안으로 들어가기
-            news_contents = ''
-            news_contents_p = browser.find_elements(By.CSS_SELECTOR, "#article-view-content-div > p")
-            for news_p in news_contents_p :
-                news_contents += news_p
-            bosa_news_coll.insert_one({"news_title" : news_title
-                                       ,"news_when" : news_when
-                                       ,"news_topic":news_topic
-                                       ,"news_contents":news_contents
-                                       ,"news_url":news_url })
-            browser.back()
-            time.sleep(1)   
-    #나머지 페이지
-    while True : 
-        browser.find_element(By.CSS_SELECTOR, "#sections > section > nav > ul > li.pagination-next > a").click()
-        time.sleep(1)
-        for page_num in range(4,14):
-            contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
-            browser.find_element(By.CSS_SELECTOR, f"#sections > section > nav > ul > li:nth-child({page_num})").click()
-            time.sleep(1)
-            for content in contents :
+            try : 
                 news_title = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > h4").text
                 news_url = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").get_attribute("href")
                 news_when = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.dated").text
                 news_topic = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.category").text
-                content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > a").click() # 안으로 들어가기
+                content.find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").click() # 안으로 들어가기
                 news_contents = ''
                 news_contents_p = browser.find_elements(By.CSS_SELECTOR, "#article-view-content-div > p")
                 for news_p in news_contents_p :
-                    news_contents += news_p
+                    news_contents += news_p.text
                 bosa_news_coll.insert_one({"news_title" : news_title
                                         ,"news_when" : news_when
                                         ,"news_topic":news_topic
                                         ,"news_contents":news_contents
                                         ,"news_url":news_url })
+                browser.back()
+                time.sleep(1)
+            except StaleElementReferenceException :
+                print("StaleElementReferenceException 발생. 다음 요소로 넘어갑니다")
+                continue
+    #나머지 페이지
+    while True :
+        try : 
+            next_page = browser.find_element(By.CSS_SELECTOR, "#sections > section > nav > ul > li.pagination-next > a")
+            next_page.click()
+            time.sleep(1)
+            for page_num in range(5,14):
+                contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
+                time.sleep(1)
+                for content in contents :
+                    news_title = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > h4").text
+                    news_url = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").get_attribute("href")
+                    news_when = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.dated").text
+                    news_topic = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.category").text
+                    content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > h4 > a").click() # 안으로 들어가기
+                    news_contents = ''
+                    news_contents_p = browser.find_elements(By.CSS_SELECTOR, "#article-view-content-div > p")
+                    for news_p in news_contents_p :
+                        news_contents += news_p.text
+                    bosa_news_coll.insert_one({"news_title" : news_title
+                                            ,"news_when" : news_when
+                                            ,"news_topic":news_topic
+                                            ,"news_contents":news_contents
+                                            ,"news_url":news_url })
+                    browser.back()
+                    time.sleep(1)
+                try : 
+                    browser.find_element(By.CSS_SELECTOR, f"#sections > section > nav > ul > li:nth-child({page_num})").click()
+                except NoSuchElementException :
+                    continue
+        except NoSuchElementException :
+            pass
+        
                     
         
 

@@ -1,4 +1,4 @@
-{% extends "manag_template.html"%}
+{% extends "/manag/manag_template.html"%}
 {% block main %}
 <form action="" method="POST" id="myForm">
     <div class="mb-3">
@@ -8,8 +8,8 @@
       <input type="" class="form-control" name="ques_writer" id="writer" required>
       <label for="content">내용</label>
       <textarea type="" class="form-control text-box" name="ques_content" id="content" placeholder="내용을 입력하세요." required></textarea>
-      <button class="btn btn-primary" type="submit" formaction="/manag/QnA/manag_QnA" formmethod="post">글쓰기</button>
-      <a href="/manag/QnA/manag_FAQ" class="btn btn-danger">취소</a>
+      <button class="btn btn-primary" type="submit" formaction="/manag/manag_QnA" formmethod="post">글쓰기</button>
+      <a href="/manag/manag_QnA" class="btn btn-danger">취소</a>
   </div>
 </form>
 {% endblock main %}
