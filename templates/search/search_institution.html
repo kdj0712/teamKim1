@@ -3,10 +3,23 @@
 {% block main_container %}
 <div class="container">
   <div class="row">
-    <div class="col-6" id="map" style="width: 550px; height: 550px;"></div>
+    <div class="col-6" id="map" style="width: 600px; height: 600px;"></div>
     <div class="col-6">
-      <input type="text" id="search-input"  class="controls" placeholder="검색할 장소를 입력하세요">
-      <button onclick="searchPlaces()">Search</button>
+        <input type="text" id="search-input"  class="controls" placeholder="검색할 장소를 입력하세요">
+        <button onclick="searchPlaces()">Search</button>
+      <div class="row">
+        <table id="places"> 
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
   </div>
 </div>
 <script>
@@ -54,7 +67,12 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
 }
-
+function clearTable() {
+  var table = document.getElementById('places').getElementsByTagName('tbody')[0];
+  while (table.hasChildNodes()) {  
+    table.removeChild(table.firstChild);
+  }
+}
 function searchPlaces() {
   const placeType = document.getElementById('search-input').value;
 
@@ -75,6 +93,7 @@ function callback(results, status) {
   if (status === google.maps.places.PlacesServiceStatus.OK) {
     for (let i = 0; i < results.length; i++) {
       createMarker(results[i]);
+      addPlaceToTable(results[i]);
     }
   }
 }
@@ -91,8 +110,22 @@ function createMarker(place) {
     infowindow.open(map, this);
   });
 }
+
+function addPlaceToTable(place) {
+  var table = document.getElementById('places').getElementsByTagName('tbody')[0];
+  var row = table.insertRow(-1);
+
+  var nameCell = row.insertCell(0);
+  var addressCell = row.insertCell(1);
+
+  nameCell.innerHTML = place.name;
+  addressCell.innerHTML = place.vicinity;
+}
+
+
+
 </script>
 <!-- Google Maps API Script -->
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGf8qN6SIvO-f3UFzQx6fQddEoXgLkGuM&callback=initMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap" async defer></script>
 
 {% endblock %}

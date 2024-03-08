@@ -2,6 +2,10 @@ from fastapi import APIRouter, FastAPI, Form
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
+from dotenv import load_dotenv
+load_dotenv()
+import os
+api_key = os.getenv("API_KEY")
 
 router = APIRouter()
 
@@ -24,12 +28,11 @@ templates = Jinja2Templates(directory="templates/")
 
 @router.get("/search_institution", response_class=HTMLResponse) 
 async def institution(request:Request):
-    return templates.TemplateResponse(name="search/search_institution.html", context={'request':request})
+    return templates.TemplateResponse(name="search/search_institution.html", context={'request':request, 'API_KEY':api_key})
 
 @router.post("/search_institution", response_class=HTMLResponse) 
 async def institution(request:Request):
-    return templates.TemplateResponse(name="search/search_institution.html", context={'request':request})
-
+    return templates.TemplateResponse(name="search/search_institution.html", context={'request':request, 'API_KEY':api_key})
 # @router.get("/search_raredisease", response_class=HTMLResponse) 
 # async def raredisease(request:Request):
 #     return templates.TemplateResponse(name="search/search_raredisease.html", context={'request':request})
