@@ -360,3 +360,12 @@ async def list(
     #     context={'request': request})
     #     pass
     
+# data analytics
+
+@router.get("/data_analytics", response_class=HTMLResponse) 
+async def data_analytics(request:Request):
+    return templates.TemplateResponse(name="manag/data_analytics/manag_data_analytics.html", context={'request':request})
+
+@router.post("/data_analytics", response_class=HTMLResponse) 
+async def data_analytics(request:Request):
+    return templates.TemplateResponse(name="manag/data_analytics/manag_data_analytics.html", context={'request':request})
