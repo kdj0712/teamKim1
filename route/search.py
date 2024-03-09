@@ -28,7 +28,7 @@ collection_academicinfo = Database(academicinfo)
 templates = Jinja2Templates(directory="templates/")
 
 @router.get("/search_institution", response_class=HTMLResponse) 
-async def institution(request:Request, keyword:Optional[str]=None):
+async def institution(request:Request, keyword:str=None):
     if keyword:
         url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
         params = {
@@ -41,8 +41,8 @@ async def institution(request:Request, keyword:Optional[str]=None):
             async with session.get(url, params=params) as resp:
                 data = await resp.text()
         return templates.TemplateResponse("search/search_institution.html", {"request": request, "results": json.loads(data)})
-    else:
-        return templates.TemplateResponse("search/search_institution.html", {"request": request})
+    elif keyword is None:
+        return templates.TemplateResponse("search/search_institution.html", {"request": request, 'API_KEY' : api_key})
 
 
 @router.post("/search_institution", response_class=HTMLResponse) 

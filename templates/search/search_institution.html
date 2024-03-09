@@ -5,7 +5,8 @@
   <div class="row">
     <div class="col-6" id="map" style="width: 600px; height: 600px;"></div>
     <div class="col-6">
-        <input type="text" id="search-input"  class="controls" placeholder="검색할 장소를 입력하세요">
+        <label for="search-input">검색할 장소를 입력하세요</label>
+        <input type="text" id="search-input"  class="controls" placeholder="입력하기">
         <button onclick="searchPlaces()">Search</button>
       <div class="row">
         <table id="places"> 
@@ -100,7 +101,7 @@ function callback(results, status) {
 
 function createMarker(place) {
   if (!place.geometry || !place.geometry.location) return;
-  const marker = new google.maps.Marker({
+  const marker = new google.maps.Marker.AdvancedMarkerElement({
     map,
     position: place.geometry.location,
   });
@@ -110,7 +111,7 @@ function createMarker(place) {
     infowindow.open(map, this);
   });
 }
-
+  
 function addPlaceToTable(place) {
   var table = document.getElementById('places').getElementsByTagName('tbody')[0];
   var row = table.insertRow(-1);
@@ -129,5 +130,5 @@ function addPlaceToTable(place) {
   }
 </script>
 <!-- Google Maps API Script -->
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap" async defer></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap"></script>
 {% endblock %}
