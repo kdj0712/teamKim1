@@ -30,7 +30,7 @@
 let map, infoWindow, service, pos;
 
 function initMap() {
-  infowindow = new google.maps.InfoWindow();
+  const infowindow = new google.maps.InfoWindow();
 
   // 사용자의 위치를 가져오거나, 가져오는 것이 불가능할 경우에는 기본 좌표를 사용합니다.
   if (navigator.geolocation) {
@@ -122,10 +122,12 @@ function addPlaceToTable(place) {
   addressCell.innerHTML = place.vicinity;
 }
 
-
-
+</script>
+<script>
+  window.onload = function() {
+    initMap();
+  }
 </script>
 <!-- Google Maps API Script -->
 <script async src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap" async defer></script>
-
 {% endblock %}

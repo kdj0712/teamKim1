@@ -1,8 +1,11 @@
-from fastapi import APIRouter, FastAPI, Form
+from fastapi import APIRouter, FastAPI, Form, Depends
+from typing import Optional
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from aiohttp import ClientSession
 from fastapi import Request
 from dotenv import load_dotenv
+import json
 load_dotenv()
 import os
 api_key = os.getenv("API_KEY")
@@ -22,13 +25,25 @@ collection_trend = Database(trends)
 from models.academicinfo import academicinfo
 collection_academicinfo = Database(academicinfo)
 
-
-
 templates = Jinja2Templates(directory="templates/")
 
 @router.get("/search_institution", response_class=HTMLResponse) 
-async def institution(request:Request):
-    return templates.TemplateResponse(name="search/search_institution.html", context={'request':request, 'API_KEY':api_key})
+async def institution(request:Request, keyword:Optional[str]=None):
+    if keyword:
+        url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+        params = {
+            "input": keyword,
+            "inputtype": "textquery",
+            "fields": "photos,formatted_address,name,rating,opening_hours,geometry",
+            "key": api_key
+        }
+        async with ClientSession() as session:
+            async with session.get(url, params=params) as resp:
+                data = await resp.text()
+        return templates.TemplateResponse("search/search_institution.html", {"request": request, "results": json.loads(data)})
+    else:
+        return templates.TemplateResponse("search/search_institution.html", {"request": request})
+
 
 @router.post("/search_institution", response_class=HTMLResponse) 
 async def institution(request:Request):
