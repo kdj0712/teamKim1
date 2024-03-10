@@ -23,17 +23,96 @@ collection_QnA = Database(QnA)
 
 router = APIRouter()
 
-templates = Jinja2Templates(directory="templates/manag/")
+templates = Jinja2Templates(directory="templates/")
 
 
 #### -------------------------------------------------------------------------------------------------------
 
 # manag main - 대시보드
 
-@router.get("manag/managmain", response_class=HTMLResponse) 
+@router.get("/managmain", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="manag_manager.html", context={'request':request})
+    return templates.TemplateResponse(name="manag/managmain.html", context={'request':request})
 
+#### -------------------------------------------------------------------------------------------------------
+
+# user_main
+
+@router.get("/manag_user_main/{page_number}")
+@router.get("/manag_user_main") # 검색 with pagination
+# http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
+# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
+# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
+async def list(
+    request: Request,
+    page_number: Optional[int] = 1, 
+    user_ID: Optional[Union[str, int, float, bool]] = None,
+    user_pswd: Optional[Union[str, int, float, bool]] = None,
+    user_email: Optional[EmailStr] = None,
+    user_name: Optional[Union[str, int, float, bool]] = None,
+    user_phone : Optional[Union[str, int, float, bool]] = None,
+    user_info : Optional[Union[str, int, float, bool]] = None,
+    user_birth : Optional[Union[str, int, float, bool]] = None,
+    user_postcode : Optional[Union[str, int, float, bool]] = None,
+    user_address : Optional[Union[str, int, float, bool]] = None,
+    user_detailed_address : Optional[Union[str, int, float, bool]] = None
+):
+    # db.answers.find({'name':{ '$regex': '김' }})
+    # { 'name': { '$regex': user_dict.word } }
+    
+    user_dict = dict(request._query_params)
+    conditions = {}
+    search_word = request.query_params.get('search_word')
+
+    if search_word:
+        conditions.update({
+            "$or": [
+                {"dise_KCD_code": {'$regex': search_word}},
+                {"dise_group": {'$regex': search_word}},
+                {"dise_name_kr": {'$regex': search_word}},
+                {"dise_name_en": {'$regex': search_word}},
+                {"dise_support": {'$regex': search_word}},
+                {"dise_url": {'$regex': search_word}}
+            ]
+        })
+
+    pass
+
+    if user_ID:
+        conditions.find({ 'user_ID': { '$regex': search_word }})
+    pass
+
+    # try:
+    User_list, pagination = await collection_member.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    return templates.TemplateResponse(
+    name="manag/user/manag_user_main.html",
+    context={'request': request, 'user_list': User_list, 'pagination': pagination,'search_word' : search_word},
+    )
+
+    # except:
+    #     return templates.TemplateResponse(
+    #     name="/manag/QnA/manag_QnA_manager_nonpage.html",
+    #     context={'request': request})
+    #     pass
+
+
+#### -------------------------------------------------------------------------------------------------------
+
+# community_main
+
+@router.get("/manag_community_main", response_class=HTMLResponse) 
+async def community(request:Request):
+    return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
+
+#### -------------------------------------------------------------------------------------------------------
+
+# program_main
+
+@router.get("/manag_program_main", response_class=HTMLResponse) 
+async def program(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
 
 #### -------------------------------------------------------------------------------------------------------
 
@@ -84,7 +163,7 @@ async def FAQ(request:Request,     page_number: Optional[int] = 1,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_QnA_manager.html",
+        name="manag/QnA/manag_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word' : search_word},
     )
 
@@ -102,8 +181,8 @@ async def FAQ(request:Request):
 async def FAQ(request:Request):
     return templates.TemplateResponse(name="manag/QnA/manag_QnA_manager_nonpage.html", context={'request':request})
 
-@router.get("/manag_QnA/{page_number}")
-@router.get("/manag_QnA") # 검색 with pagination
+@router.get("/manag_QnA_main/{page_number}")
+@router.get("/manag_QnA_main") # 검색 with pagination
 # http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
 # http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
 # http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
@@ -146,13 +225,13 @@ async def list(
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_QnA_main.html",
+        name="manag/QnA/manag_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word' : search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_QnA_manager_nonpage.html",
+        name="manag/QnA/manag_QnA_manager_nonpage.html",
         context={'request': request})
         pass
 
@@ -161,7 +240,7 @@ async def list(
 async def FAQ(request:Request):
     return templates.TemplateResponse(name="manag/QnA/manag_QnA_write.html", context={'request':request})
 
-@router.post("/manag_QnA_main_write", response_class=HTMLResponse) 
+@router.post("/manag_QnA_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
     return templates.TemplateResponse(name="manag/QnA/manag_QnA_write.html", context={'request':request})
 
@@ -216,13 +295,13 @@ async def FAQ(request:Request, object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_QnA_manager.html",
+        name="manag/QnA/manag_QnA_manager.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_QnA_manager_nonpage.html",
+        name="manag/QnA/manag_QnA_manager_nonpage.html",
         context={'request': request},
     )
         
@@ -265,13 +344,13 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_QnA_manager.html",
+        name="manag/QnA/manag_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/manag/QnA/manag_QnA_manager_nonpage.html",
+        name="manag/QnA/manag_QnA_manager_nonpage.html",
         context={'request': request},
     )
 
@@ -289,79 +368,12 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
 
 #### -------------------------------------------------------------------------------------------------------
 
-# community_main
-
-@router.get("/manag_community_main", response_class=HTMLResponse) 
-async def community(request:Request):
-    return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
-
-@router.get("/manag_program_main", response_class=HTMLResponse) 
-async def program(request:Request):
-    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
+# notice_main
 
 @router.get("/manag_notice_main", response_class=HTMLResponse) 
 async def academic(request:Request):
     return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request})
 
-
-@router.get("/user/main/{page_number}")
-@router.get("/user/main") # 검색 with pagination
-# http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
-async def list(
-    request: Request,
-    page_number: Optional[int] = 1, 
-    user_ID: Optional[Union[str, int, float, bool]] = None,
-    user_pswd: Optional[Union[str, int, float, bool]] = None,
-    user_email: Optional[EmailStr] = None,
-    user_name: Optional[Union[str, int, float, bool]] = None,
-    user_phone : Optional[Union[str, int, float, bool]] = None,
-    user_info : Optional[Union[str, int, float, bool]] = None,
-    user_birth : Optional[Union[str, int, float, bool]] = None,
-    user_postcode : Optional[Union[str, int, float, bool]] = None,
-    user_address : Optional[Union[str, int, float, bool]] = None,
-    user_detailed_address : Optional[Union[str, int, float, bool]] = None
-):
-    # db.answers.find({'name':{ '$regex': '김' }})
-    # { 'name': { '$regex': user_dict.word } }
-    
-    user_dict = dict(request._query_params)
-    conditions = {}
-    search_word = request.query_params.get('search_word')
-
-    if search_word:
-        conditions.update({
-            "$or": [
-                {"dise_KCD_code": {'$regex': search_word}},
-                {"dise_group": {'$regex': search_word}},
-                {"dise_name_kr": {'$regex': search_word}},
-                {"dise_name_en": {'$regex': search_word}},
-                {"dise_support": {'$regex': search_word}},
-                {"dise_url": {'$regex': search_word}}
-            ]
-        })
-
-    pass
-
-    if user_ID:
-        conditions.find({ 'user_ID': { '$regex': search_word }})
-    pass
-
-    # try:
-    User_list, pagination = await collection_member.getsbyconditionswithpagination(
-    conditions, page_number
-    )
-    return templates.TemplateResponse(
-    name="/manag/user/main.html",
-    context={'request': request, 'user_list': User_list, 'pagination': pagination,'search_word' : search_word},
-    )
-
-    # except:
-    #     return templates.TemplateResponse(
-    #     name="/manag/QnA/manag_QnA_manager_nonpage.html",
-    #     context={'request': request})
-    #     pass
 
 #### -------------------------------------------------------------------------------------------------------
     
