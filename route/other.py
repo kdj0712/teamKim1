@@ -15,6 +15,9 @@ collection_QnA = Database(QnA)
 
 templates = Jinja2Templates(directory="templates/")
 
+#### -------------------------------------------------------------------------------------------------------
+
+# 공지사항
 
 @router.get("/other_notice", response_class=HTMLResponse)
 async def NOTICE(request:Request):
@@ -24,16 +27,9 @@ async def NOTICE(request:Request):
 async def NOTICE(request:Request):
     return templates.TemplateResponse(name="other/other_notice.html", context={'request' :request})
 
+#### -------------------------------------------------------------------------------------------------------
 
-@router.get("/other_FAQ", response_class=HTMLResponse) 
-async def FAQ(request:Request):
-    return templates.TemplateResponse(name="other/other_FAQ.html", context={'request':request})
-
-@router.post("/other_FAQ", response_class=HTMLResponse) 
-async def FAQ(request:Request):
-    return templates.TemplateResponse(name="other/other_FAQ.html", context={'request':request})
-
-# QnA 창
+# QnA
 
 @router.post("/other_QnA", response_class=HTMLResponse) 
 async def FAQ(request:Request,     page_number: Optional[int] = 1, 
@@ -147,12 +143,6 @@ async def list(
         name="/other/other_QnA_nonpage.html",
         context={'request': request},
     )
-
-
-
-
-
-
 
 
 # 글쓰기 창

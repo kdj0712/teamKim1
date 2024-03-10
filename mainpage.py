@@ -10,7 +10,7 @@ async def init_db():
 from route.info import router as info_router
 from route.manag import router as manag_router
 from route.other import router as other_router
-from route.search import router as search_router
+from route.info import router as search_router
 from route.user import router as user_router
 from route.empo import router as empo_router
 from route.trend import router as trends_router
