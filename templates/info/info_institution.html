@@ -16,9 +16,7 @@
               <th>Address</th>
             </tr>
           </thead>
-          <tbody>
-
-          </tbody>
+          <tbody id="tbody"></tbody>
         </table>
       </div>
   </div>
@@ -101,7 +99,7 @@ function callback(results, status) {
 
 function createMarker(place) {
   if (!place.geometry || !place.geometry.location) return;
-  const marker = new google.maps.Marker.AdvancedMarkerElement({
+  const marker = new google.maps.Marker({
     map,
     position: place.geometry.location,
   });
@@ -111,7 +109,7 @@ function createMarker(place) {
     infowindow.open(map, this);
   });
 }
-  
+
 function addPlaceToTable(place) {
   var table = document.getElementById('places').getElementsByTagName('tbody')[0];
   var row = table.insertRow(-1);
