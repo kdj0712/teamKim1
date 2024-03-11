@@ -37,11 +37,12 @@ def selectCourts(browser, collection):
     time.sleep(2)
     search = browser.find_element(by=By.CSS_SELECTOR, value="#search\.keyword\.query")
     search.send_keys("병원")
-    time.sleep(1)
+    time.sleep(0.5)
     button = browser.find_element(by=By.CSS_SELECTOR, value="#search\.keyword\.submit")
     button.click()
+    time.sleep(1)
     while True : 
-        time.sleep(1)
+        
         try : 
             more_button = browser.find_element(by=By.CSS_SELECTOR, value="#info\.search\.place\.more")
             more_button.click()
@@ -50,66 +51,64 @@ def selectCourts(browser, collection):
         time.sleep(1)
         pagination = browser.find_elements(by=By.CSS_SELECTOR, value="#info\.search\.page > div > a")
         for i in range(len(pagination)) :
-            time.sleep(1)
-            pagination[i].click()
-            # 게시물 리스트 : 
-            elements = browser.find_elements(by=By.CSS_SELECTOR, value="#info\.search\.place\.list > li > div.head_item.clickArea > strong > a.link_name")
-            origin_tab = browser.current_window_handle
-            pass
-            try :
-                for x in range(len(elements)) :
-                    time.sleep(1)
-                    hospital_name = browser.find_elements(by=By.CSS_SELECTOR, value="#info\.search\.place\.list > li > div.head_item.clickArea > strong > a.link_name")[x].text
-                    hospital_reviews = browser.find_elements(by=By.CSS_SELECTOR, value="#info\.search\.place\.list > li > div.rating.clickArea > span.score > a")[x]
-                    hospital_reviews.click()
-                    time.sleep(2)
-                    browser.switch_to.window(browser.window_handles[1])
-                    while True :
-                        time.sleep(2)
-                        if browser.find_element(by=By.CSS_SELECTOR, value="#mArticle > div.cont_evaluation > div.evaluation_review > a").text != '후기 더보기' : 
-                            break
-                        else :
-                            more_element = browser.find_element(by=By.CSS_SELECTOR, value="#mArticle > div.cont_evaluation > div.evaluation_review > a")
-                            more_element.click()
-
-                    
-                    contents = browser.find_elements(by=By.CSS_SELECTOR, value="#mArticle > div.cont_evaluation > div.evaluation_review > ul > li > div.comment_info > p > span")
-                    for content in contents :
-                        try : 
-                            text = content.text
-                        except :
-                            text = ''
-                        pass
-                        collection.insert_one({'hospital_name':hospital_name, 'text':text})
+             
+                time.sleep(1)
+                try : 
+                    pagination[i].click()
+                    # 병원 리스트 : 
+                    elements = browser.find_elements(by=By.CSS_SELECTOR, value="#info\.search\.place\.list > li > div.head_item.clickArea > strong > a.link_name")
+                    origin_tab = browser.current_window_handle
                     pass
-                    browser.close()
-                    browser.switch_to.window(origin_tab)
-            except :
-                browser.switch_to.window(origin_tab)
+                    
+                        # 병원 개수 만큼 반복
+                    for x in range(len(elements)) :
+
+                        time.sleep(1)
+                        try :
+                            hospital_name = browser.find_elements(by=By.CSS_SELECTOR, value="#info\.search\.place\.list > li > div.head_item.clickArea > strong > a.link_name")[x].text
+                            hospital_reviews = browser.find_elements(by=By.CSS_SELECTOR, value="#info\.search\.place\.list > li > div.rating.clickArea > span.score > a")[x]
+                            # 병원 리뷰 페이지로 이동
+                        
+                            hospital_reviews.click()
+                            time.sleep(2)
+
+                            browser.switch_to.window(browser.window_handles[1])
+                            while True :
+                                time.sleep(1)
+                                if browser.find_element(by=By.CSS_SELECTOR, value="#mArticle > div.cont_evaluation > div.evaluation_review > a").text != '후기 더보기' : 
+                                    break
+                                else :
+                                    more_element = browser.find_element(by=By.CSS_SELECTOR, value="#mArticle > div.cont_evaluation > div.evaluation_review > a")
+                                    more_element.click()
+
+                            try :
+                                contents = browser.find_elements(by=By.CSS_SELECTOR, value="#mArticle > div.cont_evaluation > div.evaluation_review > ul > li > div.comment_info > p > span")
+                                for content in contents :
+                                    try : 
+                                        text = content.text
+                                    except :
+                                        text = ''
+                                    pass
+                                    collection.insert_one({'hospital_name':hospital_name, 'text':text})
+                                pass
+
+                            except :
+                                pass 
+                            browser.close()
+                            browser.switch_to.window(origin_tab)
+                            
+                        except :
+                            try : 
+                                browser.close(browser.window_handles[1])
+                                browser.switch_to.window(origin_tab)
+                            except :
+
+                                browser.switch_to.window(origin_tab)
+                                pass
+                except :
+                    pass
             
-
-
-            pass
-
-            
-        
-        
-        
-        pass
-        
-        # dc_title = Select(element.find_element(by=By.CSS_SELECTOR, value="#container > section > article:nth-child(3) > div.view_content_wrap > header > div > h3 > span.title_subject")) 
-        # dc_title_text = dc_title.text
-        # dc_name = Select(element.find_element(by=By.CSS_SELECTOR, value="#container > section > article:nth-child(3) > div.view_content_wrap > header > div > div > div.fl > span.nickname")) 
-        # dc_name_text = dc_name.text
-        # dc_date = Select(element.find_element(by=By.CSS_SELECTOR, value="#container > section > article:nth-child(3) > div.view_content_wrap > header > div > div > div.fl > span.gall_date")) 
-        # dc_date_text = dc_date.text
-        # dc_contents = Select(element.find_element(by=By.CSS_SELECTOR, value="#container > section > article:nth-child(3) > div.view_content_wrap > div > div.inner.clear > div.writing_view_box > div.write_div")) 
-        # dc_contents_text = dc_contents.text
-        # print(f"title: {dc_title_text}, name: {dc_name_text}, date: {dc_date_text}, contents: {dc_contents_text}")
-        # browser.back()
-        pass
-    pass
-    return 
+                
 
 def quitBrowser(browser):
     # 브라우저 종료
