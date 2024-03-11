@@ -5,7 +5,7 @@ import time
 from pymongo import MongoClient
 mongoClient = MongoClient("mongodb://192.168.10.236:27017")
 database = mongoClient["Seleniums"]
-collection = database['eng_academic_research']
+collection = database['eng_academic_research2']
 
 # chrome browser 열기
 browser = webdriver.Chrome()
@@ -36,9 +36,18 @@ for i in range(1467):
                 research_volumn = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(4) > div > p").text
                 research_year = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(5) > div > p").text
                 research_language = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(6) > div > p").text
-                research_subject = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(7) > div > p").text
-                research_type = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(8) > div > p").text
-                research_page = browser.find_element(by=By.CSS_SELECTOR, value="ul > li:nth-child(9) > div > p").text
+                try:
+                    research_subject = browser.find_element(by=By.XPATH, value='//span[text()="주제어"]/../div/p').text
+                except:
+                    research_subject = " "
+                try:
+                    research_type = browser.find_element(by=By.XPATH, value='//span[text()="자료형태"]/../div/p').text
+                except:
+                    research_type = " "
+                try:
+                    research_page = browser.find_element(by=By.CSS_SELECTOR, value='//span[text()="수록면"]/../div/p').text
+                except:
+                    research_page = " "
                 # browser.back()
             
                 collection.insert_one({'research_title': research_title
@@ -57,3 +66,4 @@ for i in range(1467):
                 time.sleep(3)
         except : 
             break
+        pass
