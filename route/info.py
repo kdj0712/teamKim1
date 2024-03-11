@@ -111,11 +111,18 @@ async def institution(request:Request):
 @router.get("/info_institution", response_class=HTMLResponse) 
 async def institution(request:Request, keyword:str=None):
     if keyword:
-        url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+        # url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+        # params = {
+        #     "input": keyword,
+        #     "inputtype": "textquery",
+        #     "fields": "photos,formatted_address,name,rating,opening_hours,geometry",
+        #     "key": api_key
+        # }
+        url = "https://places.googleapis.com/v1/places:searchText"
         params = {
             "input": keyword,
             "inputtype": "textquery",
-            "fields": "photos,formatted_address,name,rating,opening_hours,geometry",
+            # "fields": "photos,formatted_address,name,rating,opening_hours,geometry",
             "key": api_key
         }
         async with ClientSession() as session:
