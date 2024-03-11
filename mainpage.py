@@ -7,24 +7,22 @@ settings = Settings()
 async def init_db():
     await settings.initialize_database()
 
-from route.info import router as info_router
-from route.manag import router as manag_router
-from route.other import router as other_router
-from route.search import router as search_router
 from route.user import router as user_router
+from route.trend import router as trend_router
+from route.info import router as info_router
 from route.empo import router as empo_router
-from route.trends import router as trends_router
-
+from route.other import router as other_router
+from route.manag import router as manag_router
 
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
-app.include_router(info_router, prefix="/info")
-app.include_router(manag_router, prefix="/manag")
-app.include_router(other_router, prefix="/other")
-app.include_router(search_router, prefix="/search")
 app.include_router(user_router, prefix="/user")
+app.include_router(trend_router, prefix="/trend")
+app.include_router(info_router, prefix="/info")
 app.include_router(empo_router, prefix="/empo")
-app.include_router(trends_router, prefix="/trends")
+app.include_router(other_router, prefix="/other")
+app.include_router(manag_router, prefix="/manag")
+
 
 templates = Jinja2Templates(directory="templates/")
 
