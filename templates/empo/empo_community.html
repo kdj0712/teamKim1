@@ -3,7 +3,7 @@
 {% block main_container %}
 <div class="container">
     <div class="row">
-    
+
         <div class="col-7">
             <input class="form-control" placeholder="Enter Search!" name="search_word"
                 value="{{request._query_params.word}}">
@@ -11,7 +11,9 @@
         <div class="col-5">
             <button type="submit" class="btn btn-primary" formaction="/other/other_QnA" formmethod="get">검색</button>
         </div>
+        
     </div>
+
     <div style="text-align: start;">
 
         <button type="button" class="btn btn-none chip-btn filter-btn">
