@@ -16,9 +16,7 @@
               <th>Address</th>
             </tr>
           </thead>
-          <tbody>
-
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
   </div>
@@ -111,7 +109,7 @@ function createMarker(place) {
     infowindow.open(map, this);
   });
 }
-  
+
 function addPlaceToTable(place) {
   var table = document.getElementById('places').getElementsByTagName('tbody')[0];
   var row = table.insertRow(-1);
