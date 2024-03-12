@@ -1,7 +1,7 @@
 {% extends "/manag/manag_template.html"%}
 
 {% block main %}
-<main class="container">
+<main class="col-md-9 col-lg-10 px-md-4">
   <form action="">
     <h2>QnA 관리자 페이지</h2>
     <div class="row">
@@ -16,7 +16,7 @@
           value="{{request._query_params.word}}">
       </div>
       <div class="col-4">
-        <button type="submit" class="btn btn-primary" formaction="/manag/manag_QnA" formmethod="get">검색</button>
+        <button type="submit" class="btn btn-primary" formaction="/manag/manag_QnA_main" formmethod="get">검색</button>
       </div>
     </div>
 
