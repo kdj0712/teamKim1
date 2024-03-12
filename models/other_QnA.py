@@ -13,4 +13,4 @@ class QnA(Document):
     
   
     class Settings:
-        name = "QnA"
+        name = "other_QnA"

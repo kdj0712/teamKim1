@@ -10,7 +10,7 @@ router = APIRouter()
 
 from database.connection import Database
 
-from models.member import members
+from models.user_member import members
 collection_member = Database(members)
 
 

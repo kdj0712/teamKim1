@@ -13,7 +13,7 @@ api_key = os.getenv("API_KEY")
 router = APIRouter()
 
 from database.connection import Database
-from models.disease import diseases
+from models.info_rarediseases import diseases
 collection_disease = Database(diseases)
 
 from models.institution import Institutions

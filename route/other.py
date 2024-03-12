@@ -10,7 +10,7 @@ router = APIRouter()
 
 from database.connection import Database
 
-from models.QnA import QnA
+from models.other_QnA import QnA
 collection_QnA = Database(QnA)
 
 templates = Jinja2Templates(directory="templates/")

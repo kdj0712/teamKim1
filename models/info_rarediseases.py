@@ -13,4 +13,4 @@ class diseases(Document):
     dise_url : Optional[str] = None
   
     class Settings:
-        name = "diseases"
+        name = "info_rarediseases"

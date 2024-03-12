@@ -9,11 +9,11 @@ from beanie import PydanticObjectId
 from pydantic import BaseModel, EmailStr
 
 from models.academicinfo import academicinfo
-from models.disease import diseases
+from models.info_rarediseases import diseases
 from models.institution import Institutions
 from models.trend import trends
-from models.member import members
-from models.QnA import QnA
+from models.user_member import members
+from models.other_QnA import QnA
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)
