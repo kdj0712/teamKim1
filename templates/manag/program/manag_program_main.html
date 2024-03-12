@@ -1,10 +1,28 @@
 {% extends "manag/manag_template.html"%}
 {% block main %}
-<main class="col-md-9 col-lg-10 px-md-4">
-    <h2>프로그램 관리</h2>
-    <div style="text-align: end;">
-        <a class="btn btn-success" href="#/other/other_write">글쓰기</a>
+<main col-md-9 col-lg-10 px-md-4
+    <h2>news</h2>
+    <div class="justify-content-center row">
+        <div class="row col-7">
+            <div class="col-3">
+                <select class="form-control" name="key_name">
+                    <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else ''
+                        }}>
+                        제목
+                    </option>
+                </select>
+            </div>
+            <div class="col-6">
+                <input class="form-control" placeholder="Enter Search!" name="search_word"
+                    value="{{request._query_params.word}}">
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary" formaction="/manag/manag_QnA_main"
+                    formmethod="get">검색</button>
+            </div>
+        </div>
     </div>
+
     <table class="table table-hover">
         <thead>
             <tr>
