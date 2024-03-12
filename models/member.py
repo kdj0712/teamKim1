@@ -17,4 +17,4 @@ class members(Document):
     
   
     class Settings:
-        name = "members"
+        name = "user_member"
