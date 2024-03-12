@@ -155,7 +155,7 @@ async def mypage(request:Request ):
     form_data = await request.form()
     dict_form_data = dict(form_data)
     current_time = datetime.now()
-    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+    formatted_time = current_time.strftime("%Y-%m-%d")
     # 이 시간을 item 객체의 'ques_time' 속성에 저장한다.
     dict_form_data['join_date'] = formatted_time
     inputID = dict_form_data['user_ID']
