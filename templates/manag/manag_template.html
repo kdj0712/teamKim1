@@ -18,27 +18,32 @@
 </head>
 
 <body>
-    <div class="m-5 justify-content-start"><a href="/manag"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTAzMDVfOTcg%2FMDAxNTUxNzc4OTA3MTI1.92rvEEVtkWp_rXCp1R7qwb879mcHnAwam40eT9HsRAYg.kfWfMejkRFmyk3gCaqq08enzXk2XvqCcESbgY8hO9gwg.JPEG.icsebarcelona_1%2FICSEB-RDD.jpg&type=a340" width="80" height="auto"
-                alt=""></a></div>
+    <div class="m-5 justify-content-start">
+        <a href="/manag/managmain">
+            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTAzMDVfOTcg%2FMDAxNTUxNzc4OTA3MTI1.92rvEEVtkWp_rXCp1R7qwb879mcHnAwam40eT9HsRAYg.kfWfMejkRFmyk3gCaqq08enzXk2XvqCcESbgY8hO9gwg.JPEG.icsebarcelona_1%2FICSEB-RDD.jpg&type=a340"
+                width="80" height="auto" alt="">
+        </a>
+    </div>
     <div class="row ms-5">
         <ul class="col-2 list-unstyled ps-0">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0">
-                <a href="/manag" class="text-decoration-none">Home</a>
-                
+                <a href="/manag/managmain" class="text-decoration-none">Home</a>
             </button>
             <li class="mb-1">
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                     data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
                     회원관리
                 </button>
-                <div class="collapse" id="home-collapse" >
+                <div class="collapse" id="home-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/manag/user/main"
-                                class="link-body-emphasis d-inline-flex text-decoration-none rounded">회원 계정 조회</a></li>
+                        <li>
+                            <a href="/manag/manag_user_main"
+                                class="link-body-emphasis d-inline-flex text-decoration-none rounded">회원 계정 조회</a>
+                        </li>
                     </ul>
                 </div>
             </li>
-        
+
             <li class="mb-1">
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                     data-bs-toggle="collapse" data-bs-target="#community-collapse" aria-expanded="false">
@@ -46,56 +51,71 @@
                 </button>
                 <div class="collapse" id="community-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/manag/community_main"
+                        <li><a href="/manag/manag_community_main"
                                 class="link-body-emphasis d-inline-flex text-decoration-none rounded">커뮤니티 관리</a>
                         </li>
-                    </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#service-collapse" aria-expanded="false">
-                    프로그램서비스관리
-                </button>
-                <div class="collapse" id="service-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/manag/program_main" class="link-body-emphasis d-inline-flex text-decoration-none rounded">프로그램관리</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#qna-collapse" aria-expanded="false">
-                    1:1 문의 관리
-                </button>
-                <div class="collapse" id="qna-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/manag/manag_QnA"
-                                class="link-body-emphasis d-inline-flex text-decoration-none rounded">QnA 관리</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#notice-collapse" aria-expanded="false">
-                    공지사항 관리
-                </button>
-                <div class="collapse" id="notice-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/manag/notice_main" class="link-body-emphasis d-inline-flex text-decoration-none rounded">공지사항 관리</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
         </ul>
+    </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+            data-bs-toggle="collapse" data-bs-target="#service-collapse" aria-expanded="false">
+            프로그램서비스관리
+        </button>
+        <div class="collapse" id="service-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="/manag/manag_program_main"
+                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">프로그램관리</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+            data-bs-toggle="collapse" data-bs-target="#qna-collapse" aria-expanded="false">
+            1:1 문의 관리
+        </button>
+        <div class="collapse" id="qna-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="/manag/manag_QnA_main" class="link-body-emphasis d-inline-flex text-decoration-none rounded">QnA
+                        관리</a></li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+            data-bs-toggle="collapse" data-bs-target="#notice-collapse" aria-expanded="false">
+            공지사항 관리
+        </button>
+        <div class="collapse" id="notice-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="/manag/manag_notice_main"
+                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">공지사항 관리</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+            data-bs-toggle="collapse" data-bs-target="#analytics-collapse" aria-expanded="false">
+            Data Analytics
+        </button>
+        <div class="collapse" id="analytics-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="/manag/data_analytics"
+                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Data Analytics</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    </ul>
 
 
-        <main class="col-10 container ">
-            {% block main %}
-            {% endblock main %}
-        </main>
+    <main class="col-10 container ">
+        {% block main %}
+        {% endblock main %}
+    </main>
     </div>
 
 

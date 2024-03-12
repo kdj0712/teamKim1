@@ -19,6 +19,47 @@ templates = Jinja2Templates(directory="templates/")
 from fastapi.staticfiles import StaticFiles
 app.mount("/data/img", StaticFiles(directory="data/img"), name="static_img")
 
+
+#### -------------------------------------------------------------------------------------------------------
+
+# 로그인
+@router.get("/user_login", response_class=HTMLResponse) 
+async def user_login(request:Request):
+    return templates.TemplateResponse(name="user/user_login.html", context={'request':request})
+
+@router.post("/user_login", response_class=HTMLResponse) 
+async def user_login(request:Request):
+    return templates.TemplateResponse(name="user/user_login.html", context={'request':request})
+
+# 로그인 체킹 페이지
+@router.get("/user_logincheck", response_class=HTMLResponse) 
+async def mypage(request:Request):
+    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+
+@router.post("/user_logincheck", response_class=HTMLResponse) 
+async def mypage(request:Request):
+    form_data = await request.form()
+    dict_form_data = dict(form_data)
+    pass
+    inputID = dict_form_data['user_ID']
+    inputPSWD = dict_form_data['user_pswd']
+
+    check_list = await collection_member.get_all()
+    checks_list = [answer.dict() for answer in check_list]
+
+    logcheck = False
+    pass
+    for i in checks_list:
+        if i['user_ID'] == inputID and i['user_pswd'] == inputPSWD:
+            logcheck = True
+            break
+    if logcheck:
+        return templates.TemplateResponse(name="mainpage.html", context={'request':request})
+    else: 
+        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+
+#### -------------------------------------------------------------------------------------------------------
+
 # 회원가입
 @router.get("/user_join", response_class=HTMLResponse)
 async def user_join(request:Request):
@@ -33,7 +74,6 @@ async def user_join(request:Request):
     return templates.TemplateResponse(name="user/user_join.html", context={'request':request})
 
 # 회원가입 ID 중복확인 페이지
-
 @router.get("/user_joincheck_ID", response_class=HTMLResponse) 
 async def mypage(request:Request):
     return templates.TemplateResponse(name="user/user_joincheck_ID.html", context={'request':request})
@@ -103,43 +143,42 @@ async def mypage(request:Request):
     pass
     return templates.TemplateResponse(name="user/user_join_suc.html", context={'request':request})
 
+# 회원가입 최종 확인 페이지
 
-# 로그인
-@router.get("/user_login", response_class=HTMLResponse) 
-async def user_login(request:Request):
-    return templates.TemplateResponse(name="user/user_login.html", context={'request':request})
-
-@router.post("/user_login", response_class=HTMLResponse) 
-async def user_login(request:Request):
-    return templates.TemplateResponse(name="user/user_login.html", context={'request':request})
-
-# 로그인 체킹 페이지
-@router.get("/user_logincheck", response_class=HTMLResponse) 
+@router.get("/user_join_finalcheck", response_class=HTMLResponse) 
 async def mypage(request:Request):
-    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+    return templates.TemplateResponse(name="user/user_joincheck_ID.html", context={'request':request})
 
-@router.post("/user_logincheck", response_class=HTMLResponse) 
-async def mypage(request:Request):
+@router.post("/user_join_finalcheck", response_class=HTMLResponse) 
+async def mypage(request:Request ):
     form_data = await request.form()
     dict_form_data = dict(form_data)
-    pass
     inputID = dict_form_data['user_ID']
-    inputPSWD = dict_form_data['user_pswd']
+    inputEmail = dict_form_data['user_email']
+
 
     check_list = await collection_member.get_all()
-    checks_list = [answer.dict() for answer in check_list]
-
-    logcheck = False
-    pass
+    checks_list = [check.dict() for check in check_list]
+    
+    check_ID = False
+    # pass
     for i in checks_list:
-        if i['user_ID'] == inputID and i['user_pswd'] == inputPSWD:
-            logcheck = True
+        if i['user_ID'] == inputID :
+            check_ID = True
             break
-    if logcheck:
-        return templates.TemplateResponse(name="mainpage.html", context={'request':request})
-    else: 
-        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+        else:
+            if i['user_email'] == inputEmail:
+                check_ID = True
+                break
 
+    if check_ID:
+        return templates.TemplateResponse(name="user/user_join_fail.html", context={'request':request})
+    else :
+        member = members(**dict_form_data)
+        await collection_member.save(member)
+        return templates.TemplateResponse(name="user/user_join_suc.html", context={'request':request})
+
+#### -------------------------------------------------------------------------------------------------------
 
 # 마이 페이지
 @router.get("/user_mypage", response_class=HTMLResponse) 
@@ -186,9 +225,6 @@ async def mypage(request:Request):
     else:
         return templates.TemplateResponse("user/user_searchemail_notfound.html", context={'request': request})
 
-
-
-
 # 이용약관
 @router.get("/user_privacypolicy", response_class=HTMLResponse) 
 async def mypage(request:Request):
@@ -198,38 +234,4 @@ async def mypage(request:Request):
 async def mypage(request:Request):
     return templates.TemplateResponse(name="user/user_privacypolicy.html", context={'request':request})
 
-
-# 회원가입 최종 확인 페이지
-
-@router.get("/user_join_finalcheck", response_class=HTMLResponse) 
-async def mypage(request:Request):
-    return templates.TemplateResponse(name="user/user_joincheck_ID.html", context={'request':request})
-
-@router.post("/user_join_finalcheck", response_class=HTMLResponse) 
-async def mypage(request:Request ):
-    form_data = await request.form()
-    dict_form_data = dict(form_data)
-    inputID = dict_form_data['user_ID']
-    inputEmail = dict_form_data['user_email']
-
-
-    check_list = await collection_member.get_all()
-    checks_list = [check.dict() for check in check_list]
-    
-    check_ID = False
-    # pass
-    for i in checks_list:
-        if i['user_ID'] == inputID :
-            check_ID = True
-            break
-        else:
-            if i['user_email'] == inputEmail:
-                check_ID = True
-                break
-
-    if check_ID:
-        return templates.TemplateResponse(name="user/user_join_fail.html", context={'request':request})
-    else :
-        member = members(**dict_form_data)
-        await collection_member.save(member)
-        return templates.TemplateResponse(name="user/user_join_suc.html", context={'request':request})
+#### -------------------------------------------------------------------------------------------------------

@@ -1,0 +1,132 @@
+{% extends "mainpage.html" %}
+
+{% block main_container %}
+<div class="container">
+  <div class="row">
+    <div class="col-6" id="map" style="width: 600px; height: 600px;"></div>
+    <div class="col-6">
+        <label for="search-input">검색할 장소를 입력하세요</label>
+        <input type="text" id="search-input"  class="controls" placeholder="입력하기">
+        <button onclick="searchPlaces()">Search</button>
+      <div class="row">
+        <table id="places"> 
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+  </div>
+</div>
+<script>
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see the error "The Geolocation service
+// failed.", it means you probably did not give permission for the browser to
+// locate you.
+let map, infoWindow, service, pos;
+
+function initMap() {
+  const infowindow = new google.maps.InfoWindow();
+
+  // 사용자의 위치를 가져오거나, 가져오는 것이 불가능할 경우에는 기본 좌표를 사용합니다.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: pos,
+        zoom: 15,
+      });
+    }, function() {
+      handleLocationError(true, infowindow, map.getCenter());
+    });
+  } else {
+    // 브라우저가 Geolocation을 지원하지 않는 경우
+    handleLocationError(false, infowindow, map.getCenter());
+  }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  // Geolocation 서비스가 실패한 경우 기본 위치로 설정
+  pos = {lat: 37.552408, lng: 126.9794067};  // 기본 위치 (예: 서울)
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: pos,
+    zoom: 15,
+  });
+
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+}
+function clearTable() {
+  var table = document.getElementById('places').getElementsByTagName('tbody')[0];
+  while (table.hasChildNodes()) {  
+    table.removeChild(table.firstChild);
+  }
+}
+function searchPlaces() {
+  const placeType = document.getElementById('search-input').value;
+
+  // 사용자가 입력한 타입의 장소를 검색하기 위한 요청 객체를 생성합니다.
+  const request = {
+    location: pos,
+    radius: '1000',  // 1Km 내에서 검색
+    type: [placeType]  // 사용자가 입력한 타입의 장소를 검색
+  };
+
+  // PlacesService 객체를 생성하고, Nearby Search 요청을 보냅니다.
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+}
+
+function callback(results, status) {
+  console.log(results);
+  if (status === google.maps.places.PlacesServiceStatus.OK) {
+    for (let i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+      addPlaceToTable(results[i]);
+    }
+  }
+}
+
+function createMarker(place) {
+  if (!place.geometry || !place.geometry.location) return;
+  const marker = new google.maps.Marker({
+    map,
+    position: place.geometry.location,
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
+
+function addPlaceToTable(place) {
+  var table = document.getElementById('places').getElementsByTagName('tbody')[0];
+  var row = table.insertRow(-1);
+
+  var nameCell = row.insertCell(0);
+  var addressCell = row.insertCell(1);
+
+  nameCell.innerHTML = place.name;
+  addressCell.innerHTML = place.vicinity;
+}
+
+</script>
+<script>
+  window.onload = function() {
+    initMap();
+  }
+</script>
+<!-- Google Maps API Script -->
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap"></script>
+{% endblock %}
