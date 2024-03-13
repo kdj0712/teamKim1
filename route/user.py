@@ -277,7 +277,7 @@ async def mypage_account_reply_get(request:Request,object_id : PydanticObjectId)
     user = await collection_member.get(object_id)
     return templates.TemplateResponse(name="user/user_mypage_account_reply.html", context={'request':request,"user" : user})
 
-@router.post("/user_mypage_account_reply/{object_id}", response_class=HTMLResponse) 
+@router.post("/user_mypage_account_reply", response_class=HTMLResponse) 
 async def mypage_account_reply_post(request:Request):
     await request.form()
     return templates.TemplateResponse(name="user/user_mypage_account_reply.html", context={'request':request})

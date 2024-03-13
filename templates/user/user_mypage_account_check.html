@@ -2,8 +2,19 @@
 
 {% block user_main %}
 
+<div style="padding-block: 70px ;">
+    <div class="m-4 fw-light">
+        <div>본인인증이 필요합니다.</div>
+        <div>기본 회원정보를 조회하기 위해 비밀번호를 입력해주세요.</div>
+    </div>
 
-계정정보수정페이지
-
-
+    <div class="input-group justify-content-center">
+        <form action="/user/user_mypage_account_reply" method="post" style="height: fit-content;">
+            <div class="row" style="width: 500px;">
+            <div class="col-8"><input type="text" class="form-control" placeholder="영소문자 숫자 혼용 4~12글자" style="width: 90%; height: 50px;"></div>
+            <div class="col-4"><button type="submit" class="btn btn-secondary" style="width: 100%; height: 50px;">확인</button></div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock user_main %}
