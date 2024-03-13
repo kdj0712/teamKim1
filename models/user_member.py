@@ -9,7 +9,6 @@ class members(Document):
     user_email: Optional[EmailStr] = None    
     user_name: Optional[Union[str, int, float, bool]] = None
     user_phone : Optional[Union[str, int, float, bool]] = None
-    user_info : Optional[Union[str, int, float, bool]] = None
     user_birth : Optional[Union[str, int, float, bool]] = None
     user_postcode : Optional[Union[str, int, float, bool]] = None
     user_address : Optional[Union[str, int, float, bool]] = None
