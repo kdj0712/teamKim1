@@ -32,7 +32,7 @@ async def NOTICE(request:Request):
 # QnA
 
 @router.post("/other_QnA", response_class=HTMLResponse) 
-async def FAQ(request:Request,     page_number: Optional[int] = 1, 
+async def QnA(request:Request,     page_number: Optional[int] = 1, 
     ques_title: Optional[str] = None,
     ques_writer: Optional[str] = None,
     ques_content: Optional[str] = None,
