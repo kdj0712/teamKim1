@@ -48,12 +48,12 @@ def bosascrapping(browser_name, keyword) :
 
     ## 스크래핑
     contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
-    for content in contents :
+    for index in range(len(contents)) :
         try : 
-            news_title = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > h4 > a").text
-            news_url = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").get_attribute("href")
-            news_when = content.find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.dated").text
-            content.find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").click() # 안으로 들어가기
+            news_title = contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li > h4 > a").text
+            news_url = contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").get_attribute("href")
+            news_when = contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.dated").text
+            contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").click() # 안으로 들어가기
             news_contents = ''
             news_contents_p = browser.find_elements(By.CSS_SELECTOR, "#article-view-content-div > p")
             for news_p in news_contents_p :

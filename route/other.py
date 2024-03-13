@@ -91,8 +91,8 @@ async def FAQ(request:Request):
     return templates.TemplateResponse(name="other/other_QnA_nonpage.html", context={'request':request})
 
 
-@router.get("/other_QnA/{page_number}")
-@router.get("/other_QnA") # 검색 with pagination
+@router.get("/other_QnA_main/{page_number}")
+@router.get("/other_QnA_main") # 검색 with pagination
 # http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
 # http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
 # http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
@@ -134,7 +134,7 @@ async def list(
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA.html",
+        name="/other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
@@ -156,18 +156,18 @@ async def FAQ(request:Request):
 
 # 글 확인
 
-@router.get("/other_read/{object_id}", response_class=HTMLResponse) 
+@router.get("/other_QnA_read/{object_id}", response_class=HTMLResponse) 
 async def FAQ(request:Request, object_id:PydanticObjectId):
     dict(request._query_params)
     QnA = await collection_QnA.get(object_id)
-    return templates.TemplateResponse(name="other/other_read.html", context={'request':request,'QnAs' : QnA})
+    return templates.TemplateResponse(name="other/other_QnA_read.html", context={'request':request,'QnAs' : QnA})
 
 
-@router.post("/other_read/{object_id}", response_class=HTMLResponse) 
+@router.post("/other_QnA_read/{object_id}", response_class=HTMLResponse) 
 async def FAQ(request:Request, object_id:PydanticObjectId):
     await request.form()
     QnA = await collection_QnA.get(object_id)
-    return templates.TemplateResponse(name="other/other_read.html", context={'request':request ,'QnAs' : QnA})
+    return templates.TemplateResponse(name="other/other_QnA_read.html", context={'request':request ,'QnAs' : QnA})
 
 
 # 답글 달기
@@ -206,7 +206,7 @@ async def FAQ(request:Request, object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA.html",
+        name="/other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
@@ -215,6 +215,7 @@ async def FAQ(request:Request, object_id:PydanticObjectId,
         name="/other/other_QnA_nonpage.html",
         context={'request': request},
     )
+        
 # 글 삭제
 @router.post("/other_delete/{object_id}", response_class=HTMLResponse) 
 async def FAQ(request:Request,object_id:PydanticObjectId,
