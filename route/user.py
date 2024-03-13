@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi import FastAPI
 from datetime import datetime
+from beanie import PydanticObjectId
 
 app = FastAPI()
 router = APIRouter()
@@ -240,3 +241,52 @@ async def mypage(request:Request):
     return templates.TemplateResponse(name="user/user_privacypolicy.html", context={'request':request})
 
 #### -------------------------------------------------------------------------------------------------------
+
+# 찜 목록
+@router.get("/user_mypage_like", response_class=HTMLResponse) 
+async def mypage_like_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_like.html", context={'request':request})
+
+@router.post("/user_mypage_like", response_class=HTMLResponse) 
+async def mypage_like_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_like.html", context={'request':request})
+
+# 내가 쓴 글
+
+@router.get("/user_mypage_post", response_class=HTMLResponse) 
+async def mypage_post_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_post.html", context={'request':request})
+
+@router.post("/user_mypage_post", response_class=HTMLResponse) 
+async def mypage_post_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_post.html", context={'request':request})
+
+# 계정관리인증화면
+@router.get("/user_mypage_account_check", response_class=HTMLResponse) 
+async def mypage_account_check_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_account_check.html", context={'request':request})
+
+@router.post("/user_mypage_account_check", response_class=HTMLResponse) 
+async def mypage_account_check_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_account_check.html", context={'request':request})
+
+
+# 계정관리 수정화면
+@router.get("/user_mypage_account_reply/{object_id}") 
+async def mypage_account_reply_get(request:Request,object_id : PydanticObjectId):
+    user = await collection_member.get(object_id)
+    return templates.TemplateResponse(name="user/user_mypage_account_reply.html", context={'request':request,"user" : user})
+
+@router.post("/user_mypage_account_reply/{object_id}", response_class=HTMLResponse) 
+async def mypage_account_reply_post(request:Request):
+    await request.form()
+    return templates.TemplateResponse(name="user/user_mypage_account_reply.html", context={'request':request})
+
+# 프로그램 신청내역 화면
+@router.get("/user_mypage_program", response_class=HTMLResponse) 
+async def mypage_program_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_program.html", context={'request':request})
+
+@router.post("/user_mypage_program", response_class=HTMLResponse) 
+async def mypage_program_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_program.html", context={'request':request})
