@@ -95,6 +95,10 @@ async def list(
 async def community(request:Request):
     return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
 
+@router.post("/manag_community_main", response_class=HTMLResponse) 
+async def community(request:Request):
+    return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
+
 #### -------------------------------------------------------------------------------------------------------
 
 # program_main
@@ -102,6 +106,27 @@ async def community(request:Request):
 @router.get("/manag_program_main", response_class=HTMLResponse) 
 async def program(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
+
+@router.post("/manag_program_main", response_class=HTMLResponse) 
+async def program(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
+
+@router.get("/manag_program_write", response_class=HTMLResponse) 
+async def program_write(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
+
+@router.post("/manag_program_write", response_class=HTMLResponse) 
+async def program_write(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
+
+@router.get("/manag_program_read", response_class=HTMLResponse) 
+async def program_read(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
+
+@router.post("/manag_program_read", response_class=HTMLResponse) 
+async def program_read(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
+
 
 #### -------------------------------------------------------------------------------------------------------
 
