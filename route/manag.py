@@ -40,22 +40,12 @@ async def FAQ(request:Request):
 
 @router.get("/manag_user_main/{page_number}")
 @router.get("/manag_user_main") # 검색 with pagination
-# http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
+
 async def list(
     request: Request,
     page_number: Optional[int] = 1, 
     user_ID: Optional[Union[str, int, float, bool]] = None,
-    user_pswd: Optional[Union[str, int, float, bool]] = None,
-    user_email: Optional[EmailStr] = None,
-    user_name: Optional[Union[str, int, float, bool]] = None,
-    user_phone : Optional[Union[str, int, float, bool]] = None,
-    user_info : Optional[Union[str, int, float, bool]] = None,
-    user_birth : Optional[Union[str, int, float, bool]] = None,
-    user_postcode : Optional[Union[str, int, float, bool]] = None,
-    user_address : Optional[Union[str, int, float, bool]] = None,
-    user_detailed_address : Optional[Union[str, int, float, bool]] = None
+   
 ):
     # db.answers.find({'name':{ '$regex': '김' }})
     # { 'name': { '$regex': user_dict.word } }
@@ -96,7 +86,6 @@ async def list(
     #     name="/manag/QnA/manag_QnA_manager_nonpage.html",
     #     context={'request': request})
     #     pass
-
 
 #### -------------------------------------------------------------------------------------------------------
 

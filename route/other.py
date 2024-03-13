@@ -9,7 +9,6 @@ from datetime import datetime
 router = APIRouter()
 
 from database.connection import Database
-
 from models.other_QnA import QnA
 collection_QnA = Database(QnA)
 
@@ -23,7 +22,7 @@ templates = Jinja2Templates(directory="templates/")
 async def NOTICE(request:Request):
     return templates.TemplateResponse(name="other/other_notice.html", context={'request' :request})
 
-@router.post("/notice", response_class=HTMLResponse)
+@router.post("/other_notice", response_class=HTMLResponse)
 async def NOTICE(request:Request):
     return templates.TemplateResponse(name="other/other_notice.html", context={'request' :request})
 
