@@ -12,4 +12,4 @@ class Institutions(Document):
     
   
     class Settings:
-        name = "Institutions"
+        name = "institutions"

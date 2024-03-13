@@ -48,3 +48,8 @@ async def root(Request:Request):
 @app.post("/")
 async def root(Request:Request):
     return templates.TemplateResponse("mainpage.html",{'request':Request})
+
+
+# 워드 클라우드 제작 후 보내기
+
+from apscheduler.schedulers.background import BackgroundScheduler

@@ -3,71 +3,48 @@
 {% block main_container %}
 
 <body>
-    <div class="m-5 justify-content-start"><a href="/user/user_mypage">마이페이지</a></div>
+    <div class="m-5 container row justify-content-between">
+        <div class="col-2">
+            <span class="fw-bold fs-3">회원이름자리</span><span>님</span>
+        </div>
+        <div class="col-2 fs-10 mt-2">
+            <span>가입일 : </span> <span>2024.03.13</span>
+        </div>
+    </div>
+    <hr>
+    
     <div class="row ms-5">
-        <ul class="col-3 list-unstyled ps-0">
-        
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#like-collapse" aria-expanded="false">
+        <ul class="col-2 list-unstyled justify-content-start " style="height: 500px;">
+            <form action="/user/user_mypage" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
+                    마이페이지
+                </button>
+            </form>
+            <hr>
+            <form action="/user/user_mypage_like" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
                     찜 목록
                 </button>
-                <div class="collapse" id="like-collapse" >
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/user/user_mypage"
-                                class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">희귀질환검색내용</a></li>
-                        <li><a href="/user/user_mypage"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">병원</a></li>
-                    </ul>
-                </div>
-            </li>
-        
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#post-collapse" aria-expanded="false">
+            </form>
+            <hr>
+            <form action="/user/user_mypage_post" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
                     내가 쓴 글
                 </button>
-                <div class="collapse" id="post-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/user/user_mypage"
-                                class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">병원후기</a>
-                        </li>
-                        <li><a href="/user/user_mypage"
-                                class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">커뮤니티</a>
-                        </li>
-                        <li><a href="/user/user_mypage"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">QnA</a>
-                    </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#program-collapse" aria-expanded="false">
+            </form>
+            <hr>
+            <form action="/user/user_mypage_program" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
                     프로그램신청현황
                 </button>
-                <div class="collapse" id="program-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/user/user_mypage" class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">신청내역조회</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+            </form>
+            <hr>
+            <form action="/user/user_mypage_account_check" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
                     계정관리
                 </button>
-                <div class="collapse" id="account-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/user/user_mypage" class="link-body-emphasis d-inline-flex text-decoration-none rounded ms-3">계정정보 조회 및 삭제</a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-        </ul>   
+            </form>
+        </ul> 
         <main class="col-9 container ">
             {% block user_main %}
             <div class="container row">

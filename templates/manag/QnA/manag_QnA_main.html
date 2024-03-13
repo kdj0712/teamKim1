@@ -1,7 +1,7 @@
 {% extends "/manag/manag_template.html"%}
 
 {% block main %}
-<main class="container">
+<main class="col-md-9 col-lg-10 px-md-4">
   <form action="">
     <h2>QnA 관리자 페이지</h2>
     <div class="row">
@@ -16,7 +16,7 @@
           value="{{request._query_params.word}}">
       </div>
       <div class="col-4">
-        <button type="submit" class="btn btn-primary" formaction="/manag/manag_QnA" formmethod="get">검색</button>
+        <button type="submit" class="btn btn-primary" formaction="/manag/manag_QnA_main" formmethod="get">검색</button>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
       </thead>
       <tbody>
         {% for QnA in QnAs %}
-        <tr onclick="location.href='/manag/manag_read/{{QnA.id}}'" style="cursor: pointer;">
+        <tr onclick="location.href='/manag/manag_QnA_read/{{QnA.id}}'" style="cursor: pointer;">
           <td>{{pagination.start_record_number + loop.index0}}</td>
           <td id="readpage">{{QnA.ques_title}}</td>
           <td>{{QnA.ques_writer}}</td>

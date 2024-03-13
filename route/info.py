@@ -1,4 +1,4 @@
-from fastapi import APIRouter, FastAPI, Form, Depends
+from fastapi import APIRouter, FastAPI, Form, Depends, Query
 from typing import Optional
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -13,14 +13,14 @@ api_key = os.getenv("API_KEY")
 router = APIRouter()
 
 from database.connection import Database
-from models.disease import diseases
+from models.info_rarediseases import diseases
 collection_disease = Database(diseases)
 
 from models.institution import Institutions
 collection_institution = Database(Institutions)
 
-from models.trend import trends
-collection_trend = Database(trends)
+from models.trend import news_trends
+collection_trend = Database(news_trends)
 
 from models.academicinfo import academicinfo
 collection_academicinfo = Database(academicinfo)
@@ -109,29 +109,22 @@ async def institution(request:Request):
 # 의료기관검색
 
 @router.get("/info_institution", response_class=HTMLResponse) 
-async def institution(request:Request, keyword:str=None):
+async def institution(request:Request, keyword: str = Query(None, alias="keyword")):
     if keyword:
-        # url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
-        # params = {
-        #     "input": keyword,
-        #     "inputtype": "textquery",
-        #     "fields": "photos,formatted_address,name,rating,opening_hours,geometry",
-        #     "key": api_key
-        # }
-        url = "https://places.googleapis.com/v1/places:searchText"
+        url = "https://maps.googleapis.com/maps/api/place/searchByText/json"
         params = {
             "input": keyword,
             "inputtype": "textquery",
-            # "fields": "photos,formatted_address,name,rating,opening_hours,geometry",
+            "fields": "photos,formatted_address,name,rating,geometry,place_id",
             "key": api_key
         }
         async with ClientSession() as session:
             async with session.get(url, params=params) as resp:
-                data = await resp.text()
-        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": json.loads(data)})
+                data = await resp.json()
+                results = data.get('results', [])  # 'results' 키의 값을 추출하고, 없을 경우 빈 배열을 사용합니다.
+        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": results})
     elif keyword is None:
-        return templates.TemplateResponse("info/info_institution.html", {"request": request, 'API_KEY' : api_key})
-
+        return templates.TemplateResponse("info/info_institution.html", {"request": request, 'API_KEY': api_key})
 
 @router.post("/info_institution", response_class=HTMLResponse) 
 async def institution(request:Request):
