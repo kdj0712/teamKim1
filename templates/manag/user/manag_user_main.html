@@ -25,7 +25,7 @@ RDS: 관리자마당 회원관리
         <td>{{User.user_ID}}</td>
         <td>{{User.user_name}}</td>
         <td>{{User.user_email}}</td>
-        <td><button formaction="/manag/user/user_detail/{{User.id}}">정보 보기</button></td>
+        <td><button formmethod="get" formaction="/manag/manag_user_detail/{{User.id}}">정보 보기</button></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -34,30 +34,30 @@ RDS: 관리자마당 회원관리
       <ul class="pagination justify-content-center">
         <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+            formaction="/manag/manag_user_main/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
             맨 처음
           </button>
 
         </li>
         <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
+            formaction="/manag/manag_user_main/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
         </li>
         {% for page_num in pagination.current_page_range %}
         <li class="page-item {{ 'active' if page_num == pagination.current_page else '' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+            formaction="/manag/manag_user_main/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
             {{page_num}}
           </button>
         </li>
         {% endfor %}
         <li class="page-item {{ '' if pagination.has_next_page else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
+            formaction="/manag/manag_user_main/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
         </li>
         <li class="page-item {{ '' if pagination.has_next_block else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+            formaction="/manag/manag_user_main/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
             맨 끝
           </button>
         </li>
