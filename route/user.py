@@ -35,8 +35,8 @@ async def user_login(request:Request):
 
 # 로그인 체킹 페이지
 @router.get("/user_logincheck", response_class=HTMLResponse) 
-async def mypage(request:Request):
-    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+async def mypage(request:Request,user_id:PydanticObjectId ):
+    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request,'user_id':PydanticObjectId})
 
 @router.post("/user_logincheck", response_class=HTMLResponse) 
 async def mypage(request:Request):
@@ -58,7 +58,7 @@ async def mypage(request:Request):
     if logcheck:
         return templates.TemplateResponse(name="mainpage.html", context={'request':request})
     else: 
-        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request,'user_id':PydanticObjectId})
 
 #### -------------------------------------------------------------------------------------------------------
 
