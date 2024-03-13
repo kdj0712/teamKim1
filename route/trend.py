@@ -9,7 +9,7 @@ from beanie import PydanticObjectId
 
 
 
-from models.trend import trends  # mongodb 추가해서 넣어야 함
+from models.trend import news_trends  # mongodb 추가해서 넣어야 함
 
 
 router = APIRouter()
@@ -26,7 +26,26 @@ async def trend_news(request:Request):
 
 @router.post("/trend_news", response_class=HTMLResponse) 
 async def trend_news(request:Request):
-    return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request})
+    news_data = news_trends.objects().all()
+
+    news_title = []
+    news_when = []
+    news_contents = []
+    news_urls = []
+    news_paper = '의학신문'
+
+    for data in news_data :
+        news_title.append(data.news_title)
+        news_when.append(data.news_when)
+        news_contents.append(data.news_contents)
+        news_urls.append(data.news_url)
+
+    return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request
+                                                                             , 'news_title' : news_title
+                                                                             , 'news_when' : news_when
+                                                                             , 'news_contents' : news_contents
+                                                                             , 'news_urls' : news_urls
+                                                                            , 'news_paper' : news_paper})
 
 #### -------------------------------------------------------------------------------------------------------
 
