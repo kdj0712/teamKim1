@@ -11,13 +11,13 @@ from pydantic import BaseModel, EmailStr
 from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
 from models.institution import Institutions
-from models.trend import trends
+from models.trend import news_trends
 from models.user_member import members
 from models.other_QnA import QnA
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)
-collection_trend = Database(trends)
+collection_trend = Database(news_trends)
 collection_member = Database(members)    
 collection_QnA = Database(QnA)
 

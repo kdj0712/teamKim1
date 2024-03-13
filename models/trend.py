@@ -10,4 +10,4 @@ class news_trends(Document):
     news_url : Optional[str] = None
 
     class Settings:
-        name = "news_trends"
+        name = "trend_news"

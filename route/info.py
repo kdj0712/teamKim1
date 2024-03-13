@@ -19,8 +19,8 @@ collection_disease = Database(diseases)
 from models.institution import Institutions
 collection_institution = Database(Institutions)
 
-from models.trend import trends
-collection_trend = Database(trends)
+from models.trend import news_trends
+collection_trend = Database(news_trends)
 
 from models.academicinfo import academicinfo
 collection_academicinfo = Database(academicinfo)
