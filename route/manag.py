@@ -15,7 +15,7 @@ from models.trend import news_trends
 from models.user_member import members
 from models.other_QnA import QnA
 from models.manag_program import program
-from models.manag_notice import notice
+from models.notice_list import notice
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)

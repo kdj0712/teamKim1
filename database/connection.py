@@ -9,7 +9,7 @@ from models.user_member import members
 from models.trend import news_trends
 from models.other_QnA import QnA
 from models.manag_program import program
-from models.manag_notice import notice
+from models.notice_list import notice
 import os
 
 from motor.motor_asyncio import AsyncIOMotorClient
