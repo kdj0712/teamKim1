@@ -4,6 +4,7 @@ from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from aiohttp import ClientSession
 from fastapi import Request
+from typing import Optional
 from dotenv import load_dotenv
 import json
 load_dotenv()
@@ -34,34 +35,13 @@ templates = Jinja2Templates(directory="templates/")
 async def raredisease(request:Request):
     return templates.TemplateResponse(name="search/search_raredisease.html", context={'request':request})
 
-@router.get("/info_symptom", response_class=HTMLResponse) 
-async def symptom(request:Request):
-    return templates.TemplateResponse(name="info/info_symptom.html", context={'request':request})
-
-@router.post("/info_symptom", response_class=HTMLResponse) 
-async def symptom(request:Request):
-    return templates.TemplateResponse(name="info/info_symptom.html", context={'request':request})
-
-
-from typing import Optional
 @router.get("/info_raredisease/{page_number}")
 @router.get("/info_raredisease") # 검색 with pagination
-# http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
 async def list(
     request: Request, 
     page_number: Optional[int] = 1, 
-    dise_KCD_code: Optional[str] = None,
-    dise_spc_code: Optional[int] = None,
-    dise_group: Optional[str] = None,
     dise_name_kr: Optional[str] = None,
-    dise_name_en: Optional[str] = None,
-    dise_support: Optional[str] = None,
-    dise_url: Optional[str] = None,
 ):
-    # db.answers.find({'name':{ '$regex': '김' }})
-    # { 'name': { '$regex': user_dict.word } }
     
     user_dict = dict(request._query_params)
     conditions = {}
@@ -85,6 +65,7 @@ async def list(
     if dise_name_kr:
         conditions.find({ 'dise_name_kr': { '$regex': search_word }})
     pass
+
     try :
         dise_list, pagination = await collection_disease.getsbyconditionswithpagination(
             conditions, page_number

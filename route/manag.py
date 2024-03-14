@@ -45,11 +45,12 @@ async def list(
     request: Request,
     page_number: Optional[int] = 1, 
     user_ID: Optional[Union[str, int, float, bool]] = None,
+    user_name: Optional[Union[str, int, float, bool]] = None,
+    user_phone : Optional[Union[str, int, float, bool]] = None,
+    user_email: Optional[EmailStr] = None   
    
 ):
-    # db.answers.find({'name':{ '$regex': '김' }})
-    # { 'name': { '$regex': user_dict.word } }
-    
+
     user_dict = dict(request._query_params)
     conditions = {}
     search_word = request.query_params.get('search_word')
@@ -57,20 +58,22 @@ async def list(
     if search_word:
         conditions.update({
             "$or": [
-                {"dise_KCD_code": {'$regex': search_word}},
-                {"dise_group": {'$regex': search_word}},
-                {"dise_name_kr": {'$regex': search_word}},
-                {"dise_name_en": {'$regex': search_word}},
-                {"dise_support": {'$regex': search_word}},
-                {"dise_url": {'$regex': search_word}}
+                {"user_ID": {'$regex': search_word}},
+                {"user_name": {'$regex': search_word}},
+                {"user_phone": {'$regex': search_word}},
+                {"user_email": {'$regex': search_word}}
             ]
         })
-
     pass
 
     if user_ID:
         conditions.find({ 'user_ID': { '$regex': search_word }})
-    pass
+    if user_name:
+        conditions.find({ 'user_name': { '$regex': search_word }})
+    if user_phone:
+        conditions.find({ 'user_phone': { '$regex': search_word }})
+    if user_email:
+        conditions.find({ 'user_email': { '$regex': search_word }})
 
     # try:
     User_list, pagination = await collection_member.getsbyconditionswithpagination(

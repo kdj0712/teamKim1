@@ -7,12 +7,36 @@ RDS: 관리자마당 회원관리
 {% block main %}
 <main class="col-md-9 col-lg-10 px-md-4">
   <form action="">
-    <h2>회원 관리</h2>
 
+    <h2>회원 관리</h2>
+    
+    <div class="justify-content-center row">
+      <div class="row col-7">
+        <div class="col-2">
+          <select class="form-control" name="key_name" id="selected_field">
+            <option value="user_ID" {{ 'selected' if request._query_params.key_name=='user_ID' else '' }}>아이디
+            </option>
+            <option value="user_name" {{ 'selected' if request._query_params.key_name=='user_namer' else '' }}>이름
+            </option>
+            <option value="user_email" {{ 'selected' if request._query_params.key_name=='user_email' else '' }}>이메일
+            </option>
+            <option value="user_phonenumber" {{ 'selected' if request._query_params.key_name=='user_phonenumber' else '' }}>전화번호
+            </option>
+          </select>
+        </div>
+        <div class="col-8">
+          <input class="form-control" placeholder="Enter Search!" name="search_word" id="search_keyword" value="{{request._query_params.word}}">
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary" formaction="/manag/manag_user_main" formmethod="get" id="검색" onclick="performSearch()">검색</button>
+        </div>
+      </div>
+
+    </div>
     <table class="table table-hover">
       <thead>
         <tr>
-          <th  width="60px">번호</th>
+          <th width="60px">번호</th>
           <th>아이디</th>
           <th>이름</th>
           <th>이메일</th>
@@ -65,4 +89,13 @@ RDS: 관리자마당 회원관리
     </nav>
   </form>
 </main>
+<script>
+  function performSearch() {
+    var selectedField = document.getElementById("selected_field").value;
+    var searchKeyword = document.getElementById("search_keyword").value; // 검색어를 입력하는 input 요소의 id를 사용
+  
+    // AJAX 요청이나 폼 데이터 전송 등을 통해 선택된 필드와 검색어를 백엔드로 전달
+    // 백엔드에서는 전달받은 필드와 검색어를 사용하여 검색을 수행하고 결과를 반환합니다.
+  }
+</script>
 {% endblock main %}
