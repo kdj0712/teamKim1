@@ -412,7 +412,12 @@ async def notice_function(
 
 @router.post("/manag_notice_main", response_class=HTMLResponse) 
 async def notice_function(request:Request):
-    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request})
+    await request.form()
+    print(dict(await request.form()))
+    
+    notices = await collection_manag_notice.get_all()
+    
+    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request, 'notices':notices})
 
 # notice_write
 
