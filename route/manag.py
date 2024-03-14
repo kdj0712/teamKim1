@@ -6,7 +6,7 @@ from typing import Optional, Union
 from datetime import datetime
 from database.connection import Database
 from beanie import PydanticObjectId
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, Field, EmailStr
 
 from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
@@ -14,12 +14,16 @@ from models.institution import Institutions
 from models.trend import news_trends
 from models.user_member import members
 from models.other_QnA import QnA
+from models.manag_program import program
+from models.manag_notice import notice
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)
 collection_trend = Database(news_trends)
 collection_member = Database(members)    
 collection_QnA = Database(QnA)
+collection_manag_program = Database(program)
+collection_manag_notice = Database(notice)
 
 router = APIRouter()
 
@@ -389,9 +393,56 @@ async def FAQ(request:Request, object_id:PydanticObjectId):
 # notice_main
 
 @router.get("/manag_notice_main", response_class=HTMLResponse) 
-async def academic(request:Request):
+async def notice_function(
+    request:Request, 
+    page_number: Optional[int] = 1
+    ):
+    
+    conditions = {}
+    
+    User_list, pagination = await collection_member.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(
+    name="manag/notice/manag_notice_main.html",
+    context={'request': request, 'user_list': User_list, 'pagination': pagination})
+
+    
+
+@router.post("/manag_notice_main", response_class=HTMLResponse) 
+async def notice_function(request:Request):
     return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request})
 
+# notice_write
+
+@router.get("/manag_notice_write", response_class=HTMLResponse) 
+async def notice_write_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_write.html", context={'request':request})
+
+@router.post("/manag_notice_write", response_class=HTMLResponse) 
+async def notice_write_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_write.html", context={'request':request})
+
+# notice_read
+
+@router.get("/manag_notice_read", response_class=HTMLResponse) 
+async def notice_read_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request})
+
+@router.post("/manag_notice_read", response_class=HTMLResponse) 
+async def notice_read_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_read.html", context={'request':request})
+
+# notice_reply
+
+@router.get("/manag_notice_reply", response_class=HTMLResponse) 
+async def notice_reply_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request})
+
+@router.post("/manag_notice_reply", response_class=HTMLResponse) 
+async def notice_reply_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request})
 
 #### -------------------------------------------------------------------------------------------------------
     

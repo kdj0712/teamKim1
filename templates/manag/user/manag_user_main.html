@@ -1,5 +1,5 @@
 {% extends "/manag/manag_template.html"%}
-{% block title%}
+{% block title %}
 RDS: 관리자마당 회원관리
 {% endblock title%}
 
@@ -40,6 +40,7 @@ RDS: 관리자마당 회원관리
           <th>아이디</th>
           <th>이름</th>
           <th>이메일</th>
+          <th>전화번호</th>
           <th>정보 보기</th>
         </tr>
       </thead>
@@ -49,6 +50,7 @@ RDS: 관리자마당 회원관리
         <td>{{User.user_ID}}</td>
         <td>{{User.user_name}}</td>
         <td>{{User.user_email}}</td>
+        <td>{{User.user_phone}}</td>
         <td><button formmethod="get" formaction="/manag/manag_user_detail/{{User.id}}">정보 보기</button></td>
         </tr>
         {% endfor %}
@@ -89,13 +91,5 @@ RDS: 관리자마당 회원관리
     </nav>
   </form>
 </main>
-<script>
-  function performSearch() {
-    var selectedField = document.getElementById("selected_field").value;
-    var searchKeyword = document.getElementById("search_keyword").value; // 검색어를 입력하는 input 요소의 id를 사용
-  
-    // AJAX 요청이나 폼 데이터 전송 등을 통해 선택된 필드와 검색어를 백엔드로 전달
-    // 백엔드에서는 전달받은 필드와 검색어를 사용하여 검색을 수행하고 결과를 반환합니다.
-  }
-</script>
+
 {% endblock main %}
