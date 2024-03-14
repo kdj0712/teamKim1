@@ -81,6 +81,21 @@
 ~$ pip install --upgrade jupyter ipywidgets
 ```
 
+for mac
+```
+~$ pip3 install fastapi uvicorn jinja2
+~$ pip3 install python-multipart
+~$ pip3 install beanie
+~$ pip3 install pydantic
+~$ pip3 install pydantic-settings
+~$ pip3 install pydantic[email]
+~$ pip3 install python-dotenv
+~$ pip3 install transformers
+~$ pip3 install torch
+~$ pip3 install tensorflow
+~$ pip3 install --upgrade jupyter ipywidgets
+```
+
 
 
 

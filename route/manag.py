@@ -6,7 +6,7 @@ from typing import Optional, Union
 from datetime import datetime
 from database.connection import Database
 from beanie import PydanticObjectId
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, Field, EmailStr
 
 from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
@@ -14,12 +14,16 @@ from models.institution import Institutions
 from models.trend import news_trends
 from models.user_member import members
 from models.other_QnA import QnA
+from models.manag_program import program
+from models.notice_list import notice
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)
 collection_trend = Database(news_trends)
 collection_member = Database(members)    
 collection_QnA = Database(QnA)
+collection_manag_program = Database(program)
+collection_manag_notice = Database(notice)
 
 router = APIRouter()
 
@@ -45,11 +49,12 @@ async def list(
     request: Request,
     page_number: Optional[int] = 1, 
     user_ID: Optional[Union[str, int, float, bool]] = None,
+    user_name: Optional[Union[str, int, float, bool]] = None,
+    user_phone : Optional[Union[str, int, float, bool]] = None,
+    user_email: Optional[EmailStr] = None   
    
 ):
-    # db.answers.find({'name':{ '$regex': '김' }})
-    # { 'name': { '$regex': user_dict.word } }
-    
+
     user_dict = dict(request._query_params)
     conditions = {}
     search_word = request.query_params.get('search_word')
@@ -57,20 +62,22 @@ async def list(
     if search_word:
         conditions.update({
             "$or": [
-                {"dise_KCD_code": {'$regex': search_word}},
-                {"dise_group": {'$regex': search_word}},
-                {"dise_name_kr": {'$regex': search_word}},
-                {"dise_name_en": {'$regex': search_word}},
-                {"dise_support": {'$regex': search_word}},
-                {"dise_url": {'$regex': search_word}}
+                {"user_ID": {'$regex': search_word}},
+                {"user_name": {'$regex': search_word}},
+                {"user_phone": {'$regex': search_word}},
+                {"user_email": {'$regex': search_word}}
             ]
         })
-
     pass
 
     if user_ID:
         conditions.find({ 'user_ID': { '$regex': search_word }})
-    pass
+    if user_name:
+        conditions.find({ 'user_name': { '$regex': search_word }})
+    if user_phone:
+        conditions.find({ 'user_phone': { '$regex': search_word }})
+    if user_email:
+        conditions.find({ 'user_email': { '$regex': search_word }})
 
     # try:
     User_list, pagination = await collection_member.getsbyconditionswithpagination(
@@ -95,6 +102,10 @@ async def list(
 async def community(request:Request):
     return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
 
+@router.post("/manag_community_main", response_class=HTMLResponse) 
+async def community(request:Request):
+    return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
+
 #### -------------------------------------------------------------------------------------------------------
 
 # program_main
@@ -102,6 +113,27 @@ async def community(request:Request):
 @router.get("/manag_program_main", response_class=HTMLResponse) 
 async def program(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
+
+@router.post("/manag_program_main", response_class=HTMLResponse) 
+async def program(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
+
+@router.get("/manag_program_write", response_class=HTMLResponse) 
+async def program_write(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
+
+@router.post("/manag_program_write", response_class=HTMLResponse) 
+async def program_write(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
+
+@router.get("/manag_program_read", response_class=HTMLResponse) 
+async def program_read(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
+
+@router.post("/manag_program_read", response_class=HTMLResponse) 
+async def program_read(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
+
 
 #### -------------------------------------------------------------------------------------------------------
 
@@ -361,9 +393,61 @@ async def FAQ(request:Request, object_id:PydanticObjectId):
 # notice_main
 
 @router.get("/manag_notice_main", response_class=HTMLResponse) 
-async def academic(request:Request):
+async def notice_function(
+    request:Request, 
+    page_number: Optional[int] = 1
+    ):
+    
+    conditions = {}
+    
+    User_list, pagination = await collection_member.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(
+    name="manag/notice/manag_notice_main.html",
+    context={'request': request, 'user_list': User_list, 'pagination': pagination})
+
+    
+
+@router.post("/manag_notice_main", response_class=HTMLResponse) 
+async def notice_function(request:Request):
+    await request.form()
+    print(dict(await request.form()))
+    
+    notices = await collection_manag_notice.get_all()
+    
+    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request, 'notices':notices})
+
+# notice_write
+
+@router.get("/manag_notice_write", response_class=HTMLResponse) 
+async def notice_write_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_write.html", context={'request':request})
+
+@router.post("/manag_notice_write", response_class=HTMLResponse) 
+async def notice_write_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_write.html", context={'request':request})
+
+# notice_read
+
+@router.get("/manag_notice_read", response_class=HTMLResponse) 
+async def notice_read_function(request:Request):
     return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request})
 
+@router.post("/manag_notice_read", response_class=HTMLResponse) 
+async def notice_read_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_read.html", context={'request':request})
+
+# notice_reply
+
+@router.get("/manag_notice_reply", response_class=HTMLResponse) 
+async def notice_reply_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request})
+
+@router.post("/manag_notice_reply", response_class=HTMLResponse) 
+async def notice_reply_function(request:Request):
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request})
 
 #### -------------------------------------------------------------------------------------------------------
     

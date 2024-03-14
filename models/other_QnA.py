@@ -1,7 +1,7 @@
 from typing import Optional, List
 
 from beanie import Document, Link
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
 class QnA(Document):
