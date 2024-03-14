@@ -46,7 +46,7 @@ RDS: 관리자마당 회원관리
       </thead>
       <tbody>
         {% for User in user_list %}
-        <td>{{pagination.start_record_number + loop.index0}}</td>
+        <td>{{loop.index}}</td>
         <td>{{User.user_ID}}</td>
         <td>{{User.user_name}}</td>
         <td>{{User.user_email}}</td>
