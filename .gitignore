@@ -25,6 +25,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+macro-atom-415806-fd4035d471e1.json
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
