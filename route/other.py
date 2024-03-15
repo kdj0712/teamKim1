@@ -73,13 +73,13 @@ async def QnA_function(
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA_main.html",
+        name="other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
 
@@ -129,13 +129,13 @@ async def QnA_function(request:Request,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA_main.html",
+        name="other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
 
@@ -206,13 +206,13 @@ async def FAQ(request:Request, object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA_main.html",
+        name="other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
         
@@ -255,13 +255,13 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA.html",
+        name="other/other_QnA.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
 
