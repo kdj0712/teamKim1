@@ -400,13 +400,13 @@ async def notice_function(
     
     conditions = {}
     
-    User_list, pagination = await collection_member.getsbyconditionswithpagination(
+    notice_list, pagination = await collection_manag_notice.getsbyconditionswithpagination(
     conditions, page_number
     )
     
     return templates.TemplateResponse(
     name="manag/notice/manag_notice_main.html",
-    context={'request': request, 'user_list': User_list, 'pagination': pagination})
+    context={'request': request, 'pagination': pagination, 'notices': notice_list})
 
     
 
