@@ -88,12 +88,6 @@ async def list(
     context={'request': request, 'user_list': User_list, 'pagination': pagination,'search_word' : search_word},
     )
 
-    # except:
-    #     return templates.TemplateResponse(
-    #     name="/manag/QnA/manag_QnA_manager_nonpage.html",
-    #     context={'request': request})
-    #     pass
-
 #### -------------------------------------------------------------------------------------------------------
 
 # community_main

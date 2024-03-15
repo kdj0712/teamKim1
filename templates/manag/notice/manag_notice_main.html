@@ -54,7 +54,7 @@ RDS: 관리자마당 공지사항관리
                 <td>{{notice.notice_type}}</td>
                 <td>{{notice.notice_title}}</td>
                 <td>{{notice.notice_date}}</td>
-                <td><button formmethod="get" formaction="/manag/manag_notice_main/{{notice.id}}">정보 보기</button></td>
+                <td><button formmethod="get" formaction="/manag/manag_notice_reply/{{notice._id}}">상세보기</button></td>
                 </tr>
                 {% endfor %}
             </tbody>
