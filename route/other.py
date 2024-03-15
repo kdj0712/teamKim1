@@ -73,13 +73,13 @@ async def QnA_function(
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA_main.html",
+        name="other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
 
@@ -129,13 +129,13 @@ async def QnA_function(request:Request,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA_main.html",
+        name="other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
 
@@ -206,25 +206,19 @@ async def FAQ(request:Request, object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA_main.html",
+        name="other/other_QnA_main.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
         
 # 글 삭제
 @router.post("/other_delete/{object_id}", response_class=HTMLResponse) 
-async def FAQ(request:Request,object_id:PydanticObjectId,
-    page_number: Optional[int] = 1, 
-    ques_title: Optional[str] = None,
-    ques_writer: Optional[str] = None,
-    ques_content: Optional[str] = None,
-    ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None):
+async def FAQ(request:Request,object_id:PydanticObjectId):
     await collection_QnA.delete_one(object_id)
     
     form_data = await request.form()
@@ -255,13 +249,13 @@ async def FAQ(request:Request,object_id:PydanticObjectId,
         conditions, page_number
     )
         return templates.TemplateResponse(
-        name="/other/other_QnA.html",
+        name="other/other_QnA.html",
         context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
     )
 
     except:
         return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
+        name="other/other_QnA_nonpage.html",
         context={'request': request},
     )
 
