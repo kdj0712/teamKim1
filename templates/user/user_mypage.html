@@ -1,11 +1,11 @@
 {% extends "mainpage.html"%}
 
 {% block main_container %}
-
+{{ user }}
 <body>
     <div class="m-5 container row justify-content-between">
         <div class="col-2">
-            <span class="fw-bold fs-3">회원이름자리</span><span>님</span>
+            <span class="fw-bold fs-3" id="user_name"></span><span>님</span>
         </div>
         <div class="col-2 fs-10 mt-2">
             <span>가입일 : </span> <span>2024.03.13</span>
@@ -47,20 +47,20 @@
         </ul> 
         <main class="col-9 container ">
             {% block user_main %}
-            <div class="container row">
+            <div class="container row "  style="padding: 50px;">
                 <div class="row">
                     
                     <div class="col-4">
-                        <div>찜한 질환</div>
-                        <div><span>5</span><span>개</span></div>
+                        <div class="fs-6 fw-bold">찜한 질환</div>
+                        <div><span  class="fs-1 fw-bold">5</span><span class="fs-5 fw-light">개</span></div>
                     </div>
                     <div class="col-4">
-                        <div>찜한 병원</div>
-                        <div><span>5</span><span>개</span></div>
+                        <div class="fs-6 fw-bold">찜한 프로그램</div>
+                        <div><span  class="fs-1 fw-bold">5</span><span class="fs-5 fw-light">개</span></div>
                     </div>
                     <div class="col-4">
-                        <div>신청한 프로그램</div>
-                        <div><span>5</span><span>개</span></div>
+                        <div class="fs-6 fw-bold">신청 프로그램</div>
+                        <div><span  class="fs-1 fw-bold">5</span><span class="fs-5 fw-light">개</span></div>
                     </div>
                 </div>
             </div>

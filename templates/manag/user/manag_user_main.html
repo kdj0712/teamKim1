@@ -1,5 +1,5 @@
 {% extends "/manag/manag_template.html"%}
-{% block title%}
+{% block title %}
 RDS: 관리자마당 회원관리
 {% endblock title%}
 
@@ -7,25 +7,51 @@ RDS: 관리자마당 회원관리
 {% block main %}
 <main class="col-md-9 col-lg-10 px-md-4">
   <form action="">
-    <h2>회원 관리</h2>
 
+    <h2>회원 관리</h2>
+    
+    <div class="justify-content-center row">
+      <div class="row col-7">
+        <div class="col-2">
+          <select class="form-control" name="key_name" id="selected_field">
+            <option value="user_ID" {{ 'selected' if request._query_params.key_name=='user_ID' else '' }}>아이디
+            </option>
+            <option value="user_name" {{ 'selected' if request._query_params.key_name=='user_namer' else '' }}>이름
+            </option>
+            <option value="user_email" {{ 'selected' if request._query_params.key_name=='user_email' else '' }}>이메일
+            </option>
+            <option value="user_phonenumber" {{ 'selected' if request._query_params.key_name=='user_phonenumber' else '' }}>전화번호
+            </option>
+          </select>
+        </div>
+        <div class="col-8">
+          <input class="form-control" placeholder="Enter Search!" name="search_word" id="search_keyword" value="{{request._query_params.word}}">
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary" formaction="/manag/manag_user_main" formmethod="get" id="검색" onclick="performSearch()">검색</button>
+        </div>
+      </div>
+
+    </div>
     <table class="table table-hover">
       <thead>
         <tr>
-          <th  width="60px">번호</th>
+          <th width="60px">번호</th>
           <th>아이디</th>
           <th>이름</th>
           <th>이메일</th>
+          <th>전화번호</th>
           <th>정보 보기</th>
         </tr>
       </thead>
       <tbody>
         {% for User in user_list %}
-        <td>{{pagination.start_record_number + loop.index0}}</td>
+        <td>{{loop.index}}</td>
         <td>{{User.user_ID}}</td>
         <td>{{User.user_name}}</td>
         <td>{{User.user_email}}</td>
-        <td><button formaction="/manag/user/user_detail/{{User.id}}">정보 보기</button></td>
+        <td>{{User.user_phone}}</td>
+        <td><button formmethod="get" formaction="/manag/manag_user_detail/{{User.id}}">정보 보기</button></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -34,30 +60,30 @@ RDS: 관리자마당 회원관리
       <ul class="pagination justify-content-center">
         <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+            formaction="/manag/manag_user_main/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
             맨 처음
           </button>
 
         </li>
         <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
+            formaction="/manag/manag_user_main/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
         </li>
         {% for page_num in pagination.current_page_range %}
         <li class="page-item {{ 'active' if page_num == pagination.current_page else '' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+            formaction="/manag/manag_user_main/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
             {{page_num}}
           </button>
         </li>
         {% endfor %}
         <li class="page-item {{ '' if pagination.has_next_page else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
+            formaction="/manag/manag_user_main/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
         </li>
         <li class="page-item {{ '' if pagination.has_next_block else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/user/user_detail/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+            formaction="/manag/manag_user_main/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
             맨 끝
           </button>
         </li>
@@ -65,4 +91,5 @@ RDS: 관리자마당 회원관리
     </nav>
   </form>
 </main>
+
 {% endblock main %}

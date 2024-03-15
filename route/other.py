@@ -9,7 +9,6 @@ from datetime import datetime
 router = APIRouter()
 
 from database.connection import Database
-
 from models.other_QnA import QnA
 collection_QnA = Database(QnA)
 
@@ -23,7 +22,7 @@ templates = Jinja2Templates(directory="templates/")
 async def NOTICE(request:Request):
     return templates.TemplateResponse(name="other/other_notice.html", context={'request' :request})
 
-@router.post("/notice", response_class=HTMLResponse)
+@router.post("/other_notice", response_class=HTMLResponse)
 async def NOTICE(request:Request):
     return templates.TemplateResponse(name="other/other_notice.html", context={'request' :request})
 
@@ -31,72 +30,12 @@ async def NOTICE(request:Request):
 
 # QnA
 
-@router.post("/other_QnA", response_class=HTMLResponse) 
-async def QnA(request:Request,     page_number: Optional[int] = 1, 
-    ques_title: Optional[str] = None,
-    ques_writer: Optional[str] = None,
-    ques_content: Optional[str] = None,
-    ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None):
-    form_data = await request.form()
-    dict_form_data = dict(form_data)
-    current_time = datetime.now()
-    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-    # 이 시간을 item 객체의 'ques_time' 속성에 저장한다.
-    dict_form_data['ques_time'] = formatted_time
-
-    if dict_form_data['ques_title'] =='': # title은 필수조건, 오류로 인한 저장을 방지하기 위한 구문
-        pass
-    else:
-        QnAs = QnA(**dict_form_data)
-        await collection_QnA.save(QnAs)
-
-    user_dict = dict(form_data)
-    conditions = {}
-
-    search_word = request.query_params.get('search_word')
-  
-    if search_word:
-        conditions.update({
-            "$or": [
-                {"ques_title": {'$regex': search_word}},
-                {"ques_writer": {'$regex': search_word}},
-                {"ques_content": {'$regex': search_word}},
-                {"ques_time": {'$regex': search_word}},
-                {"ques_answer": {'$regex': search_word}},
-            ]
-        })
-    pass
-
-    if ques_title:
-        conditions.find({ 'ques_title': { '$regex': search_word }})
-    pass
-    try:
-        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
-        conditions, page_number
-    )
-        return templates.TemplateResponse(
-        name="/other/other_QnA.html",
-        context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
-    )
-
-    except:
-        return templates.TemplateResponse(
-        name="/other/other_QnA_nonpage.html",
-        context={'request': request},
-    )
-
-@router.get("/other_QnA_nonpage", response_class=HTMLResponse) 
-async def FAQ(request:Request):
-    return templates.TemplateResponse(name="other/other_QnA_nonpage.html", context={'request':request})
-
-
 @router.get("/other_QnA_main/{page_number}")
 @router.get("/other_QnA_main") # 검색 with pagination
 # http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
 # http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
 # http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
-async def list(
+async def QnA_function(
     request: Request,
     page_number: Optional[int] = 1, 
     ques_title: Optional[str] = None,
@@ -143,6 +82,67 @@ async def list(
         name="/other/other_QnA_nonpage.html",
         context={'request': request},
     )
+
+@router.post("/other_QnA_main", response_class=HTMLResponse) 
+async def QnA_function(request:Request,
+    page_number: Optional[int] = 1, 
+    ques_title: Optional[str] = None,
+    ques_writer: Optional[str] = None,
+    ques_content: Optional[str] = None,
+    ques_time: Optional[datetime] = None,
+    ques_answer: Optional[str] = None):
+    form_data = await request.form()
+    dict_form_data = dict(form_data)
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+    # 이 시간을 item 객체의 'ques_time' 속성에 저장한다.
+    dict_form_data['ques_time'] = formatted_time
+
+    if dict_form_data['ques_title'] =='': # title은 필수조건, 오류로 인한 저장을 방지하기 위한 구문
+        pass
+    else:
+        QnAs = QnA(**dict_form_data)
+        await collection_QnA.save(QnAs)
+
+    user_dict = dict(form_data)
+    conditions = {}
+
+    search_word = request.query_params.get('search_word')
+  
+    if search_word:
+        conditions.update({
+            "$or": [
+                {"ques_title": {'$regex': search_word}},
+                {"ques_writer": {'$regex': search_word}},
+                {"ques_content": {'$regex': search_word}},
+                {"ques_time": {'$regex': search_word}},
+                {"ques_answer": {'$regex': search_word}},
+            ]
+        })
+    pass
+
+    if ques_title:
+        conditions.find({ 'ques_title': { '$regex': search_word }})
+    pass
+    try:
+        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
+        conditions, page_number
+    )
+        return templates.TemplateResponse(
+        name="/other/other_QnA_main.html",
+        context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
+    )
+
+    except:
+        return templates.TemplateResponse(
+        name="/other/other_QnA_nonpage.html",
+        context={'request': request},
+    )
+
+@router.get("/other_QnA_nonpage", response_class=HTMLResponse) 
+async def QnA_function(request:Request):
+    return templates.TemplateResponse(name="other/other_QnA_nonpage.html", context={'request':request})
+
 
 
 # 글쓰기 창

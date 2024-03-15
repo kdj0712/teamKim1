@@ -1,54 +1,71 @@
 {% extends "/manag/manag_template.html"%}
-
 {% block main %}
-<main class="col-md-9 col-lg-10 px-md-4">
-  <form action="">
-    <div>
-      <h2>{{ QnAs.ques_title }}</h2>
-    </div>
-    <div>
 
-    </div>
-    <div>
-      글쓴이 : {{ QnAs.ques_writer }}
-    </div>
-    <div>작성시간 : {{ QnAs.ques_time }}</div>
+{% block css %}
+<!-- Quill의 CSS 파일 링크 -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.snow.css" rel="stylesheet" />
+<!-- Quill 편집기의 스타일 지정 -->
+<style>
+  #editor {
+    height: 10rem;
+    font-size: 1.1rem;
+  }
+</style>
+{% endblock %}
 
-    <div>
-    </div>
-    <hr>
-    <div>
-      내용
-    </div>
-    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
-      <div class="col-md-6 px-0">
-        <p class="lead my-3">{{ QnAs.ques_content }}</p>
+<main col-md-9 col-lg-10 px-md-4>
+  <form action="" method="POST" id="program_writeform">
+    <div class="mb-3" >
+      <label for="title">프로그램명</label>
+      <input type="" class="form-control" name="ques_title" id="title" value="" required>
+
+      <label for="program_date">프로그램 기간</label>
+      <div class="right">
+        <div>
+          <label>
+            <input type="date" id="program_start_date" title="프로그램시작 날짜" name="program_start_date" autocomplete="off"
+              value="2024-03-14" class="hasDatepicker" value="" required>
+            <img src="" alt="프로그램시작 날짜" style="cursor:pointer;">
+          </label>
+        </div>
+        ~
+        <div>
+          <label>
+            <input type="date" id="program_end_date" title="행사종료 날짜" name="program_end_date" autocomplete="off"
+              value="2025-03-14" class="hasDatepicker" value="" required>
+            <img src="" alt="행사종료 날짜" style="cursor:pointer;">
+          </label>
+        </div>
       </div>
-    </div>
-    <div>
 
-    </div>
-    <div>
-      답변
-    </div>
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-      <div class="col p-4 d-flex flex-column position-static">
-        <p class="card-text mb-auto">{{ QnAs.ques_answer }}</p>
+      <div>
+        <label>프로그램 내용</label>
+        <!-- Quill 편집기를 적용할 div 요소 -->
+        <input type="hidden" name="editorContent" id="editorContent" value="" >
+        <div id="editor"></div>
       </div>
-    </div>
-    <div>
 
-    </div>
-    <hr>
-    <textarea type="" class="form-control text-box" name="ques_answer" id="content"
-      placeholder="답글은 최대 1개씩만 달 수 있습니다. 이 부분은 나중에 관리자 페이지로 이동할 예정"></textarea>
-    <br>
-    <div style="text-align: end;">
-      <button class="btn btn-primary" type="submit" formaction="/manag/manag_reply/{{QnAs.id}}"
-        formmethod="post">답글달기</button>
-      <button class="btn btn-danger" type="submit" formaction="/manag/manag_delete/{{QnAs.id}}" formmethod="post">글
-        삭제</button>
+      <button class="btn btn-primary" type="submit" formaction="/manag/manag_program_main"
+        formmethod="post">글쓰기</button>
+      <a href="/manag/manag_program_main" class="btn btn-danger">취소</a>
     </div>
   </form>
 </main>
+
+<!-- Quill의 JavaScript 파일 링크 -->
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.js"></script>
+
+<!-- Quill 편집기 초기화 스크립트 -->
+<script>
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  });
+  let form = document.querySelector('#form_first');
+  form.onsubmit = function (event) {
+    let editorContentInput = document.querySelector('#editorContent');
+    editorContentInput.value = quill.root.innerHTML;
+
+  };    
+</script>
+
 {% endblock main %}

@@ -147,7 +147,7 @@
             value="{{request._query_params.word}}">
         </div>
         <div class="col-2">
-          <button type="submit" class="btn btn-primary" formaction="/search/search_raredisease"
+          <button type="submit" class="btn btn-primary" formaction="/info/info_raredisease"
             formmethod="get">검색</button>
         </div>
       </div>
@@ -171,7 +171,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for dise in dises %}
+        {% for dise in dise_list %}
         <tr>
           <td class="text-center">{{pagination.start_record_number + loop.index0}}</td>
           <td>{{dise.dise_name_kr}}</td>
@@ -194,30 +194,28 @@
         <ul class="pagination justify-content-center">
           <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
             <button type="submit" class="page-link"
-              formaction="/search/search_raredisease/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">맨
+            formaction="/info/info_raredisease/{{pagination.first_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}">맨
               처음</button>
 
           </li>
           <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
             <button type="submit" class="page-link"
-              formaction="/search/search_raredisease/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
+              formaction="/info/info_raredisease/{{pagination.previous_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}">이전</button>
           </li>
           {% for page_num in pagination.current_page_range %}
           <li class="page-item {{ 'active' if page_num == pagination.current_page else '' }}">
             <button type="submit" class="page-link"
-              formaction="/search/search_raredisease/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word}}">{{
+              formaction="/info/info_raredisease/{{ page_num }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}">{{
               page_num }}</button>
-
-
           </li>
           {% endfor %}
           <li class="page-item {{ '' if pagination.has_next_page else 'disabled' }}">
             <button type="submit" class="page-link"
-              formaction="/search/search_raredisease/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
+              formaction="/info/info_raredisease/{{ pagination.next_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}">다음</button>
           </li>
           <li class="page-item {{ '' if pagination.has_next_block else 'disabled' }}">
             <button type="submit" class="page-link"
-              formaction="/search/search_raredisease/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+              formaction="/info/info_raredisease/{{ pagination.last_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}">
               맨 끝
             </button>
           </li>

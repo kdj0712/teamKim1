@@ -1,15 +1,74 @@
 {% extends "/manag/manag_template.html"%}
 {% block main %}
-<form action="" method="POST" id="myForm">
-    <div class="mb-3">
-      <label for="title">제목</label>
-      <input type="" class="form-control" name="ques_title" id="title" required>
-      <label for="writer">글쓴이</label>
-      <input type="" class="form-control" name="ques_writer" id="writer" required>
-      <label for="content">내용</label>
-      <textarea type="" class="form-control text-box" name="ques_content" id="content" placeholder="내용을 입력하세요." required></textarea>
-      <button class="btn btn-primary" type="submit" formaction="/manag/manag_QnA" formmethod="post">글쓰기</button>
-      <a href="/manag/manag_QnA" class="btn btn-danger">취소</a>
-  </div>
-</form>
+
+{% block css %}
+<!-- Quill의 CSS 파일 링크 -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.snow.css" rel="stylesheet" />
+<!-- Quill 편집기의 스타일 지정 -->
+<style>
+  #editor {
+    height: 10rem;
+    font-size: 1.1rem;
+  }
+</style>
+{% endblock %}
+
+<main col-md-9 col-lg-10 px-md-4>
+  <form action="" method="POST" id="program_writeform" enctype="multipart/form-data">
+    <div class="mb-3" >
+      <label for="title">프로그램명</label>
+      <input type="text" class="form-control" name="program_thumbnail" id="title" required>
+
+      <label for="program_date">프로그램 기간</label>
+      <div class="right">
+        <div>
+          <label>
+            <input type="date" id="program_start_date" title="프로그램시작 날짜" name="program_start_date" autocomplete="off"
+              value="2024-03-14" class="hasDatepicker" required>
+            <img src="" alt="프로그램시작 날짜" style="cursor:pointer;">
+          </label>
+        </div>
+        ~
+        <div>
+          <label>
+            <input type="date" id="program_end_date" title="행사종료 날짜" name="program_end_date" autocomplete="off"
+              value="2025-03-14" class="hasDatepicker" required>
+            <img src="" alt="행사종료 날짜" style="cursor:pointer;">
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label>프로그램 내용</label>
+        <!-- Quill 편집기를 적용할 div 요소 -->
+          <input type="file" name="program_thumbnail">
+          <input type="submit" value="Upload">
+
+        <input type="hidden" name="editorContent" id="editorContent">
+        <div id="editor"></div>
+      </div>
+
+      <button class="btn btn-primary" type="submit" formaction="/manag/manag_program_main"
+        formmethod="post">글쓰기</button>
+      <a href="/manag/manag_program_main" class="btn btn-danger">취소</a>
+    </div>
+  </form>
+</main>
+
+<!-- Quill의 JavaScript 파일 링크 -->
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.js"></script>
+
+<!-- Quill 편집기 초기화 스크립트 -->
+<script>
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  });
+  let form = document.querySelector('#form_first');
+  form.onsubmit = function (event) {
+    let editorContentInput = document.querySelector('#editorContent');
+    editorContentInput.value = quill.root.innerHTML;
+
+  };    
+</script>
+
 {% endblock main %}

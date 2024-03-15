@@ -8,6 +8,8 @@ from models.institution import Institutions
 from models.user_member import members
 from models.trend import news_trends
 from models.other_QnA import QnA
+from models.manag_program import program
+from models.notice_list import notice
 import os
 
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -24,7 +26,7 @@ class Settings(BaseSettings):
         if self.DATABASE_URL is not None:
             client = AsyncIOMotorClient(self.DATABASE_URL)
             await init_beanie(database=client.get_default_database(),
-                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA])
+                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA, program, notice])
 
     class Config:
         env_file = ".env"
