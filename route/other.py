@@ -1,7 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
 from beanie import PydanticObjectId
 from typing import Optional
 from datetime import datetime

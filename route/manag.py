@@ -1,7 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
 from typing import Optional, Union
 from datetime import datetime
 from database.connection import Database
@@ -24,7 +23,6 @@ collection_member = Database(members)
 collection_QnA = Database(QnA)
 collection_manag_notice = Database(notice)
 collection_manag_program = Database(program)
-
 
 router = APIRouter()
 
@@ -53,8 +51,7 @@ async def list(
     user_name: Optional[Union[str, int, float, bool]] = None,
     user_phone : Optional[Union[str, int, float, bool]] = None,
     user_email: Optional[EmailStr] = None   
-   
-):
+    ):
 
     user_dict = dict(request._query_params)
     conditions = {}
