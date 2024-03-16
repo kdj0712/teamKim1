@@ -80,73 +80,41 @@ def predict_disease(search_word):
 async def raredisease(request:Request):
     return templates.TemplateResponse(name="search/search_raredisease.html", context={'request':request})
 
-# @router.get("/info_raredisease/{page_number}")
-# @router.get("/info_raredisease")
-# async def list(
-#     request: Request, 
-#     page_number: Optional[int] = 1, 
-#     dise_name_kr: Optional[str] = None,
-#     dise_symptoms: Optional[str] = None,
-# ):
-    
-#     user_dict = dict(request._query_params)
-#     conditions = {}
-
-#     search_word = request.query_params.get('search_word')
-
-#     if search_word:
-#         conditions.update({
-#             "$or": [
-#                 {"dise_KCD_code": {'$regex': search_word}},
-#                 {"dise_group": {'$regex': search_word}},
-#                 {"dise_name_kr": {'$regex': search_word}},
-#                 {"dise_name_en": {'$regex': search_word}},
-#                 {"dise_support": {'$regex': search_word}},
-#                 {"dise_url": {'$regex': search_word}},
-#                 {"dise_symptoms": {'$regex': search_word}}
-#             ]
-#         })
-
-#     pass
-#     if dise_name_kr:
-#         conditions.find({ 'dise_name_kr': { '$regex': search_word }})
-#     pass
-#     try :
-#         dise_list, pagination = await collection_disease.getsbyconditionswithpagination(
-#             conditions, page_number
-#         )
-
-#         return templates.TemplateResponse(
-#             name="/info/info_raredisease.html",
-#             context={'request': request, 'dises': dise_list, 'pagination': pagination,'search_word' : search_word}
-#         )
-#     except:
-#         return templates.TemplateResponse(
-#             name="/info/info_raredisease_nondata.html",
-#             context={'request': request}
-#         )
 @router.get("/info_raredisease/{page_number}")
 @router.get("/info_raredisease")
 async def disease_list(request: Request, page_number: int = 1, key_name: Optional[str] = Query(None), search_word: Optional[str] = Query(None)):
-    # await request.form()
+    await request.form()
     # dise_list = await collection_disease.get_all()
     conditions = {}
+    key_name = request.query_params.get('key_name')
     search_word = request.query_params.get('search_word')
     if key_name and search_word:
         # 검색 조건을 기반으로 질환을 필터링하는 로직
         if key_name == 'dise_name_kr':
             # 희귀질환명으로 검색하는 로직
-            conditions.find({ 'dise_name_kr': { '$regex': search_word }})
+            conditions.update({ 'dise_name_kr': { '$regex': search_word }})
         elif key_name == 'dise_KCD_code':
             # KCD코드로 검색하는 로직
-            conditions.find({ 'dise_KCD_code': { '$regex': search_word }})
+            conditions.update({ 'dise_KCD_code': { '$regex': search_word }})
         elif key_name == 'dise_spc_code':
             # 산정특례 특정기호로 검색하는 로직
-            conditions.find({ 'dise_spc_code': { '$regex': search_word }})
+            conditions.update({ 'dise_spc_code': { '$regex': search_word }})
         elif key_name == 'dise_symptoms':
-            # 증상명으로 검색하는 로직
-            conditions["dise_symptoms"] = search_word
+            similar_diseases_names = predict_disease(search_word)  # 유사 질병 이름을 얻습니다.
+            if similar_diseases_names:
+                # MongoDB에서 $in 쿼리 연산자를 사용하여 여러 이름에 대한 문서를 검색합니다.
+                conditions.update({'dise_name_kr': {'$in': similar_diseases_names}})
+            else:
+                # 유사 질병이 없을 경우 빈 결과를 반환하도록 처리할 수 있습니다.
+                return templates.TemplateResponse(
+                    name="/info/info_raredisease_nondata.html",
+                    context={'request': request}
+                )
         dise_list, pagination = await collection_disease.getsbyconditionswithpagination(conditions, page_number)
+        return templates.TemplateResponse(
+            name="/info/info_raredisease.html",
+            context={'request': request, 'dise_list': dise_list, 'pagination': pagination,'key_name':key_name,'search_word' : search_word}
+        )
     else:
         # key_name이 없을 경우 모든 질환의 리스트를 출력
         dise_list = await collection_disease.get_all()
