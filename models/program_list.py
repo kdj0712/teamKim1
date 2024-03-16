@@ -11,4 +11,4 @@ class program(Document):
     program_content: Optional[str] = None
   
     class Settings:
-        name = "manag_program"
+        name = "program_list"

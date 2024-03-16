@@ -14,7 +14,6 @@ from models.institution import Institutions
 from models.trend import news_trends
 from models.user_member import members
 from models.other_QnA import QnA
-from models.manag_program import program
 from models.notice_list import notice
 from models.program_list import program
 collection_acade = Database(academicinfo)
@@ -134,19 +133,27 @@ async def program_main_function(request:Request):
 
 @router.get("/manag_program_write", response_class=HTMLResponse) 
 async def program_write_function(request:Request):
+    
+    
     return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
 
 @router.post("/manag_program_write", response_class=HTMLResponse) 
 async def program_write_function(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
 
-@router.get("/manag_program_read", response_class=HTMLResponse) 
-async def program_read_function(request:Request):
-    return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
+@router.get("/manag_program_reply/{object_id}", response_class=HTMLResponse) 
+async def program_read_function(request:Request, object_id:PydanticObjectId):
+    
+    program = await collection_manag_program.get(object_id)
+    
+    return templates.TemplateResponse(name="manag/program/manag_program_reply.html", context={'request':request, 'program': program})
 
-@router.post("/manag_program_read", response_class=HTMLResponse) 
-async def program_read_function(request:Request):
-    return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
+@router.post("/manag_program_reply/{object_id}", response_class=HTMLResponse) 
+async def program_read_function(request:Request, object_id:PydanticObjectId):
+    await request.form()
+    program = await collection_manag_program.get(object_id)
+        
+    return templates.TemplateResponse(name="manag/program/manag_program_reply.html", context={'request':request, 'programs': program})
 
 
 #### -------------------------------------------------------------------------------------------------------
@@ -218,9 +225,6 @@ async def FAQ(request:Request):
 
 @router.get("/manag_QnA_main/{page_number}")
 @router.get("/manag_QnA_main") # 검색 with pagination
-# http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
-# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
 async def list(
     request: Request,
     page_number: Optional[int] = 1, 
@@ -422,8 +426,6 @@ async def notice_main_function(
     name="manag/notice/manag_notice_main.html",
     context={'request': request, 'pagination': pagination, 'notices': notice_list})
 
-    
-
 @router.post("/manag_notice_main", response_class=HTMLResponse) 
 async def notice_main_function(request:Request):
     await request.form()
@@ -442,16 +444,6 @@ async def notice_write_function(request:Request):
 @router.post("/manag_notice_write", response_class=HTMLResponse) 
 async def notice_write_function(request:Request):
     return templates.TemplateResponse(name="manag/notice/manag_notice_write.html", context={'request':request})
-
-# notice_read
-
-@router.get("/manag_notice_read", response_class=HTMLResponse) 
-async def notice_read_function(request:Request):
-    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request})
-
-@router.post("/manag_notice_read", response_class=HTMLResponse) 
-async def notice_read_function(request:Request):
-    return templates.TemplateResponse(name="manag/notice/manag_notice_read.html", context={'request':request})
 
 # notice_reply
 

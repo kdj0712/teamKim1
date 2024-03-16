@@ -8,9 +8,9 @@ from models.institution import Institutions
 from models.user_member import members
 from models.trend import news_trends
 from models.other_QnA import QnA
-from models.manag_program import program
 from models.notice_list import notice
 from models.program_list import program
+
 import os
 
 from motor.motor_asyncio import AsyncIOMotorClient

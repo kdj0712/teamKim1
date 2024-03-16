@@ -7,33 +7,27 @@ RDS: 관리자마당 공지사항관리
 <main class="col-md-9 col-lg-10 px-md-4">
     <form action="">
 
-        <h2>공지사항 관리</h2>
+        <h2>프로그램 관리</h2>
 
         <div class="justify-content-center row">
             <div class="row col-7">
                 <div class="col-2">
-                    <select class="form-control" name="key_name" id="selected_field">
-                        <option value="user_ID" {{ 'selected' if request._query_params.key_name=='user_ID' else '' }}>
-                            아이디
-                        </option>
-                        <option value="user_name" {{ 'selected' if request._query_params.key_name=='user_namer' else ''
-                            }}>이름
-                        </option>
-                        <option value="user_email" {{ 'selected' if request._query_params.key_name=='user_email' else ''
-                            }}>이메일
-                        </option>
-                        <option value="user_phonenumber" {{ 'selected' if
-                            request._query_params.key_name=='user_phonenumber' else '' }}>전화번호
+                    <select class="form-control" name="" id="selected_field">
+                        <option value="program_title">
+                            프로그램명
                         </option>
                     </select>
                 </div>
                 <div class="col-8">
                     <input class="form-control" placeholder="Enter Search!" name="search_word" id="search_keyword"
-                        value="{{request._query_params.word}}">
+                        value="">
                 </div>
                 <div class="col-2">
                     <button type="submit" class="btn btn-primary" formaction="/manag/manag_notice_main" formmethod="get"
                         id="검색" onclick="performSearch()">검색</button>
+                </div>
+                <div style="text-align: end;">
+                    <a class="btn btn-success" href="/manag/manag_program_write" formmethod="get">글쓰기</a>
                 </div>
             </div>
 
@@ -42,19 +36,17 @@ RDS: 관리자마당 공지사항관리
             <thead>
                 <tr>
                     <th width="60px">번호</th>
-                    <th>게시판유형 </th>
-                    <th>공지명 </th>
+                    <th>프로그램명</th>
                     <th>작성날짜 </th>
                     <th>상세보기</th>
                 </tr>
             </thead>
             <tbody>
-                {% for notice in notices %}
+                {% for program in programs %}
                 <td>{{loop.index}}</td>
-                <td>{{notice.notice_type}}</td>
-                <td>{{notice.notice_title}}</td>
-                <td>{{notice.notice_date}}</td>
-                <td><button formmethod="get" formaction="/manag/manag_program_reply/{{program._id}}">상세보기</button></td>
+                <td>{{program.program_title}}</td>
+                <td>{{program.program_date}}</td>
+                <td><button formmethod="get" formaction="/manag/manag_program_reply/{{program.id}}">상세보기</button></td>
                 </tr>
                 {% endfor %}
             </tbody>

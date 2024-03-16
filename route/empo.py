@@ -1,3 +1,5 @@
+from database.connection import Database
+
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -11,8 +13,6 @@ collection_manag_program = Database(program)
 
 app = FastAPI()
 router = APIRouter()
-
-from database.connection import Database
 
 # from models.### import .###
 # collection_.### = Database(.###)
