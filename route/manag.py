@@ -16,14 +16,16 @@ from models.user_member import members
 from models.other_QnA import QnA
 from models.manag_program import program
 from models.notice_list import notice
+from models.program_list import program
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)
 collection_trend = Database(news_trends)
 collection_member = Database(members)    
 collection_QnA = Database(QnA)
-collection_manag_program = Database(program)
 collection_manag_notice = Database(notice)
+collection_manag_program = Database(program)
+
 
 router = APIRouter()
 
@@ -105,27 +107,45 @@ async def community(request:Request):
 # program_main
 
 @router.get("/manag_program_main", response_class=HTMLResponse) 
-async def program(request:Request):
-    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
+async def program_main_function(
+    request:Request,
+    page_number: Optional[int] = 1
+    ):
+    
+    conditions = {}
+    
+    program_list, pagination = await collection_manag_program.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(
+        name="manag/program/manag_program_main.html", 
+        context={'request':request, 'pagination': pagination, 'programs': program_list})
 
 @router.post("/manag_program_main", response_class=HTMLResponse) 
-async def program(request:Request):
-    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request})
+async def program_main_function(request:Request):
+    
+    await request.form()
+    print(dict(await request.form()))
+    
+    programs = await collection_manag_program.get_all()
+    
+    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request, 'programs': programs})
 
 @router.get("/manag_program_write", response_class=HTMLResponse) 
-async def program_write(request:Request):
+async def program_write_function(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
 
 @router.post("/manag_program_write", response_class=HTMLResponse) 
-async def program_write(request:Request):
+async def program_write_function(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
 
 @router.get("/manag_program_read", response_class=HTMLResponse) 
-async def program_read(request:Request):
+async def program_read_function(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
 
 @router.post("/manag_program_read", response_class=HTMLResponse) 
-async def program_read(request:Request):
+async def program_read_function(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_read.html", context={'request':request})
 
 
@@ -387,7 +407,7 @@ async def FAQ(request:Request, object_id:PydanticObjectId):
 # notice_main
 
 @router.get("/manag_notice_main", response_class=HTMLResponse) 
-async def notice_function(
+async def notice_main_function(
     request:Request, 
     page_number: Optional[int] = 1
     ):
@@ -405,7 +425,7 @@ async def notice_function(
     
 
 @router.post("/manag_notice_main", response_class=HTMLResponse) 
-async def notice_function(request:Request):
+async def notice_main_function(request:Request):
     await request.form()
     print(dict(await request.form()))
     

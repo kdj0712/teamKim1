@@ -6,6 +6,8 @@ from beanie import PydanticObjectId
 from typing import Optional
 from datetime import datetime
 from fastapi import FastAPI
+from models.program_list import program
+collection_manag_program = Database(program)
 
 app = FastAPI()
 router = APIRouter()
