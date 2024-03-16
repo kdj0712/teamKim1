@@ -136,13 +136,13 @@ async def disease_list(request: Request, page_number: int = 1, key_name: Optiona
         # 검색 조건을 기반으로 질환을 필터링하는 로직
         if key_name == 'dise_name_kr':
             # 희귀질환명으로 검색하는 로직
-            conditions["dise_name_kr"] = search_word
+            conditions.find({ 'dise_name_kr': { '$regex': search_word }})
         elif key_name == 'dise_KCD_code':
             # KCD코드로 검색하는 로직
-            conditions["dise_KCD_code"] = search_word
+            conditions.find({ 'dise_KCD_code': { '$regex': search_word }})
         elif key_name == 'dise_spc_code':
             # 산정특례 특정기호로 검색하는 로직
-            conditions["dise_spc_code"] = search_word
+            conditions.find({ 'dise_spc_code': { '$regex': search_word }})
         elif key_name == 'dise_symptoms':
             # 증상명으로 검색하는 로직
             conditions["dise_symptoms"] = search_word
