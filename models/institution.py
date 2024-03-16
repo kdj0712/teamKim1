@@ -1,7 +1,7 @@
 from typing import Optional, List
 
 from beanie import Document, Link
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 class Institutions(Document):
     hospital_name: Optional[str] = None

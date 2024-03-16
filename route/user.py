@@ -1,9 +1,6 @@
-from fastapi import APIRouter
-from fastapi import HTTPException
+from fastapi import APIRouter, HTTPException, Request, FastAPI
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
-from fastapi import FastAPI
 from datetime import datetime
 from beanie import PydanticObjectId
 
@@ -11,10 +8,8 @@ app = FastAPI()
 router = APIRouter()
 
 from database.connection import Database
-
 from models.user_member import members
 collection_member = Database(members)
-
 
 templates = Jinja2Templates(directory="templates/")
 

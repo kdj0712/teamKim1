@@ -1,16 +1,15 @@
-from fastapi import APIRouter
+from database.connection import Database
+from fastapi import APIRouter, Request, FastAPI
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
 from beanie import PydanticObjectId
 from typing import Optional
 from datetime import datetime
-from fastapi import FastAPI
+from models.program_list import program
+collection_manag_program = Database(program)
 
 app = FastAPI()
 router = APIRouter()
-
-from database.connection import Database
 
 # from models.### import .###
 # collection_.### = Database(.###)

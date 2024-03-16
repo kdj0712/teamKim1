@@ -2,32 +2,119 @@
 
 {% block main_container %}
 
+<style>
+  li.col-3 {
+    padding: 5px;
+    margin: 10px;
+  }
+
+  li.col-3:hover {
+    background-color: deepskyblue;
+  }
+
+  .btn-4 {
+    background-color: #4dccc6;
+  background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+    line-height: 42px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+  }
+  .btn-4:hover{
+    background-color: #89d8d3;
+  background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+  }
+  .btn-4 span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .btn-4:before,
+  .btn-4:after {
+    position: absolute;
+    content: "";
+    right: 0;
+    top: 0;
+     box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.9),
+      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+    transition: all 0.3s ease;
+  }
+  .btn-4:before {
+    height: 0%;
+    width: .1px;
+  }
+  .btn-4:after {
+    width: 0%;
+    height: .1px;
+  }
+  .btn-4:hover:before {
+    height: 100%;
+  }
+  .btn-4:hover:after {
+    width: 100%;
+  }
+  .btn-4 span:before,
+  .btn-4 span:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.9),
+      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+    transition: all 0.3s ease;
+  }
+  .btn-4 span:before {
+    width: .1px;
+    height: 0%;
+  }
+  .btn-4 span:after {
+    width: 0%;
+    height: .1px;
+  }
+  .btn-4 span:hover:before {
+    height: 100%;
+  }
+  .btn-4 span:hover:after {
+    width: 100%;
+  }
+</style>
+
 <h2>희귀질환정보</h2>
 
-<table>
-  <tr>
-    <td>항목분류</td>
-    <td>
-      <div>특정감염성(A00-B99)</div>
-      <div>신생물(C00-D48)</div>
-      <div>혈액조혈기관(D50-D89)</div>
-      <div>내분비,영양(E00-E90)</div>
-      <div>정신및행동(F00-F99)</div>
-      <div>신경계통질환(G00-G99)</div>
-      <div>눈및부속기관(H00-H59)</div>
-      <div>순환기계통(I00-I99)</div>
-      <div>호흡기계통(J00-J99)</div>
-      <div>소화기계통(K00-K93)</div>
-      <div>피부및조직(L00-L99)</div>
-      <div>근육골격계통(M00-M99)</div>
-      <div>비뇨생식(N00-N99)</div>
-      <div>출생전후기(P00-P96)</div>
-      <div>선천기형변형(Q00-Q99)</div>
-      <div>코드 없음</div>
+<table border="1" class="" style="text-align: center;">
+  <tr class="row">
+    <td class="col-2" style="font-size: x-large;">
+      <br><br><br><br>항목분류
+    </td>
+    <td class="col-10 row">
+      <ul class="row col list-unstyled justify-content-center">
+        <li class="col-3 btn btn-primary mt-4"><a href="#" style="color: aliceblue;">전체질환</a></li>
+        <li class="col-3 btn btn-primary mt-4"><a href="#" style="color: aliceblue;">특정감염성(A00-B99)</a></li>
+        <li class="col-3 btn btn-primary mt-4"><a href="#" style="color: aliceblue;">신생물(C00-D48)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">혈액조혈기관(D50-D89)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">내분비,영양(E00-E90)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">정신및행동(F00-F99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">신경계통질환(G00-G99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">눈및부속기관(H00-H59)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">순환기계통(I00-I99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">호흡기계통(J00-J99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">소화기계통(K00-K93)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">피부및조직(L00-L99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">근육골격계통(M00-M99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">비뇨생식(N00-N99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">출생전후기(P00-P96)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">선천기형변형(Q00-Q99)</a></li>
+        <li class="col-3 btn btn-primary"><a href="#" style="color: aliceblue;">코드 없음</a></li>
+        <div class="col-3" style="padding: 5px; margin: 10px;"></div>
+      </ul>
     </td>
   </tr>
 </table>
-
 <div> ※ 희귀질환정보는 참고사항으로 내용에 대한 법적인 책임이 없음을 알려드립니다. 자세한 내용은 전문의와 상의하시기 바랍니다. </div>
 <div> 희귀질환정보에 게재된 질환명은 [한국표준질병 사인분류]에 의거하여 기록하였습니다. </div>
 
@@ -39,25 +126,37 @@
 
   <form action="">
     <!-- 검색 항목 추가 필요 -->
-    <h2>검색</h2>
-    <div class="row">
-      <div class="col-2">
-        <select class="form-control" name="key_name">
-          <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>희귀 질환 명</option>
-          <option value="dise_KCD_code" {{ 'selected' if request._query_params.key_name=='dise_KCD_code' else '' }}>KCD코드</option>
-          <option value="dise_spc_code" {{ 'selected' if request._query_params.key_name=='dise_spc_code' else '' }}>산정특례 특정기호</option>
-        </select>
-        
-      </div>
-      <div class="col-6">
-        <input class="form-control" placeholder="Enter Search!" name="search_word" value="{{request._query_params.word}}">
-      </div>
-      <div class="col-4">
-        <button type="submit" class="btn btn-primary" formaction="/search/search_raredisease"
-          formmethod="get" >검색</button>
+    <br>
+    <br>
+    <br>
+    <h2>희귀병 리스트</h2>
+    <div class="justify-content-center row">
+      <div class="row col-7">
+        <div class="col-3">
+          <select class="form-control" name="key_name">
+            <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>희귀질환 명</option>
+            <option value="dise_KCD_code" {{ 'selected' if request._query_params.key_name=='dise_KCD_code' else '' }}>
+              KCD코드</option>
+            <option value="dise_spc_code" {{ 'selected' if request._query_params.key_name=='dise_spc_code' else '' }}>
+              산정특례
+              특정기호</option>
+            <option value="dise_symptoms" {{ 'selected' if request._query_params.key_name=='dise_symptoms' else '' }}>증상명</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <input class="form-control" placeholder="Enter Search!" name="search_word"
+            value="{{request._query_params.search_word}}">
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary" formaction="/info/info_raredisease"
+            formmethod="get">검색</button>
+        </div>
       </div>
     </div>
-    <h2>희귀병 리스트</h2>
+    <div class="text-end">
+      <button class="btn-4">엑셀다운로드</button>
+    </div>
+
     <table class="table table-hover">
       <thead>
         <tr>
@@ -65,7 +164,7 @@
           <th>병명(한국어)</th>
           <th>병명(영어)</th>
           <th>KCD코드</th>
-          <th>산정특례 특정기호</th>
+          <th>산정특례<br>특정기호</th>
           <th>항목분류</th>
           <th>의료비지원</th>
           <th>상세정보</th>
