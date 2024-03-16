@@ -40,8 +40,8 @@ def load_pickle_from_gcs(bucket_name, file_name):
     pickle_data = blob.download_as_bytes()
     return pickle.loads(pickle_data)
 bucket_name = 'savehomes'
-tfidf_vectorizer_file_name = 'search_symptoms.pkl'
-vectorizer = load_pickle_from_gcs(bucket_name, tfidf_vectorizer_file_name)
+file_name = 'search_symptoms.pkl'
+vectorizer = load_pickle_from_gcs(bucket_name, file_name)
 
 with open('data/pkl/vectorizer.pkl', 'rb') as file:
     vectorizer = pickle.load(file)
