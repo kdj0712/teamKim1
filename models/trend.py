@@ -8,6 +8,7 @@ class news_trends(Document):
     news_when: Optional[str] = None
     news_contents : Optional[str] = None
     news_url : Optional[str] = None
+    news_type : Optional[str] = None
 
     class Settings:
         name = "trend_news"
