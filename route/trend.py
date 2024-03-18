@@ -39,6 +39,7 @@ async def trend_news(request:Request):
         news_urls.append(data.news_url)
 
     return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request
+                                                                             ,'news_data' : news_data
                                                                              , 'news_title' : news_title
                                                                              , 'news_when' : news_when
                                                                              , 'news_contents' : news_contents
