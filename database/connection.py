@@ -6,7 +6,7 @@ from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
 from models.institution import Institutions
 from models.user_member import members
-from models.trend import news_trends
+from models.trend_news import news_trends as news
 from models.other_QnA import QnA
 from models.notice_list import notice
 from models.program_list import program
@@ -27,7 +27,7 @@ class Settings(BaseSettings):
         if self.DATABASE_URL is not None:
             client = AsyncIOMotorClient(self.DATABASE_URL)
             await init_beanie(database=client.get_default_database(),
-                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA, program, notice])
+                              document_models=[academicinfo, diseases, Institutions, members, news, QnA, program, notice])
 
     class Config:
         env_file = ".env"
@@ -98,17 +98,15 @@ class Database:
         return False    
     
     async def getsbyconditionswithpagination(self
-                                             , conditions:dict, page_number) -> Any:
+                                             , conditions:dict, page_number, records_per_page=10) -> [Any]:
         # find({})
         total = await self.model.find(conditions).count()
-        pagination = Paginations(total_records=total, current_page=page_number)
+        pagination = Paginations(total_records=total, current_page=page_number, records_per_page=records_per_page)
         documents = await self.model.find(conditions).skip(pagination.start_record_number-1).limit(pagination.records_per_page).to_list()
         if documents:
             return documents, pagination
-        return False  
+        return pagination  
     
-
-
 
 if __name__ == '__main__':
     settings = Settings()

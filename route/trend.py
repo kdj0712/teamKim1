@@ -7,10 +7,8 @@ from datetime import datetime
 from database.connection import Database
 from beanie import PydanticObjectId
 
-
-
-from models.trend import news_trends  # mongodb 추가해서 넣어야 함
-
+from models.trend_news import news_trends as news  # mongodb 추가해서 넣어야 함
+collection_trend_news= Database(news)
 
 router = APIRouter()
 
@@ -20,11 +18,11 @@ templates = Jinja2Templates(directory="templates/")
 
 # 뉴스
 
-@router.get("/trend/trend_news", response_class=HTMLResponse) 
+@router.get("/trend_news", response_class=HTMLResponse) 
 async def trend_news(request:Request):
     return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request})
 
-@router.post("/trend/trend_news", response_class=HTMLResponse) 
+@router.post("/trend_news", response_class=HTMLResponse) 
 async def trend_news(request:Request):
     news_data = news_trends.objects().all()
 
@@ -41,11 +39,7 @@ async def trend_news(request:Request):
         news_urls.append(data.news_url)
 
     return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request
-                                                                             , 'news_title' : news_title
-                                                                             , 'news_when' : news_when
-                                                                             , 'news_contents' : news_contents
-                                                                             , 'news_urls' : news_urls
-                                                                            , 'news_paper' : news_paper})
+                                                                             , 'news':news_list})
 
 #### -------------------------------------------------------------------------------------------------------
 
