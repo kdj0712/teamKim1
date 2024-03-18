@@ -6,7 +6,7 @@ from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
 from models.institution import Institutions
 from models.user_member import members
-from models.trend import news_trends
+from models.trend_news import news_trends
 from models.other_QnA import QnA
 from models.notice_list import notice
 from models.program_list import program

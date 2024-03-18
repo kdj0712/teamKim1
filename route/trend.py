@@ -7,10 +7,8 @@ from datetime import datetime
 from database.connection import Database
 from beanie import PydanticObjectId
 
-
-
-from models.trend import news_trends  # mongodb 추가해서 넣어야 함
-
+from models.trend_news import news_trends as news  # mongodb 추가해서 넣어야 함
+collection_trend_news= Database(news)
 
 router = APIRouter()
 
@@ -26,7 +24,7 @@ async def trend_news(request:Request):
 
 @router.post("/trend_news", response_class=HTMLResponse) 
 async def trend_news(request:Request):
-    news_data = news_trends.objects().all()
+    news_data = news.objects().all()
 
     news_title = []
     news_when = []
