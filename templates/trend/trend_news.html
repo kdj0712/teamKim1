@@ -35,13 +35,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for QnA in QnAs %}
+            {% for index, title in enumerate(news_title) %}
             <tr onclick="location.href='/trend/trend_news/{{news_data.id}}'" style="cursor: pointer;">
                 <td>{{loop.index}}</td>
-                <td id="readpage">{{news_title}}</td>
-                <td>{{}}</td>
-                <td>{{}}</td>
-                <td>{{news_when}}</td>
+                <td id="readpage">{{title}}</td>
+                <td>{{news_title[index]}}</td>
+                <td>{{news_title[index]}}</td>
+                <td>{{news_when[index]}}</td>
             </tr>
             {% endfor %}
         </tbody>
