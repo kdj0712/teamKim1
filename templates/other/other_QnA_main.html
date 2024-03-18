@@ -45,7 +45,12 @@
         <td id="readpage">{{QnA.ques_title}}</td>
         <td>{{QnA.ques_writer}}</td>
         <td>{{QnA.ques_time}}</td>
-        <td>답변완료</td>
+        <td>{%if QnA.other_QnA_main %}
+            답변완료
+            {% else %}
+            <div class="text-primary">답변대기</div>
+            {% endif%}
+        </td>
       </tr>
       {% endfor %}
     </tbody>
