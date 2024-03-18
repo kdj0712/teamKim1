@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field, EmailStr
 from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
 from models.institution import Institutions
-from models.trend import news_trends
+from models.trend_news import news
 from models.user_member import members
 from models.other_QnA import QnA
 from models.notice_list import notice
@@ -18,7 +18,7 @@ from models.program_list import program
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)
-collection_trend = Database(news_trends)
+collection_trend = Database(news)
 collection_member = Database(members)    
 collection_QnA = Database(QnA)
 collection_manag_notice = Database(notice)

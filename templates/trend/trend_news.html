@@ -8,8 +8,7 @@
         <div class="row col-7">
             <div class="col-3">
                 <select class="form-control" name="key_name">
-                    <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else ''
-                        }}>
+                    <option value="">
                         제목
                     </option>
                 </select>
@@ -19,7 +18,7 @@
                     value="{{request._query_params.word}}">
             </div>
             <div class="col-2">
-                <button type="submit" class="btn btn-primary" formaction="/manag/manag_QnA_main"
+                <button type="submit" class="btn btn-primary" formaction="/trend/trend_news"
                     formmethod="get">검색</button>
             </div>
         </div>
