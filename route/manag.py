@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field, EmailStr
 from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
 from models.institution import Institutions
-from models.trend_news import news
+from models.trend_news import news_trends as news
 from models.user_member import members
 from models.other_QnA import QnA
 from models.notice_list import notice

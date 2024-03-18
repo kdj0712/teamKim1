@@ -53,9 +53,9 @@ async def root(Request:Request):
 ## 뉴스 추천
 from database.connection import Database
 from models.user_member import members
-from models.trend import news_trends
+from models.trend_news import news_trends as news
 members_coll = Database(members)
-news_coll = Database(news_trends)
+news_coll = Database(news)
 
 from datetime import datetime, timedelta
 
