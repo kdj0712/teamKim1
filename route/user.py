@@ -1,9 +1,6 @@
-from fastapi import APIRouter
-from fastapi import HTTPException
+from fastapi import APIRouter, HTTPException, Request, FastAPI
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
-from fastapi import FastAPI
 from datetime import datetime
 from beanie import PydanticObjectId
 
@@ -11,10 +8,8 @@ app = FastAPI()
 router = APIRouter()
 
 from database.connection import Database
-
 from models.user_member import members
 collection_member = Database(members)
-
 
 templates = Jinja2Templates(directory="templates/")
 
@@ -35,8 +30,8 @@ async def user_login(request:Request):
 
 # 로그인 체킹 페이지
 @router.get("/user_logincheck", response_class=HTMLResponse) 
-async def mypage(request:Request):
-    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+async def mypage(request:Request,user_id:PydanticObjectId ):
+    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request,'user_id':PydanticObjectId})
 
 @router.post("/user_logincheck", response_class=HTMLResponse) 
 async def mypage(request:Request):
@@ -58,7 +53,7 @@ async def mypage(request:Request):
     if logcheck:
         return templates.TemplateResponse(name="mainpage.html", context={'request':request})
     else: 
-        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request,'user_id':PydanticObjectId})
 
 #### -------------------------------------------------------------------------------------------------------
 

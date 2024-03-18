@@ -1,4 +1,3 @@
-# 웹크롤링 동작
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -8,8 +7,12 @@ from selenium.webdriver.common.keys import Keys
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
 from pymongo import MongoClient
+
+import pickle
+import os
 
 # 몽고 디비 연결
 def dbconnect(collection) :
@@ -22,6 +25,11 @@ def dbconnect(collection) :
 
 def bosascrapping(browser_name, keyword) :
     bosa_news_coll = dbconnect('bosa_news_weekly')
+
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Ensure GUI is off
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
 
     # 현재 날짜 설정
     from datetime import datetime, timedelta
@@ -49,18 +57,37 @@ def bosascrapping(browser_name, keyword) :
     ## 스크래핑
     contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
     for index in range(len(contents)) :
+        contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
         try : 
             news_title = contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li > h4 > a").text
             news_url = contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").get_attribute("href")
-            news_when = contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.dated").text
+            news_when_orgin = contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li > em.info.dated").text
             contents[index].find_element(By.CSS_SELECTOR, "#section-list > ul > li> h4 > a").click() # 안으로 들어가기
             news_contents = ''
             news_contents_p = browser.find_elements(By.CSS_SELECTOR, "#article-view-content-div > p")
             for news_p in news_contents_p :
                 news_contents += news_p.text
+
+            # 가지고 온 내용 수정
+            ## content 분리하기
+            # pickle_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "pkl", "news_recommend_model_vectorizer.pkl"))
+
+            with open('data/pkl/news_recommend_model.pkl', "rb") as file:
+                model = pickle.load(file)
+            
+            with open('data/pkl/news_recommend_vectorizer.pkl', 'rb') as file:
+                vectorizer = pickle.load(file)
+
+            news_type = model.predict(vectorizer.transform([news_title]))
+            
+            # 날짜 형식 맞춰주기
+            desired_format = "%Y-%m-%d"
+            news_when = datetime.strftime(news_when_orgin, desired_format)
+            
             bosa_news_coll.insert_one({"news_title" : news_title
                                     ,"news_when" : news_when
                                     ,"news_contents":news_contents
+                                    , "news_type" : news_type
                                     ,"news_url":news_url })
             browser.back()
             time.sleep(1)

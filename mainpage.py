@@ -50,6 +50,22 @@ async def root(Request:Request):
     return templates.TemplateResponse("mainpage.html",{'request':Request})
 
 
-# 워드 클라우드 제작 후 보내기
+## 뉴스 추천
+from database.connection import Database
+from models.user_member import members
+from models.trend import news_trends
+members_coll = Database(members)
+news_coll = Database(news_trends)
 
-from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import datetime, timedelta
+
+@app.get("/")
+async def news_recomment(Request:Request):
+    hope_info = '프로그램 참여' #사용자 ID를 이용해서 유지가능하게 하면 user_id 도입
+    recent_day = 20 # 최근 20일 간의 뉴스만 고려
+    news_type = news_coll['news_type']
+
+
+    return
+
+    
