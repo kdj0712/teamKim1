@@ -121,23 +121,25 @@ async def institution(request:Request):
 
 # 의료기관검색
 
-@router.get("/info_institution", response_class=HTMLResponse) 
-async def institution(request:Request, keyword: str = Query(None, alias="keyword")):
+@router.get("/info_institution") 
+async def institution(request:Request):
+    await request.form()
+    keyword = request.query_params.get('keyword')
     if keyword:
-        url = "https://maps.googleapis.com/maps/api/place/searchByText/json"
+        url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
         params = {
-            "input": keyword,
-            "inputtype": "textquery",
-            "fields": "photos,formatted_address,name,rating,geometry,place_id",
+            "query": keyword,
+            "fields": "formatted_address,name,rating,geometry,place_id,formatted_phone_number",
             "key": api_key
         }
         async with ClientSession() as session:
             async with session.get(url, params=params) as resp:
                 data = await resp.json()
                 results = data.get('results', [])  # 'results' 키의 값을 추출하고, 없을 경우 빈 배열을 사용합니다.
-        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": results})
+        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": results,'keyword':keyword,'API_KEY': api_key})
     elif keyword is None:
-        return templates.TemplateResponse("info/info_institution.html", {"request": request, 'API_KEY': api_key})
+        results = {}
+        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": results,'API_KEY': api_key})
 
 @router.post("/info_institution", response_class=HTMLResponse) 
 async def institution(request:Request):
