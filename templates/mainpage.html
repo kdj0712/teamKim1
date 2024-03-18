@@ -10,19 +10,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <style>
-    * {
-        font-family: "Noto Sans KR", sans-serif;
-        font-optical-sizing: auto;
-      }
-      </style>
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+        }
+    </style>
 </head>
 
 <body>
 
     <header style="background-color: #5CB8FF;">
         <div class="container-fluid">
-            <div class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom navbar navbar-expand-lg bd-navbar sticky-top justify-content-center">
-                
+            <div
+                class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom navbar navbar-expand-lg bd-navbar sticky-top justify-content-center">
+
                 <a href="/"
                     class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <svg class="bi me-2" width="40" height="32">
@@ -153,29 +154,39 @@
             <div style="  text-align: center   align-items-center" class="justify-content-center">
                 <img src="/data/img/unnamed.png" alt="">
             </div>
+            <form >
+                <div style="text-align: center   align-items-center" class="row justify-content-center">
 
-            <div style="text-align: center   align-items-center" class="row justify-content-center">
-                <div class="col-2">
-                    <select class="form-select " id="country" required="" name="key_name">
-                        <option value="">전체</option>
-                        <option value="raredisease">희귀질환</option>
-                        <option value="institution">의료기관</option>
-                    </select>
-                </div>
-                <div class="col-5">
-                    <input class="form-control" placeholder="Enter Search!" name="search_word"
-                        value="{{request._query_params.word}}">
-                </div>
-                <!-- if 문 써서 희귀질환이면 /search/search_raredisease로 연결
+                    <div class="col-2">
+
+                        <select class="form-select " id="country" required="" name="key_name">
+                            <option value="">전체</option>
+                            <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr'
+                                else '' }}>희귀질환</option>
+                            <option value="institution_name" {{ 'selected' if
+                                request._query_params.key_name=='institution_name' else '' }}>의료기관</option>
+                        </select>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-control" placeholder="Enter Search!" name="search_word"
+                            value="{{request._query_params.word}}">
+                    </div>
+                    <!-- if 문 써서 희귀질환이면 /search/search_raredisease로 연결
                     의료기관이면/search/search_institution  -->
 
-                <div class="col-2">
-                    <button type="submit" class="btn btn-primary" formaction="/search/search_raredisease"
-                        formmethod="get">검색</button>
-                    <br>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary"
+                            {% if key_name =='dise_name_kr' %}
+                            formaction="/info/info_raredisease?key_name={{request._query_params.key_name}}&search_word={{request._query_params.key_name}}"
+                            {% elif key_name =='institution_name' %}
+                            formaction="/info/info_institution"
+                            {% endif%} formmethod="get">검색</button>
+                        <br>
+
+                    </div>
 
                 </div>
-            </div>
+            </form>
             <div class="row justify-content-center  text-center container p-3">
                 <div class="p-3 text-decoration-none " style="font-size:larger; font-weight: 700; ">📝(어떤어떤 희귀질환자의
                     보호자인)당신을 위한 추천 뉴스</div>
