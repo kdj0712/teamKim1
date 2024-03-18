@@ -70,13 +70,15 @@ def bosascrapping(browser_name, keyword) :
 
             # 가지고 온 내용 수정
             ## content 분리하기
-            pickle_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "pkl", "news_recommend_model_vectorizer.pkl"))
+            # pickle_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "pkl", "news_recommend_model_vectorizer.pkl"))
 
-            with open(pickle_file_path, "rb") as file:
-                model, tfidfvectorizer = pickle.load(file)
-                vectorized_news_title = tfidfvectorizer(news_title)
-                news_type = model.predict(vectorized_news_title)
-                pass
+            with open('data/pkl/news_recommend_model.pkl', "rb") as file:
+                model = pickle.load(file)
+            
+            with open('data/pkl/news_recommend_vectorizer.pkl', 'rb') as file:
+                vectorizer = pickle.load(file)
+
+            news_type = model.predict(vectorizer.transform([news_title]))
             
             # 날짜 형식 맞춰주기
             desired_format = "%Y-%m-%d"
