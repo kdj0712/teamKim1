@@ -420,8 +420,8 @@ async def notice_main_function(
     )
     
     return templates.TemplateResponse(
-    name="manag/notice/manag_notice_main.html",
-    context={'request': request, 'pagination': pagination, 'notices': notice_list})
+        name="manag/notice/manag_notice_main.html",
+        context={'request': request, 'pagination': pagination, 'notices': notice_list})
 
 @router.post("/manag_notice_main", response_class=HTMLResponse) 
 async def notice_main_function(request:Request):

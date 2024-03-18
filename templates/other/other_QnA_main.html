@@ -2,27 +2,22 @@
 
 {% block main_container %}
 
+<form action="">
   <div class="row justify-content-between">
     <div class="col-1 fw-bold fs-2 text-start">QnA</div>
-    <form action="" class="col-7 row">
-      
-       
-          <div class="col-3">
-            <select class="form-control" name="key_name">
-              <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>제목
-              </option>
-            </select>
-          </div>
-          <div class="col-6">
-            <input class="form-control" placeholder="Enter Search!" name="search_word"
-              value="{{request._query_params.word}}">
-          </div>
-          <div class="col-2">
-            <button type="submit" class="btn btn-primary" formaction="/other/other_QnA" formmethod="get">검색</button>
-          </div>
-        </div>
-      
-    </form>
+    <div class="col-3">
+      <select class="form-control" name="key_name">
+        <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>제목
+        </option>
+      </select>
+    </div>
+    <div class="col-6">
+      <input class="form-control" placeholder="Enter Search!" name="search_word" value="{{request._query_params.word}}">
+    </div>
+    <div class="col-2">
+      <button type="submit" class="btn btn-primary" formaction="/other/other_QnA" formmethod="get">검색</button>
+    </div>
+  </div>
   </div>
   <hr>
   <div style="text-align: end;">
@@ -46,10 +41,10 @@
         <td>{{QnA.ques_writer}}</td>
         <td>{{QnA.ques_time}}</td>
         <td>{%if QnA.other_QnA_main %}
-            답변완료
-            {% else %}
-            <div class="text-primary">답변대기</div>
-            {% endif%}
+          답변완료
+          {% else %}
+          <div class="text-primary">답변대기</div>
+          {% endif%}
         </td>
       </tr>
       {% endfor %}
@@ -88,5 +83,5 @@
       </li>
     </ul>
   </nav>
-
+</form>
 {% endblock %}

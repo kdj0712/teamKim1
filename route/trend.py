@@ -17,33 +17,37 @@ templates = Jinja2Templates(directory="templates/")
 #### -------------------------------------------------------------------------------------------------------
 
 # 뉴스
-
+@router.get("/trend_news/{page_number}")
 @router.get("/trend_news", response_class=HTMLResponse) 
-async def trend_news(request:Request):
-    return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request})
+async def trend_news(
+    request:Request, 
+    page_number: Optional[int] = 1
+    ):
+    
+    await request.form()
+    print(dict(await request.form()))
+    
+    conditions = {}
+    
+    news_list, pagination = await collection_trend_news.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(
+        name="trend/trend_news.html", 
+        context={'request': request, 'pagination': pagination, 'news': news_list})
 
 @router.post("/trend_news", response_class=HTMLResponse) 
-async def trend_news(request:Request):
-    news_data = news.objects().all()
-
-    news_title = []
-    news_when = []
-    news_contents = []
-    news_urls = []
-    news_paper = '의학신문'
-
-    for data in news_data :
-        news_title.append(data.news_title)
-        news_when.append(data.news_when)
-        news_contents.append(data.news_contents)
-        news_urls.append(data.news_url)
-
+async def trend_news(
+    request:Request):
+    
+    await request.form()
+    print(dict(await request.form()))
+    
+    news_list = await collection_trend_news.get_all()
+    
     return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request
-                                                                             , 'news_title' : news_title
-                                                                             , 'news_when' : news_when
-                                                                             , 'news_contents' : news_contents
-                                                                             , 'news_urls' : news_urls
-                                                                            , 'news_paper' : news_paper})
+                                                                             , 'news':news_list})
 
 #### -------------------------------------------------------------------------------------------------------
 
