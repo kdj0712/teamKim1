@@ -1,28 +1,30 @@
 {% extends "mainpage.html"%}
 
 {% block main_container %}
-<div class="container">
 
-  <h2>QnA</h2>
-  <form action="">
-    <div class="justify-content-center row">
-      <div class="row col-7">
-        <div class="col-3">
-          <select class="form-control" name="key_name">
-            <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>제목
-            </option>
-          </select>
+  <div class="row justify-content-between">
+    <div class="col-1 fw-bold fs-2 text-start">QnA</div>
+    <form action="" class="col-7 row">
+      
+       
+          <div class="col-3">
+            <select class="form-control" name="key_name">
+              <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>제목
+              </option>
+            </select>
+          </div>
+          <div class="col-6">
+            <input class="form-control" placeholder="Enter Search!" name="search_word"
+              value="{{request._query_params.word}}">
+          </div>
+          <div class="col-2">
+            <button type="submit" class="btn btn-primary" formaction="/other/other_QnA" formmethod="get">검색</button>
+          </div>
         </div>
-        <div class="col-6">
-          <input class="form-control" placeholder="Enter Search!" name="search_word"
-            value="{{request._query_params.word}}">
-        </div>
-        <div class="col-2">
-          <button type="submit" class="btn btn-primary" formaction="/other/other_QnA" formmethod="get">검색</button>
-        </div>
-      </div>
-    </div>
-  </form>
+      
+    </form>
+  </div>
+  <hr>
   <div style="text-align: end;">
     <a class="btn btn-success" href="/other/other_write">글쓰기</a>
   </div>
@@ -31,8 +33,8 @@
       <tr>
         <th>번호</th>
         <th>질문</th>
-        <th>작성일</th>
         <th>작성자</th>
+        <th>작성일</th>
         <th>답변</th>
       </tr>
     </thead>
@@ -82,5 +84,4 @@
     </ul>
   </nav>
 
-</div>
 {% endblock %}
