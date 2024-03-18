@@ -1,75 +1,84 @@
 {% extends "mainpage.html"%}
 
 {% block main_container %}
-
-<main class="container">
-    <h2>news</h2>
-    <div class="justify-content-center row">
-        <div class="row col-7">
-            <div class="col-3">
-                <select class="form-control" name="key_name">
-                    <option value="">
-                        제목
-                    </option>
-                </select>
-            </div>
-            <div class="col-6">
-                <input class="form-control" placeholder="Enter Search!" name="search_word"
-                    value="{{request._query_params.word}}">
-            </div>
-            <div class="col-2">
-                <button type="submit" class="btn btn-primary" formaction="/trend/trend_news"
-                    formmethod="get">검색</button>
+<form action="">
+    <main class="container">
+        <h2>news</h2>
+        <div class="justify-content-center row">
+            <div class="row col-7">
+                <div class="col-3">
+                    <select class="form-control" name="key_name">
+                        <option value="">
+                            제목
+                        </option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" placeholder="Enter Search!" name="search_word"
+                        value="{{request._query_params.word}}">
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary" formaction="/trend/trend_news"
+                        formmethod="get">검색</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>언론사명</th>
-                <th>조회수</th>
-                <th>날짜</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for index, title in enumerate(news_title) %}
-            <tr onclick="location.href='/trend/trend_news/{{news_data.id}}'" style="cursor: pointer;">
-                <td>{{loop.index}}</td>
-                <td id="readpage">{{title}}</td>
-                <td>{{news_title[index]}}</td>
-                <td>{{news_title[index]}}</td>
-                <td>{{news_when[index]}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <button type="submit" class="page-link" formaction="">
-                    맨 처음
-                </button>
-            </li>
-            <li class="page-item ">
-                <button type="submit" class="page-link" formaction="">이전</button>
-            </li>
-            <li class="page-item ">
-                <button type="submit" class="page-link" formaction="">
-                </button>
-            </li>
-            <li class="">
-                <button type="submit" class="page-link" formaction="">다음</button>
-            </li>
-            <li class="page-item ">
-                <button type="submit" class="page-link" formaction="{}}">
-                    맨 끝
-                </button>
-            </li>
-        </ul>
-    </nav>
-</main>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>날짜</th>
+                    <th>언론사명</th>
+                    <th>제목</th>
+                    <th>타입</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for new in news %}
+                <tr onclick="location.href='/trend/trend_news/{{new.id}}'" style="cursor: pointer;">
+                    <td>{{loop.index}}</td>
+                    <td>{{new.news_when}}</td>
+                    <td>{{new.news_paper}}</td>
+                    <td>{{new.news_title}}</td>
+                    <td>{{new.news_topic}}</td>
+                    <td>{{new.news_title}}</td>
 
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
+                    <button type="submit" class="page-link" formaction="/trend/trend_news/{{pagination.first_page}}">
+                        맨 처음
+                    </button>
+                </li>
+                <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
+                    <button type="submit" class="page-link"
+                        formaction="/trend/trend_news/{{pagination.previous_page}}">이전</button>
+                </li>
+                {% for page_num in pagination.current_page_range %}
+                <li class=" page-item {{ 'active' if page_num == pagination.current_page else '' }}">
+                    <button type=" submit" class="page-link" formaction="/trend/trend_news/{{ page_num }}">
+                        {{page_num}}
+                    </button>
+                </li>
+                {% endfor %}
+                <li class=" page-item {{ '' if pagination.has_next_page else 'disabled' }}">
+                    <button type=" submit" class="page-link"
+                        formaction="/trend/trend_news/{{ pagination.next_page }}">다음</button>
+                </li>
+                <li class=" page-item {{ '' if pagination.has_next_block else ' disabled' }}">
+                    <button type=" submit" class="page-link" formaction="/trend/trend_news/{{ pagination.last_page }}">
+                        맨 끝
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </main>
+</form>
 {% endblock %}
