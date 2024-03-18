@@ -20,11 +20,11 @@ templates = Jinja2Templates(directory="templates/")
 
 # 뉴스
 
-@router.get("/trend_news", response_class=HTMLResponse) 
+@router.get("/trend/trend_news", response_class=HTMLResponse) 
 async def trend_news(request:Request):
     return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request})
 
-@router.post("/trend_news", response_class=HTMLResponse) 
+@router.post("/trend/trend_news", response_class=HTMLResponse) 
 async def trend_news(request:Request):
     news_data = news_trends.objects().all()
 
