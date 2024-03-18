@@ -1,7 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
 from beanie import PydanticObjectId
 from typing import Optional
 from datetime import datetime
@@ -146,13 +145,13 @@ async def QnA_function(request:Request):
 
 
 # 글쓰기 창
-@router.get("/other_write", response_class=HTMLResponse) 
+@router.get("/other_QnA_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="other/other_write.html", context={'request':request})
+    return templates.TemplateResponse(name="other/other_QnA_write.html", context={'request':request})
 
-@router.post("/other_write", response_class=HTMLResponse) 
+@router.post("/other_QnA_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="other/other_write.html", context={'request':request})
+    return templates.TemplateResponse(name="other/other_QnA_write.html", context={'request':request})
 
 # 글 확인
 
