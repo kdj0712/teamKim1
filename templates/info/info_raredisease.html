@@ -14,71 +14,83 @@
 
   .btn-4 {
     background-color: #4dccc6;
-  background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+    background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
     line-height: 42px;
     padding-left: 10px;
     padding-right: 10px;
     border: none;
   }
-  .btn-4:hover{
+
+  .btn-4:hover {
     background-color: #89d8d3;
-  background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+    background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
   }
+
   .btn-4 span {
     position: relative;
     display: block;
     width: 100%;
     height: 100%;
   }
+
   .btn-4:before,
   .btn-4:after {
     position: absolute;
     content: "";
     right: 0;
     top: 0;
-     box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
-                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-      inset -4px -4px 6px 0 rgba(255,255,255,.9),
+    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .9),
+      -4px -4px 6px 0 rgba(116, 125, 136, .2),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, .9),
       inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
     transition: all 0.3s ease;
   }
+
   .btn-4:before {
     height: 0%;
     width: .1px;
   }
+
   .btn-4:after {
     width: 0%;
     height: .1px;
   }
+
   .btn-4:hover:before {
     height: 100%;
   }
+
   .btn-4:hover:after {
     width: 100%;
   }
+
   .btn-4 span:before,
   .btn-4 span:after {
     position: absolute;
     content: "";
     left: 0;
     bottom: 0;
-    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
-                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-      inset -4px -4px 6px 0 rgba(255,255,255,.9),
+    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .9),
+      -4px -4px 6px 0 rgba(116, 125, 136, .2),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, .9),
       inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
     transition: all 0.3s ease;
   }
+
   .btn-4 span:before {
     width: .1px;
     height: 0%;
   }
+
   .btn-4 span:after {
     width: 0%;
     height: .1px;
   }
+
   .btn-4 span:hover:before {
     height: 100%;
   }
+
   .btn-4 span:hover:after {
     width: 100%;
   }
@@ -133,13 +145,15 @@
       <div class="row col-7">
         <div class="col-3">
           <select class="form-control" name="key_name">
-            <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>희귀질환 명</option>
+            <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>희귀질환
+              명</option>
             <option value="dise_KCD_code" {{ 'selected' if request._query_params.key_name=='dise_KCD_code' else '' }}>
               KCD코드</option>
             <option value="dise_spc_code" {{ 'selected' if request._query_params.key_name=='dise_spc_code' else '' }}>
               산정특례
               특정기호</option>
-            <option value="dise_symptoms" {{ 'selected' if request._query_params.key_name=='dise_symptoms' else '' }}>증상명</option>
+            <option value="dise_symptoms" {{ 'selected' if request._query_params.key_name=='dise_symptoms' else '' }}>
+              증상명</option>
           </select>
         </div>
         <div class="col-6">
@@ -147,14 +161,14 @@
             value="{{request._query_params.search_word}}">
         </div>
         <div class="col-2">
-          <button type="submit" class="btn btn-primary" formaction="/info/info_raredisease"
-            formmethod="get">검색</button>
+          <button type="submit" class="btn btn-primary" formaction="/info/info_raredisease" formmethod="get">검색</button>
         </div>
       </div>
     </div>
-    <div class="text-end">
-      <button class="btn-4">엑셀다운로드</button>
-    </div>
+    <!-- 엑셀로 내보내기 버튼 -->
+    <form action="/info/info_raredisease_download" method="get">
+      <button type="submit">엑셀로 내보내기</button>
+    </form>
 
     <table class="table table-hover">
       <thead>
@@ -194,28 +208,33 @@
         <ul class="pagination justify-content-center">
           <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
             <button type="submit" class="page-link"
-            formaction="/info/info_raredisease/{{pagination.first_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">맨
+              formaction="/info/info_raredisease/{{pagination.first_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}"
+              formmethod="get">맨
               처음</button>
 
           </li>
           <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
             <button type="submit" class="page-link"
-              formaction="/info/info_raredisease/{{pagination.previous_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">이전</button>
+              formaction="/info/info_raredisease/{{pagination.previous_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}"
+              formmethod="get">이전</button>
           </li>
           {% for page_num in pagination.current_page_range %}
           <li class="page-item {{ 'active' if page_num == pagination.current_page else '' }}">
             <button type="submit" class="page-link"
-              formaction="/info/info_raredisease/{{ page_num }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">{{
+              formaction="/info/info_raredisease/{{ page_num }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}"
+              formmethod="get">{{
               page_num }}</button>
           </li>
           {% endfor %}
           <li class="page-item {{ '' if pagination.has_next_page else 'disabled' }}">
             <button type="submit" class="page-link"
-              formaction="/info/info_raredisease/{{ pagination.next_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">다음</button>
+              formaction="/info/info_raredisease/{{ pagination.next_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}"
+              formmethod="get">다음</button>
           </li>
           <li class="page-item {{ '' if pagination.has_next_block else 'disabled' }}">
             <button type="submit" class="page-link"
-              formaction="/info/info_raredisease/{{ pagination.last_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">
+              formaction="/info/info_raredisease/{{ pagination.last_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}"
+              formmethod="get">
               맨 끝
             </button>
           </li>

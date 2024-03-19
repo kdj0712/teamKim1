@@ -117,6 +117,29 @@ async def disease_list(request: Request, page_number: int = 1, key_name: Optiona
 async def institution(request:Request):
     return templates.TemplateResponse(name="info/info_raredisease_nondata.html", context={'request':request})
 
+
+from fastapi.responses import FileResponse
+
+# excel download
+@router.get("/info_raredisease_download")
+async def download(request: Request):
+    # 엑셀 파일로 저장
+    excel_path = 'data.xlsx'
+    # 여기서 'to_excel' 함수가 직접적으로 사용 가능한지 확인 필요. 
+    # Database 객체 또는 'diseases' 정보를 pandas DataFrame으로 변환 후 'to_excel' 사용 가능.
+    # 예를 들어, pandas DataFrame으로 변환하는 과정이 필요할 수 있습니다.
+    df = pd.DataFrame(collection_disease.get_all())
+    df.to_excel(excel_path, index=False)
+    
+    # 예시에서는 직접 'to_excel'을 호출했습니다. 이는 구현에 따라 다를 수 있습니다.
+    # collection_disease.to_excel(excel_path, index=False)
+    
+    # 엑셀 파일을 웹에서 다운로드할 수 있도록 함
+    return FileResponse(path=excel_path, filename="data.xlsx", media_type='application/vnd.ms-excel')
+
+
+
+
 #### -------------------------------------------------------------------------------------------------------
 
 # 의료기관검색
