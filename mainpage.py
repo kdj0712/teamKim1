@@ -44,9 +44,9 @@ app.mount("/data/img", StaticFiles(directory="data/img/"), name="static_img")
 ## 뉴스 추천
 from database.connection import Database
 from models.user_member import members
-from models.trend_news import news_trends as news
+from models.trend_news import news_trends
 members_coll = Database(members)
-news_coll = Database(news)
+news_coll = Database(news_trends)
 
 from datetime import datetime, timedelta
 from pymongo import DESCENDING
@@ -64,11 +64,12 @@ async def news_recomment(request:Request):
         news_type_user = '의료/법안'
     
     query = {
-    'news_type': news_type_user,
+    'news_topic': news_type_user,
     'news_when': {'$gte': start_date}
 }
     try: 
-        news_list = news_coll.find(query).sort('news_when', DESCENDING).limit(4)
+        news_list = await news_coll.getsbyconditions(query).sort('news_when', DESCENDING).limit(4).to_list(length=4)
+    
 
         recommend_news = []
         for news in news_list:
