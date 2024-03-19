@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/data/img/favicon.ico">
     <style>
         * {
             font-family: "Noto Sans KR", sans-serif;
@@ -19,7 +20,7 @@
 
 <body>
 
-    <header style="background-color: #5CB8FF;">
+    <header style="background-color: #d5e7fd;">
         <div class="container-fluid">
             <div
                 class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom navbar navbar-expand-lg bd-navbar sticky-top justify-content-center">
@@ -29,13 +30,13 @@
                     <svg class="bi me-2" width="40" height="32">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
-                    <span class="fs-4"><img height="90" src="/data/img/RDS_logo.jpg" alt=""></span>
+                    <span class="fs-4"><img width="350" src="/data/img/RDS_logo.png" alt=""></span>
                 </a>
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="/user/user_login" class="nav-link text-white fw-bold"
+                    <li class="nav-item"><a href="/user/user_login" class="nav-link fw-bold text-secondary" 
                             aria-current="page">로그인/로그아웃</a>
                     </li>
-                    <li class="nav-item"><a href="/user/user_mypage" class="nav-link text-white fw-bold">마이페이지</a></li>
+                    <li class="nav-item"><a href="/user/user_mypage" class="nav-link text-secondary fw-bold">마이페이지</a></li>
 
                     <div class="dropdown-start">
                         <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -154,47 +155,38 @@
             <div style="  text-align: center   align-items-center" class="justify-content-center">
                 <img src="/data/img/unnamed.png" alt="">
             </div>
-            <form >
-                <div style="text-align: center   align-items-center" class="row justify-content-center">
-
+            <form>
+                <div style="text-align: center; align-items:center" class="row justify-content-center">
                     <div class="col-2">
-
-                        <select class="form-select " id="search_select" required="" name="key_name">
+                        <select class="form-select" id="search_select" required="" name="key_name">
                             <option value="">전체</option>
-                            <option value="dise_name_kr" >희귀질환</option>
-                            <option value="institution_name" >의료기관</option>
+                            <option value="dise_name_kr">희귀질환</option>
+                            <option value="institution_name">의료기관</option>
                         </select>
                     </div>
                     <div class="col-5">
-                        <input class="form-control" placeholder="Enter Search!" name="search_word"
-                            id="search_word">
+                        <input class="form-control" placeholder="Enter Search!" name="search_word" id="search_word">
                     </div>
-                    <!-- if 문 써서 희귀질환이면 /search/search_raredisease로 연결
-                    의료기관이면/search/search_institution  -->
-
                     <div class="col-2">
-                        <input type="button" class="btn btn-primary"
-                             formmethod="post"
-                             formaction="/info/info_raredisease?key_name=search_select&search_word=search_word"
-                             onclick="alert_();">검색</input>
+                        <button type="button" class="btn btn-primary" onclick="search()">검색</button>
                         <br>
-
                     </div>
-
                 </div>
             </form>
+
             <div class="row justify-content-center  text-center container p-3">
                 <div class="p-3 text-decoration-none " style="font-size:larger; font-weight: 700; ">📝(어떤어떤 희귀질환자의
                     보호자인)당신을 위한 추천 뉴스</div>
+                {% for news in news_list %}
                 <div class="row justify-content-center">
 
                     <div class=" col-2 card ms-2 me-2" style="width: 18rem;">
                         <div class="card-body">
-                            <a href="#" class="card-link text-decoration-none">
-                                <h5 class="card-title"></h5>
+                            <a href="{{ news.news_urls }}" class="card-link text-decoration-none">
+                                <h5 class="card-title">{{news.news_title}}</h5>
                             </a>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">어디일보</h6>
-                            <p class="card-text">간략한내용</p>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{news.news_paper}}</h6>
+                            <p class="card-text"></p>
 
                         </div>
                     </div>
@@ -231,8 +223,9 @@
 
 
                 </div>
+                {% endfor %}
             </div>
-            <div class="row justify-content-center  text-center container p-3">
+                <div class="row justify-content-center  text-center container p-3">
                 <div class="p-3 text-decoration-none " style="font-size:larger; font-weight: 700; ">📝(어떤어떤 희귀질환자의
                     보호자인)당신을 위한 추천 뉴스</div>
                 <div class="row justify-content-center">
@@ -361,16 +354,28 @@
     </footer>
 </body>
 <script type="text/javascript">
-	
-    var search_select = document.getElementById("search_select");
-    var search_select_index = document.getElementById("search_select").options.selectedIndex;
-    var search_word = document.getElementById("search_word")
-    function alert_() {
-        alert (search_select.value,  search_word.value)}
+    function search() {
+        var search_select = document.getElementById("search_select").value;
+        var search_word = document.getElementById("search_word").value;
 
+        if (search_select && search_word) { // 검색 선택과 검색어가 모두 입력되었는지 확인
+            var formAction = '';
 
-
-	
+            // 동적으로 폼 생성하고 제출
+            var form = document.createElement('form');
+            form.method = 'POST';
+            if (search_select === 'dise_name_kr') {
+                formAction = '/info/info_raredisease';
+                form.action = formAction + '?key_name=' + encodeURIComponent(search_select) + '&search_word=' + encodeURIComponent(search_word);
+            }  else if (search_select === 'institution_name') {
+                formAction = '/info/info_institution';
+                form.action = formAction + '?keyword=' + encodeURIComponent(search_word)}
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            alert('선택과 검색어를 모두 입력해주세요.');
+        }
+    }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
