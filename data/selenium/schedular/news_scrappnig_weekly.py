@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
+
 from pymongo import MongoClient
 
 import pickle
@@ -69,16 +70,22 @@ def bosascrapping(browser_name, keyword) :
                 news_contents += news_p.text
 
             # 가지고 온 내용 수정
-            ## content 분리하기
-            # pickle_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "pkl", "news_recommend_model_vectorizer.pkl"))
 
-            with open('data/pkl/news_recommend_model.pkl', "rb") as file:
-                model = pickle.load(file)
+            # with open('data\pkl\\news_recommend.pkl', "rb") as file:
+            #     model = pickle.load(file)
+            with open('data\pkl\\news_recommend_model.pkl', "rb") as file:
+                model_test = pickle.load(file)
+
             
-            with open('data/pkl/news_recommend_vectorizer.pkl', 'rb') as file2:
-                vectorizer = pickle.load(file2)
+            with open('data/pkl/news_recommend_vectorizer.pkl', "rb") as file : 
+                vector_test = pickle.load(file)
+            
 
-            news_topic = model.predict(vectorizer.transform([news_title]))
+
+            vector_test_title = vector_test.transform(news_title)
+            answer_test = model_test.predict(vector_test_title)
+
+            # news_topic = model([news_title])
             news_paper = '의학신문'
             
             # 날짜 형식 맞춰주기
