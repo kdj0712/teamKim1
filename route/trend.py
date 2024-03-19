@@ -39,7 +39,8 @@ async def trend_news(
 
 @router.post("/trend_news", response_class=HTMLResponse) 
 async def trend_news(
-    request:Request):
+    request:Request,
+    ):
     
     await request.form()
     print(dict(await request.form()))
@@ -49,6 +50,36 @@ async def trend_news(
     return templates.TemplateResponse(name="trend/trend_news.html", context={'request':request
                                                                              , 'news':news_list})
 
+# news_read
+
+@router.get("/trend_news_read/{object_id}", response_class=HTMLResponse)
+async def trend_news_read_function(
+    request: Request, 
+    object_id:PydanticObjectId
+    ):
+    
+    await request.form()
+    print(dict(await request.form()))
+    
+    news = await collection_trend_news.get(object_id)
+
+    return templates.TemplateResponse(
+        name="trend/trend_news_read.html",
+        context={"request": request, "news": news})
+        
+@router.post("/trend_news_read/{object_id}", response_class=HTMLResponse)
+async def trend_news_read_function(
+    request: Request, 
+    ):
+    
+    await request.form()
+    print(dict(await request.form()))
+    
+    return templates.TemplateResponse(
+        name="trend/trend_news.html",
+        context={"request": request}
+    )
+    
 #### -------------------------------------------------------------------------------------------------------
 
 # 법, 시행령, 시행규칙

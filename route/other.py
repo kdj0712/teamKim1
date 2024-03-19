@@ -85,7 +85,9 @@ async def QnA_function(request:Request,
     ques_writer: Optional[str] = None,
     ques_content: Optional[str] = None,
     ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None):
+    ques_answer: Optional[str] = None
+    ):
+    
     form_data = await request.form()
     dict_form_data = dict(form_data)
     current_time = datetime.now()

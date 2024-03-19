@@ -37,13 +37,13 @@
             </thead>
             <tbody>
                 {% for new in news %}
-                <tr onclick="location.href='/trend/trend_news/{{new.id}}'" style="cursor: pointer;">
+                <tr onclick="location.href='/trend/trend_news_read/{{new.id}}'" style="cursor: pointer;">
                     <td>{{loop.index}}</td>
                     <td>{{new.news_when}}</td>
                     <td>{{new.news_paper}}</td>
                     <td>{{new.news_title}}</td>
                     <td>{{new.news_topic}}</td>
-                    <td>{{new.news_title}}</td>
+                    <td>{{new.news_click}}</td>
 
                 </tr>
                 {% endfor %}
