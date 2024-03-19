@@ -3,8 +3,8 @@
 {% block main_container %}
 
 <main class="container">
-    <div>
-        <h2>{{ news.news_title }}</h2>
+    <div class="mt-4 mb-4">
+        <h2 style="margin-top: 100px;">{{ news.news_title }}</h2>
     </div>
     <div class="row">
         <div class="col-12 text-end">
@@ -15,11 +15,8 @@
         </div>
     </div>
     <hr>
-    <h3>
-        내용
-    </h3>
     <div class="">
-        <p class="lead">{{ news.news_contents }}</p>
+        <p class="lead" style="text-align:justify; font-size: 18px;">{{ news.news_contents }}</p>
     </div>
     <hr>
     <table>
