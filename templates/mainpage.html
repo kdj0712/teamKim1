@@ -358,17 +358,15 @@
         if (search_select && search_word) { // 검색 선택과 검색어가 모두 입력되었는지 확인
             var formAction = '';
 
-            if (search_select === 'dise_name_kr') {
-                formAction = '/info/info_raredisease';
-            } else if (search_select === 'institution_name') {
-                formAction = '/info/info_institution';
-            }
-
             // 동적으로 폼 생성하고 제출
             var form = document.createElement('form');
             form.method = 'POST';
-            form.action = formAction + '?key_name=' + encodeURIComponent(search_select) + '&search_word=' + encodeURIComponent(search_word);
-
+            if (search_select === 'dise_name_kr') {
+                formAction = '/info/info_raredisease';
+                form.action = formAction + '?key_name=' + encodeURIComponent(search_select) + '&search_word=' + encodeURIComponent(search_word);
+            }  else if (search_select === 'institution_name') {
+                formAction = '/info/info_institution';
+                form.action = formAction + '?keyword=' + encodeURIComponent(search_word)}
             document.body.appendChild(form);
             form.submit();
         } else {
