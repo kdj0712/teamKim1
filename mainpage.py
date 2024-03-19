@@ -40,6 +40,8 @@ from fastapi.staticfiles import StaticFiles
 # url 경로, 자원 물리 경로, 프로그래밍 측면
 app.mount("/data/img", StaticFiles(directory="data/img/"), name="static_img")
 
+
+@app.post("/")
 @app.get("/")
 async def root(request:Request):
     await request.form()
@@ -96,6 +98,6 @@ async def news_recomment(request:Request):
             , 'news_type' : news['news_type']
         })
 
-    return recommend_news
+    return templates.TemplateResponse("mainpage.html",{'request':request, 'recommend_news': recommend_news})
 
     

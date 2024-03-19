@@ -53,7 +53,7 @@ def bosascrapping(browser_name, keyword) :
     browser.find_element(By.CSS_SELECTOR, "#sc_edate").send_keys(current_date)
     browser.find_element(By.CSS_SELECTOR, "#sc_word").send_keys(keyword)
     browser.find_element(By.CSS_SELECTOR, "#search-tabs1 > form > footer > div > button").click()
-
+    time.sleep(2)
     ## 스크래핑
     contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
     for index in range(len(contents)) :
@@ -75,10 +75,11 @@ def bosascrapping(browser_name, keyword) :
             with open('data/pkl/news_recommend_model.pkl', "rb") as file:
                 model = pickle.load(file)
             
-            with open('data/pkl/news_recommend_vectorizer.pkl', 'rb') as file:
-                vectorizer = pickle.load(file)
+            with open('data/pkl/news_recommend_vectorizer.pkl', 'rb') as file2:
+                vectorizer = pickle.load(file2)
 
-            news_type = model.predict(vectorizer.transform([news_title]))
+            news_topic = model.predict(vectorizer.transform([news_title]))
+            news_paper = '의학신문'
             
             # 날짜 형식 맞춰주기
             desired_format = "%Y-%m-%d"
@@ -87,8 +88,9 @@ def bosascrapping(browser_name, keyword) :
             bosa_news_coll.insert_one({"news_title" : news_title
                                     ,"news_when" : news_when
                                     ,"news_contents":news_contents
-                                    , "news_type" : news_type
-                                    ,"news_url":news_url })
+                                    ,"news_url":news_url
+                                     ,"news_topic" : news_topic
+                                      , "news_paper" : news_paper })
             browser.back()
             time.sleep(1)
         except StaleElementReferenceException :

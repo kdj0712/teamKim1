@@ -74,10 +74,10 @@ def predict_disease(search_word):
 
 
 # 희귀질환정보검색
+# @router.post("/info_raredisease", response_class=HTMLResponse) 
+# async def raredisease(request:Request):
+#     return templates.TemplateResponse(name="search/search_raredisease.html", context={'request':request})
 @router.post("/info_raredisease", response_class=HTMLResponse) 
-async def raredisease(request:Request):
-    return templates.TemplateResponse(name="search/search_raredisease.html", context={'request':request})
-
 @router.get("/info_raredisease/{page_number}")
 @router.get("/info_raredisease")
 async def disease_list(request: Request, page_number: int = 1, key_name: Optional[str] = Query(None), search_word: Optional[str] = Query(None)):
@@ -120,7 +120,7 @@ async def institution(request:Request):
 #### -------------------------------------------------------------------------------------------------------
 
 # 의료기관검색
-
+@router.post("/info_institution", response_class=HTMLResponse) 
 @router.get("/info_institution") 
 async def institution(request:Request):
     await request.form()
