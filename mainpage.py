@@ -96,4 +96,4 @@ async def news_recomment(request:Request):
             , 'news_topic' : news['news_topic']
         })
 
-    return recommend_news
+    return templates.TemplateResponse("mainpage.html", {"request":request, "news_list" : recommend_news})
