@@ -479,13 +479,17 @@ async def notice_main_function(
 @router.get("/manag_notice_reply/{object_id}", response_class=HTMLResponse) 
 async def notice_reply_function(request:Request, object_id:PydanticObjectId):
     
-    notice = await collection_manag_notice.get(object_id)
+    notices = await collection_manag_notice.get(object_id)
     
-    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request, 'notice':notice})
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request, 'notices':notices})
 
 @router.post("/manag_notice_reply/{object_id}", response_class=HTMLResponse) 
-async def notice_reply_function(request:Request):
-    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request})
+async def notice_reply_function(request:Request, object_id:PydanticObjectId):
+    
+    await request.form()
+    notices = await collection_manag_notice.get(object_id)
+    
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request, 'notices':notices})
 
 #### -------------------------------------------------------------------------------------------------------
     
