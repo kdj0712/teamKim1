@@ -16,10 +16,24 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
 
+#### -------------------------------------------------------------------------------------------------------
+
+# program
 @router.get("/empo_program", response_class=HTMLResponse) 
-async def empo_program(request:Request):
+async def empo_program_function(request:Request):
     return templates.TemplateResponse(name="empo/empo_program.html", context={'request':request})
 
+@router.post("/empo_program", response_class=HTMLResponse) 
+async def empo_program_function(request:Request):
+    return templates.TemplateResponse(name="empo/empo_program.html", context={'request':request})
+
+#### -------------------------------------------------------------------------------------------------------
+
+# community
 @router.get("/empo_community", response_class=HTMLResponse) 
-async def empo_community(request:Request):
+async def empo_community_function(request:Request):
+    return templates.TemplateResponse(name="empo/empo_community.html", context={'request':request})
+
+@router.post("/empo_community", response_class=HTMLResponse) 
+async def empo_community_function(request:Request):
     return templates.TemplateResponse(name="empo/empo_community.html", context={'request':request})

@@ -2,42 +2,36 @@
 
 {% block main_container %}
 
-<!-- 나중에 바꿀게여 -->
 <main class="container">
-    <form action="">
-        <div>
-            <h2>{{ QnAs.ques_title }}</h2>
+    <div class="mt-4 mb-4">
+        <h2 style="margin-top: 100px;">{{ news.news_title }}</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 text-end">
+            언론사명 : {{ news.news_paper }}
         </div>
-        <div>
-
+        <div class="col-12 text-end">
+            날짜 : {{ news.news_when }}
         </div>
-        <div>
-            글쓴이 : {{ QnAs.ques_writer }}
+    </div>
+    <hr>
+    <div class="">
+        <p class="lead" style="text-align:justify; font-size: 18px;">{{ news.news_contents }}</p>
+    </div>
+    <hr>
+    <table>
+        <tr>
+            <td> 뉴스 링크 : </td>
+            <td>
+                <a href="{{ news.news_url }}">{{ news.news_url }}</a>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <div class="row">
+        <div class="col-12 text-end">
+            <a href="/trend/trend_news" class="btn btn-primary">목록</a>
         </div>
-        <div>작성시간 : {{ QnAs.ques_time }}</div>
-
-        <div>
-        </div>
-        <hr>
-        <div>
-            내용
-        </div>
-        <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
-            <div class="col-md-6 px-0">
-                <p class="lead my-3">{{ QnAs.ques_content }}</p>
-            </div>
-        </div>
-        <div>
-
-        </div>
-        <div>
-            답변
-        </div>
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-                <p class="card-text mb-auto">{{ QnAs.ques_answer }}</p>
-            </div>
-        </div>
-        <div>
+    </div>
 </main>
 {% endblock %}

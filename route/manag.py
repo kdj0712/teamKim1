@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field, EmailStr
 from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
 from models.institution import Institutions
-from models.trend import news_trends
+from models.trend_news import news_trends as news
 from models.user_member import members
 from models.other_QnA import QnA
 from models.notice_list import notice
@@ -18,7 +18,7 @@ from models.program_list import program
 collection_acade = Database(academicinfo)
 collection_dise = Database(diseases)
 collection_insti = Database(Institutions)
-collection_trend = Database(news_trends)
+collection_trend = Database(news)
 collection_member = Database(members)    
 collection_QnA = Database(QnA)
 collection_manag_notice = Database(notice)
@@ -139,18 +139,15 @@ async def program_write_function(request:Request):
     return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
 
 @router.get("/manag_program_reply/{object_id}", response_class=HTMLResponse) 
-async def program_read_function(request:Request, object_id:PydanticObjectId):
+async def program_reply_function(request:Request, object_id:PydanticObjectId):
     
     program = await collection_manag_program.get(object_id)
     
     return templates.TemplateResponse(name="manag/program/manag_program_reply.html", context={'request':request, 'program': program})
 
 @router.post("/manag_program_reply/{object_id}", response_class=HTMLResponse) 
-async def program_read_function(request:Request, object_id:PydanticObjectId):
-    await request.form()
-    program = await collection_manag_program.get(object_id)
-        
-    return templates.TemplateResponse(name="manag/program/manag_program_reply.html", context={'request':request, 'programs': program})
+async def program_reply_function(request:Request):
+    return templates.TemplateResponse(name="manag/program/manag_program_reply.html", context={'request':request})
 
 
 #### -------------------------------------------------------------------------------------------------------
@@ -406,31 +403,38 @@ async def FAQ(request:Request, object_id:PydanticObjectId):
 #### -------------------------------------------------------------------------------------------------------
 
 # notice_main
-
+@router.get("/manag_notice_main/{page_number}")
 @router.get("/manag_notice_main", response_class=HTMLResponse) 
-async def notice_main_function(
-    request:Request, 
-    page_number: Optional[int] = 1
-    ):
+async def notice_main_function(request:Request,
+                                page_number: Optional[int] = 1):
     
     conditions = {}
     
-    notice_list, pagination = await collection_manag_notice.getsbyconditionswithpagination(
+    notices, pagination = await collection_manag_notice.getsbyconditionswithpagination(
     conditions, page_number
     )
     
-    return templates.TemplateResponse(
-    name="manag/notice/manag_notice_main.html",
-    context={'request': request, 'pagination': pagination, 'notices': notice_list})
+    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request': request, 'pagination':pagination, 'notices':notices})
 
+@router.post("/manag_notice_main/{page_number}", response_class=HTMLResponse)
 @router.post("/manag_notice_main", response_class=HTMLResponse) 
-async def notice_main_function(request:Request):
-    await request.form()
-    print(dict(await request.form()))
+async def notice_main_function(
+    request:Request,
+    page_number: Optional[int] = 1
+    ):
     
-    notices = await collection_manag_notice.get_all()
+    form_data = await request.form()
+    dict_form_data = dict(form_data)
     
-    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request, 'notices':notices})
+     ## db 불러오기 + 페이지네이션
+    
+    conditions = {}
+    
+    notices, pagination = await collection_manag_notice.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request, 'notices':notices, 'pagination': pagination})
 
 # notice_write
 
@@ -438,19 +442,54 @@ async def notice_main_function(request:Request):
 async def notice_write_function(request:Request):
     return templates.TemplateResponse(name="manag/notice/manag_notice_write.html", context={'request':request})
 
+@router.post("/manag_notice_write/{page_number}", response_class=HTMLResponse)
 @router.post("/manag_notice_write", response_class=HTMLResponse) 
-async def notice_write_function(request:Request):
-    return templates.TemplateResponse(name="manag/notice/manag_notice_write.html", context={'request':request})
+async def notice_main_function(
+    request:Request,
+    page_number: Optional[int] = 1
+    ):
+    
+    form_data = await request.form()
+    dict_form_data = dict(form_data)
+    
+    ## notice 작성 부분
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+    # 이 시간을 item 객체의 'ques_time' 속성에 저장한다.
+    dict_form_data['notice_date'] = formatted_time
+
+    if dict_form_data['notice_title'] ==' ': # title은 필수조건, 오류로 인한 저장을 방지하기 위한 구문
+        pass
+    else:
+        notice_list = notice(**dict_form_data)
+        await collection_QnA.save(notice_list)
+    
+     ## db 불러오기 + 페이지네이션
+    
+    conditions = {}
+    
+    notices, pagination = await collection_manag_notice.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(name="manag/notice/manag_notice_main.html", context={'request':request, 'notices':notices, 'pagination': pagination})
 
 # notice_reply
 
-@router.get("/manag_notice_reply", response_class=HTMLResponse) 
-async def notice_reply_function(request:Request):
-    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request})
+@router.get("/manag_notice_reply/{object_id}", response_class=HTMLResponse) 
+async def notice_reply_function(request:Request, object_id:PydanticObjectId):
+    
+    notices = await collection_manag_notice.get(object_id)
+    
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request, 'notices':notices})
 
-@router.post("/manag_notice_reply", response_class=HTMLResponse) 
-async def notice_reply_function(request:Request):
-    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request})
+@router.post("/manag_notice_reply/{object_id}", response_class=HTMLResponse) 
+async def notice_reply_function(request:Request, object_id:PydanticObjectId):
+    
+    await request.form()
+    notices = await collection_manag_notice.get(object_id)
+    
+    return templates.TemplateResponse(name="manag/notice/manag_notice_reply.html", context={'request':request, 'notices':notices})
 
 #### -------------------------------------------------------------------------------------------------------
     

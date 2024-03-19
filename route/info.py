@@ -24,7 +24,7 @@ collection_disease = Database(diseases)
 from models.institution import Institutions
 collection_institution = Database(Institutions)
 
-from models.trend import news_trends
+from models.trend_news import news_trends
 collection_trend = Database(news_trends)
 
 from models.academicinfo import academicinfo
@@ -40,8 +40,8 @@ def load_pickle_from_gcs(bucket_name, file_name):
     pickle_data = blob.download_as_bytes()
     return pickle.loads(pickle_data)
 bucket_name = 'savehomes'
-tfidf_vectorizer_file_name = 'search_symptoms.pkl'
-vectorizer = load_pickle_from_gcs(bucket_name, tfidf_vectorizer_file_name)
+file_name = 'search_symptoms.pkl'
+vectorizer = load_pickle_from_gcs(bucket_name, file_name)
 
 with open('data/pkl/vectorizer.pkl', 'rb') as file:
     vectorizer = pickle.load(file)
@@ -74,10 +74,10 @@ def predict_disease(search_word):
 
 
 # 희귀질환정보검색
+# @router.post("/info_raredisease", response_class=HTMLResponse) 
+# async def raredisease(request:Request):
+#     return templates.TemplateResponse(name="search/search_raredisease.html", context={'request':request})
 @router.post("/info_raredisease", response_class=HTMLResponse) 
-async def raredisease(request:Request):
-    return templates.TemplateResponse(name="search/search_raredisease.html", context={'request':request})
-
 @router.get("/info_raredisease/{page_number}")
 @router.get("/info_raredisease")
 async def disease_list(request: Request, page_number: int = 1, key_name: Optional[str] = Query(None), search_word: Optional[str] = Query(None)):
@@ -117,27 +117,52 @@ async def disease_list(request: Request, page_number: int = 1, key_name: Optiona
 async def institution(request:Request):
     return templates.TemplateResponse(name="info/info_raredisease_nondata.html", context={'request':request})
 
+
+from fastapi.responses import FileResponse
+
+# excel download
+@router.get("/info_raredisease_download")
+async def download(request: Request):
+    # 엑셀 파일로 저장
+    excel_path = 'data.xlsx'
+    # 여기서 'to_excel' 함수가 직접적으로 사용 가능한지 확인 필요. 
+    # Database 객체 또는 'diseases' 정보를 pandas DataFrame으로 변환 후 'to_excel' 사용 가능.
+    # 예를 들어, pandas DataFrame으로 변환하는 과정이 필요할 수 있습니다.
+    df = pd.DataFrame(collection_disease.get_all())
+    df.to_excel(excel_path, index=False)
+    
+    # 예시에서는 직접 'to_excel'을 호출했습니다. 이는 구현에 따라 다를 수 있습니다.
+    # collection_disease.to_excel(excel_path, index=False)
+    
+    # 엑셀 파일을 웹에서 다운로드할 수 있도록 함
+    return FileResponse(path=excel_path, filename="data.xlsx", media_type='application/vnd.ms-excel')
+
+
+
+
 #### -------------------------------------------------------------------------------------------------------
 
 # 의료기관검색
-
-@router.get("/info_institution", response_class=HTMLResponse) 
-async def institution(request:Request, keyword: str = Query(None, alias="keyword")):
+@router.post("/info_institution", response_class=HTMLResponse) 
+@router.get("/info_institution") 
+async def institution(request:Request):
+    await request.form()
+    keyword = request.query_params.get('keyword')
     if keyword:
-        url = "https://maps.googleapis.com/maps/api/place/searchByText/json"
+        url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
         params = {
-            "input": keyword,
-            "inputtype": "textquery",
-            "fields": "photos,formatted_address,name,rating,geometry,place_id",
+            "query": keyword,
+            "fields": "formatted_address,name,rating,geometry,place_id,formatted_phone_number",
             "key": api_key
         }
         async with ClientSession() as session:
             async with session.get(url, params=params) as resp:
                 data = await resp.json()
                 results = data.get('results', [])  # 'results' 키의 값을 추출하고, 없을 경우 빈 배열을 사용합니다.
-        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": results})
+        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": results,'keyword':keyword,'API_KEY': api_key})
     elif keyword is None:
-        return templates.TemplateResponse("info/info_institution.html", {"request": request, 'API_KEY': api_key})
+        results = {}
+        return templates.TemplateResponse("info/info_institution.html", {"request": request, "results": results,'API_KEY': api_key})
 
 @router.post("/info_institution", response_class=HTMLResponse) 
 async def institution(request:Request):

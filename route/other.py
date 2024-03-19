@@ -38,10 +38,6 @@ async def QnA_function(
     request: Request,
     page_number: Optional[int] = 1, 
     ques_title: Optional[str] = None,
-    ques_writer: Optional[str] = None,
-    ques_content: Optional[str] = None,
-    ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None
 ):
     # db.answers.find({'name':{ '$regex': '김' }})
     # { 'name': { '$regex': user_dict.word } }
@@ -89,9 +85,12 @@ async def QnA_function(request:Request,
     ques_writer: Optional[str] = None,
     ques_content: Optional[str] = None,
     ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None):
+    ques_answer: Optional[str] = None
+    ):
+    
     form_data = await request.form()
     dict_form_data = dict(form_data)
+    
     current_time = datetime.now()
     formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     # 이 시간을 item 객체의 'ques_time' 속성에 저장한다.
@@ -103,7 +102,6 @@ async def QnA_function(request:Request,
         QnAs = QnA(**dict_form_data)
         await collection_QnA.save(QnAs)
 
-    user_dict = dict(form_data)
     conditions = {}
 
     search_word = request.query_params.get('search_word')
@@ -145,13 +143,13 @@ async def QnA_function(request:Request):
 
 
 # 글쓰기 창
-@router.get("/other_write", response_class=HTMLResponse) 
+@router.get("/other_QnA_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="other/other_write.html", context={'request':request})
+    return templates.TemplateResponse(name="other/other_QnA_write.html", context={'request':request})
 
-@router.post("/other_write", response_class=HTMLResponse) 
+@router.post("/other_QnA_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
-    return templates.TemplateResponse(name="other/other_write.html", context={'request':request})
+    return templates.TemplateResponse(name="other/other_QnA_write.html", context={'request':request})
 
 # 글 확인
 

@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
+
 from pymongo import MongoClient
 
 import pickle
@@ -53,7 +54,7 @@ def bosascrapping(browser_name, keyword) :
     browser.find_element(By.CSS_SELECTOR, "#sc_edate").send_keys(current_date)
     browser.find_element(By.CSS_SELECTOR, "#sc_word").send_keys(keyword)
     browser.find_element(By.CSS_SELECTOR, "#search-tabs1 > form > footer > div > button").click()
-
+    time.sleep(2)
     ## 스크래핑
     contents = browser.find_elements(By.CSS_SELECTOR, "#section-list > ul > li")
     for index in range(len(contents)) :
@@ -69,14 +70,23 @@ def bosascrapping(browser_name, keyword) :
                 news_contents += news_p.text
 
             # 가지고 온 내용 수정
-            ## content 분리하기
-            pickle_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "pkl", "news_recommend_model_vectorizer.pkl"))
 
-            with open(pickle_file_path, "rb") as file:
-                model, tfidfvectorizer = pickle.load(file)
-                vectorized_news_title = tfidfvectorizer(news_title)
-                news_type = model.predict(vectorized_news_title)
-                pass
+            # with open('data\pkl\\news_recommend.pkl', "rb") as file:
+            #     model = pickle.load(file)
+            with open('data\pkl\\news_recommend_model.pkl', "rb") as file:
+                model_test = pickle.load(file)
+
+            
+            with open('data/pkl/news_recommend_vectorizer.pkl', "rb") as file : 
+                vector_test = pickle.load(file)
+            
+
+
+            vector_test_title = vector_test.transform(news_title)
+            answer_test = model_test.predict(vector_test_title)
+
+            # news_topic = model([news_title])
+            news_paper = '의학신문'
             
             # 날짜 형식 맞춰주기
             desired_format = "%Y-%m-%d"
@@ -85,8 +95,9 @@ def bosascrapping(browser_name, keyword) :
             bosa_news_coll.insert_one({"news_title" : news_title
                                     ,"news_when" : news_when
                                     ,"news_contents":news_contents
-                                    , "news_type" : news_type
-                                    ,"news_url":news_url })
+                                    ,"news_url":news_url
+                                    ,"news_topic" : news_topic
+                                    , "news_paper" : news_paper })
             browser.back()
             time.sleep(1)
         except StaleElementReferenceException :

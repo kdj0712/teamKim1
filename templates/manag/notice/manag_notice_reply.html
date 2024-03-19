@@ -14,20 +14,20 @@
 {% endblock %}
 
 <main class="col-md-9 col-lg-10 px-md-4">
-    <form action="" method="POST" id="myForm">
+    <form action="" method="get" id="myForm">
         <div class="mb-3">
 
             <label for="notice_title">제목</label>
-            <input type="" class="form-control" name="notice_title" id="notice_title" required>
+            <input type="" class="form-control" name="notice_title" id="notice_title" value="{{ notices.notice_title }}" disabled>
 
             <!-- 커뮤니티 유형은 추후 dropdown으로 변경 -->
             <label for="notice_type">커뮤니티 유형</label>  
-            <input type="" class="form-control" name="notice_type" id="notice_type" required>
+            <input type="" class="form-control" name="notice_type" id="notice_type" value="{{ notices.notice_type }}" disabled>
 
             <div>
                 <label>프로그램 내용</label>
                 <!-- Quill 편집기를 적용할 div 요소 -->
-                <input type="hidden" name="editorContent" id="editorContent" required>
+                <input type="hidden" name="editorContent" id="editorContent" value="{{ notices.notice_content }}" disabled>
                 <div id="editor"></div>
             </div>
 
