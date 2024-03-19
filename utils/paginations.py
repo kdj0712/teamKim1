@@ -1,18 +1,16 @@
 from math import ceil
 
 class Paginations:
-    def __init__(self, total_records, current_page):
-        self.records_per_page = 10  # 한 페이지 당 레코드 수
-        self.pages_per_block = 10  # 한 블럭 당 페이지 수
-
+    def __init__(self, total_records, current_page, records_per_page=10):
         self.total_records = total_records  # 총 레코드 수
         self.current_page = current_page # 현재 페이지
-        # self.records_per_page = 10  # 한 페이지 당 레코드 수
+        self.records_per_page = records_per_page  # 한 페이지 당 레코드 수
+        self.pages_per_block = 5  # 한 블럭 당 페이지 수
 
         # 전체 페이지 수
         self.total_pages = self._calculate_total_pages()
         # 총 블럭 수
-        self.total_blocks = ceil(self.total_pages / self.records_per_page)
+        self.total_blocks = ceil(self.total_pages / self.pages_per_block)
         # 현재 블럭
         self.current_block = self._calculate_current_block()
         # 시작 페이지
@@ -30,21 +28,18 @@ class Paginations:
         self.has_previous_page = self.start_page - 1 > 0
         # 다음 페이지 번호
         self.next_page = self.end_page + 1
-
         # 다음 페이지 존재 여부
-        self.has_next_page = (self.current_block * self.pages_per_block) < self.total_pages
-
+        self.has_next_page = True
+        self.has_next_page = 1 <= self.current_block < self.total_blocks
         # 이전 블럭 존재 여부(첫 페이지)
         self.has_previous_block = self.current_block > 1
-
         # 다음 블럭 존재 여부(마지막 페이지)
-        self.has_next_block = self.current_page < self.total_pages
-
+        self.has_next_block = True
+        self.has_next_block = 1 <= self.current_page < self.total_pages
         # 첫 페이지
         self.first_page = 1
         # 마지막 페이지
         self.last_page = self.total_pages
-        pass
 
     def _calculate_total_pages(self):
         # return (self.total_records + self.records_per_page - 1) // self.records_per_page
@@ -63,9 +58,7 @@ class Paginations:
     
     def _calculate_start_record_number(self):
         # 현재 페이지 번호와 페이지 당 레코드 수를 곱한 후 페이지 당 레코드 수를 빼고 1을 더하여 현재 페이지의 시작 레코드 번호를 계산
-        return (self.current_page * self.records_per_page) - self.records_per_page + 1
-    
-    pass    
+        return (self.current_page * self.records_per_page) - self.records_per_page + 1    
 
 if __name__ == "__main__":
     # 예시 사용:

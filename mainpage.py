@@ -41,13 +41,22 @@ from fastapi.staticfiles import StaticFiles
 app.mount("/data/img", StaticFiles(directory="data/img/"), name="static_img")
 
 @app.get("/")
-async def root(Request:Request):
-    return templates.TemplateResponse("mainpage.html",{'request':Request})
+async def root(request:Request):
+    await request.form()
+    key_name = request.query_params.get('key_name')
+    if key_name == None :
+        return templates.TemplateResponse("mainpage.html",{'request':request})
+    else :
+        search_word = request.query_params.get('search_word')
+    
+        return templates.TemplateResponse("mainpage.html",
+                                      context={'request': request, 'key_name':key_name,'search_word' : search_word})
+        
 
 
 @app.post("/")
-async def root(Request:Request):
-    return templates.TemplateResponse("mainpage.html",{'request':Request})
+async def root(request:Request):
+    return templates.TemplateResponse("mainpage.html",{'request':request})
 
 
 ## 뉴스 추천

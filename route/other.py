@@ -38,10 +38,6 @@ async def QnA_function(
     request: Request,
     page_number: Optional[int] = 1, 
     ques_title: Optional[str] = None,
-    ques_writer: Optional[str] = None,
-    ques_content: Optional[str] = None,
-    ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None
 ):
     # db.answers.find({'name':{ '$regex': '김' }})
     # { 'name': { '$regex': user_dict.word } }
