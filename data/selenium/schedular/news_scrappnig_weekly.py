@@ -89,8 +89,8 @@ def bosascrapping(browser_name, keyword) :
                                     ,"news_when" : news_when
                                     ,"news_contents":news_contents
                                     ,"news_url":news_url
-                                     ,"news_topic" : news_topic
-                                      , "news_paper" : news_paper })
+                                    ,"news_topic" : news_topic
+                                    , "news_paper" : news_paper })
             browser.back()
             time.sleep(1)
         except StaleElementReferenceException :
