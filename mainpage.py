@@ -41,20 +41,58 @@ from fastapi.staticfiles import StaticFiles
 app.mount("/data/img", StaticFiles(directory="data/img/"), name="static_img")
 
 
+## 뉴스 추천
+from database.connection import Database
+from models.user_member import members
+from models.trend_news import news_trends as news
+members_coll = Database(members)
+news_coll = Database(news)
+
+from datetime import datetime, timedelta
+from pymongo import DESCENDING
+
+@app.post("/")
+@app.get("/")
+async def news_recomment(request:Request):
+
+    hope_info = '프로그램 참여' #사용자 ID를 이용해서 유지가능하게 하면 user_id 도입
+    recent_day = 20 # 최근 20일 간의 뉴스만 고려
+    start_date = datetime.now() - timedelta(days=recent_day)
+    if hope_info == '프로그램 참여' :
+        news_type_user = '심포지엄/행사'
+    elif hope_info == '관련 법 사항' :
+        news_type_user = '의료/법안'
+    
+    query = {
+    'news_type': news_type_user,
+    'news_when': {'$gte': start_date}
+}
+    try: 
+        news_list = news_coll.find(query).sort('news_when', DESCENDING).limit(4)
+
+        recommend_news = []
+        for news in news_list:
+            recommend_news.append({
+                'news_title' : news['news_title']
+                , 'news_when' : news['news_when']
+                , 'news_contents' : news['news_contents']
+                , 'news_url' : news['news_urls']
+                , 'news_type' : news['news_type']
+            })
+
+        return templates.TemplateResponse("mainpage.html",{'request':request, 'recommend_news': recommend_news})
+    except :
+        return templates.TemplateResponse("mainpage.html",{'request':request})
+
+
+
+
 @app.post("/")
 @app.get("/")
 async def root(request:Request):
-    await request.form()
-    key_name = request.query_params.get('key_name')
-    if key_name == None :
-        return templates.TemplateResponse("mainpage.html",{'request':request})
-    else :
-        search_word = request.query_params.get('search_word')
-    
-        return templates.TemplateResponse("mainpage.html",
-                                      context={'request': request, 'key_name':key_name,'search_word' : search_word})
-        
 
+    return templates.TemplateResponse("mainpage.html",{'request':request})
+   
 
 @app.post("/")
 async def root(request:Request):
