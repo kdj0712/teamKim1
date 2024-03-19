@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/data/img/favicon.ico">
     <style>
         * {
             font-family: "Noto Sans KR", sans-serif;
@@ -154,33 +155,22 @@
             <div style="  text-align: center   align-items-center" class="justify-content-center">
                 <img src="/data/img/unnamed.png" alt="">
             </div>
-            <form >
-                <div style="text-align: center   align-items-center" class="row justify-content-center">
-
+            <form>
+                <div style="text-align: center; align-items:center" class="row justify-content-center">
                     <div class="col-2">
-
-                        <select class="form-select " id="search_select" required="" name="key_name">
+                        <select class="form-select" id="search_select" required="" name="key_name">
                             <option value="">전체</option>
-                            <option value="dise_name_kr" >희귀질환</option>
-                            <option value="institution_name" >의료기관</option>
+                            <option value="dise_name_kr">희귀질환</option>
+                            <option value="institution_name">의료기관</option>
                         </select>
                     </div>
                     <div class="col-5">
-                        <input class="form-control" placeholder="Enter Search!" name="search_word"
-                            id="search_word">
+                        <input class="form-control" placeholder="Enter Search!" name="search_word" id="search_word">
                     </div>
-                    <!-- if 문 써서 희귀질환이면 /search/search_raredisease로 연결
-                    의료기관이면/search/search_institution  -->
-
                     <div class="col-2">
-                        <input type="button" class="btn btn-primary"
-                             formmethod="post"
-                             formaction="/info/info_raredisease?key_name=search_select&search_word=search_word"
-                             onclick="alert_();">검색</input>
+                        <button type="button" class="btn btn-primary" onclick="search()">검색</button>
                         <br>
-
                     </div>
-
                 </div>
             </form>
             <div class="row justify-content-center  text-center container p-3">
@@ -361,16 +351,30 @@
     </footer>
 </body>
 <script type="text/javascript">
-	
-    var search_select = document.getElementById("search_select");
-    var search_select_index = document.getElementById("search_select").options.selectedIndex;
-    var search_word = document.getElementById("search_word")
-    function alert_() {
-        alert (search_select.value,  search_word.value)}
+    function search() {
+        var search_select = document.getElementById("search_select").value;
+        var search_word = document.getElementById("search_word").value;
 
+        if (search_select && search_word) { // 검색 선택과 검색어가 모두 입력되었는지 확인
+            var formAction = '';
 
+            if (search_select === 'dise_name_kr') {
+                formAction = '/info/info_raredisease';
+            } else if (search_select === 'institution_name') {
+                formAction = '/info/info_institution';
+            }
 
-	
+            // 동적으로 폼 생성하고 제출
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = formAction + '?key_name=' + encodeURIComponent(search_select) + '&search_word=' + encodeURIComponent(search_word);
+
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            alert('선택과 검색어를 모두 입력해주세요.');
+        }
+    }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
