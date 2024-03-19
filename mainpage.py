@@ -44,12 +44,19 @@ app.mount("/data/img", StaticFiles(directory="data/img/"), name="static_img")
 @app.post("/")
 @app.get("/")
 async def root(request:Request):
-
-    return templates.TemplateResponse("mainpage.html",{'request':request})
+    await request.form()
+    key_name = request.query_params.get('key_name')
+    if key_name == None :
+        return templates.TemplateResponse("mainpage.html",{'request':request})
+    else :
+        search_word = request.query_params.get('search_word')
+    
+        return templates.TemplateResponse("mainpage.html",
+                                      context={'request': request, 'key_name':key_name,'search_word' : search_word})
         
 
 
-
+@app.post("/")
 async def root(request:Request):
     return templates.TemplateResponse("mainpage.html",{'request':request})
 
