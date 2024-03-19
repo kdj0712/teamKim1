@@ -91,11 +91,17 @@ class Database:
         return False
 
     # column 값으로 여러 Documents 가져오기
-    async def getsbyconditions(self, conditions:dict) -> Any:
+    async def getsbyconditions(self, conditions:dict) -> [Any]:
         documents = await self.model.find(conditions).to_list()  # find({})
         if documents:
             return documents
-        return False    
+        return []    
+    
+    async def getsbyconditions_top4(self, conditions:dict) -> [Any]:
+        documents = await self.model.find(conditions).sort('news_when').limit(4).to_list(length=4)  # find({})
+        if documents:
+            return documents
+        return []
     
     async def getsbyconditionswithpagination(self
                                              , conditions:dict, page_number, records_per_page=10) -> [Any]:
@@ -105,7 +111,7 @@ class Database:
         documents = await self.model.find(conditions).skip(pagination.start_record_number-1).limit(pagination.records_per_page).to_list()
         if documents:
             return documents, pagination
-        return pagination  
+        return documents, pagination  
     
 
 if __name__ == '__main__':
