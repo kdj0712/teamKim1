@@ -124,7 +124,7 @@ async def news_recomment(request:Request):
     'publish_date': {'$gte': start_date}
 }
 
-    news_list = news_coll.find(query).sort('publish_date', DESCENDING).limit(4)
+    news_list = await news_coll.find(query).sort('publish_date', DESCENDING).limit(4).to_list(lenth=4)
 
     recommend_news = []
     for news in news_list:
