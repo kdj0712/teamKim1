@@ -54,33 +54,31 @@ from pymongo import DESCENDING
 @app.post("/")
 @app.get("/")
 async def news_recomment(request:Request):
-
+    conditions = {}
     hope_info = '프로그램 참여' #사용자 ID를 이용해서 유지가능하게 하면 user_id 도입
-    recent_day = 20 # 최근 20일 간의 뉴스만 고려
-    start_date = datetime.now() - timedelta(days=recent_day)
+    # recent_day = 20 # 최근 20일 간의 뉴스만 고려
+    # start_date = datetime.now() - timedelta(days=recent_day)
     if hope_info == '프로그램 참여' :
         news_type_user = '심포지엄/행사'
+        # {'news_when': {'$gte': start_date}}
     elif hope_info == '관련 법 사항' :
         news_type_user = '의료/법안'
-    
-    query = {
-    'news_topic': news_type_user,
-    'news_when': {'$gte': start_date}
-}
-    try: 
-        news_list = await news_coll.getsbyconditions(query).sort('news_when', DESCENDING).limit(4).to_list(length=4)
-    
-        recommend_news = []
-        for news in news_list:
-            recommend_news.append({
-                'news_title' : news['news_title']
-                , 'news_when' : news['news_when']
-                , 'news_contents' : news['news_contents']
-                , 'news_url' : news['news_urls']
-                , 'news_type' : news['news_type']
-            })
 
-        return templates.TemplateResponse("mainpage.html",{'request':request, 'recommend_news': recommend_news})
+    conditions.update({'news_topic': {'$regex':news_type_user}})
+
+    try: 
+        news_list = await news_coll.getsbyconditions(conditions)
+        # recommend_news = []
+        # for news in news_list:
+        #     recommend_news.append({
+        #         'news_title' : news['news_title']
+        #         , 'news_when' : news['news_when']
+        #         , 'news_contents' : news['news_contents']
+        #         , 'news_url' : news['news_urls']
+        #         , 'news_type' : news['news_type']
+        #     })
+
+        return templates.TemplateResponse("mainpage.html",{'request':request, 'news_list': news_list})
     except :
         return templates.TemplateResponse("mainpage.html",{'request':request})
 
