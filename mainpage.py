@@ -70,7 +70,6 @@ async def news_recomment(request:Request):
     try: 
         news_list = await news_coll.getsbyconditions(query).sort('news_when', DESCENDING).limit(4).to_list(length=4)
     
-
         recommend_news = []
         for news in news_list:
             recommend_news.append({
