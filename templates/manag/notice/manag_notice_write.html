@@ -25,13 +25,13 @@
           <input type="" class="form-control" name="notice_type" id="notice_type" required>
 
           <div>
-              <label>프로그램 내용</label>
+              <label>공지 내용</label>
               <!-- Quill 편집기를 적용할 div 요소 -->
               <input type="hidden" name="editorContent" id="editorContent" required>
               <div id="editor"></div>
           </div>
 
-          <button class="btn btn-primary" type="submit" formaction="/manag/manag_notice_main" formmethod="post">글쓰기</button>
+          <button class="btn btn-primary" type="submit" formaction="/manag/manag_notice_write" formmethod="post">글쓰기</button>
           <a href="/manag/manag_notice_main" class="btn btn-danger">취소</a>
       </div>
   </form>
