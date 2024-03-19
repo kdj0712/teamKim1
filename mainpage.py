@@ -62,7 +62,7 @@ from pymongo import DESCENDING
 
 @app.get("/")
 async def news_recomment(request:Request):
-    hope_info = '프로그램 참여' #사용자 ID를 이용해서 유지가능하게 하면 user_id 도입
+    hope_info = '프로그램 참여' # 사용자 ID를 이용해서 유지가능하게 하면 user_id 도입
     recent_day = 20 # 최근 20일 간의 뉴스만 고려
     start_date = datetime.now() - timedelta(days=recent_day)
     if hope_info == '프로그램 참여' :
@@ -71,7 +71,7 @@ async def news_recomment(request:Request):
         news_type_user = '의료/법안'
     
     query = {
-    'news_type': news_type_user,
+    'news_topic': news_type_user,
     'publish_date': {'$gte': start_date}
 }
 
@@ -84,9 +84,7 @@ async def news_recomment(request:Request):
             , 'news_when' : news['news_when']
             , 'news_contents' : news['news_contents']
             , 'news_url' : news['news_urls']
-            , 'news_type' : news['news_type']
+            , 'news_topic' : news['news_topic']
         })
 
     return recommend_news
-
-    
