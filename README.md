@@ -60,7 +60,7 @@
 ~$ docker-compose up -d
 
 ~$ docker-compose down
-~$ docker-compose up -d  # reRun
+~$ docker-compose up -d  # reRunW
 ```
 #### samples
 - connect mongodb : [samples\sample_mongodb_connection.ipynb](./samples/sample_mongodb_connection.ipynb)

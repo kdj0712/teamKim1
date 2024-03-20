@@ -44,28 +44,28 @@
       <ul class="pagination justify-content-center">
         <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/manag_read/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">맨
+            formaction="/manag/manag_QnA_read/{{pagination.first_page}}">맨
             처음</button>
 
         </li>
         <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/manag_read/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
+            formaction="/manag/manag_QnA_read/{{pagination.previous_page}}">이전</button>
         </li>
         {% for page_num in pagination.current_page_range %}
         <li class="page-item {{ 'active' if page_num == pagination.current_page else '' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/manag_read/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word}}">{{
+            formaction="/manag/manmanag_QnA_readag_read/{{ page_num }}?">{{
             page_num }}</button>
         </li>
         {% endfor %}
         <li class="page-item {{ '' if pagination.has_next_page else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/manag_read/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
+            formaction="/manag/manag_QnA_read/{{ pagination.next_page }}">다음</button>
         </li>
         <li class="page-item {{ '' if pagination.has_next_block else 'disabled' }}">
           <button type="submit" class="page-link"
-            formaction="/manag/QnAmanag_read/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+            formaction="/manag/manag_QnA_read/{{ pagination.last_page }}">
             맨 끝
           </button>
         </li>
