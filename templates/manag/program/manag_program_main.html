@@ -1,6 +1,91 @@
 {% extends "manag/manag_template.html"%}
+{% block title %}
+RDS: 관리자마당 공지사항관리
+{% endblock title%}
+
 {% block main %}
 <main class="col-md-9 col-lg-10 px-md-4">
-프로그램 관리 페이지입니다?
+    <form action="">
+
+        <h2>프로그램 관리</h2>
+
+        <div class="justify-content-center row">
+            <div class="row col-7">
+                <div class="col-2">
+                    <select class="form-control" name="" id="selected_field">
+                        <option value="program_title">
+                            프로그램명
+                        </option>
+                    </select>
+                </div>
+                <div class="col-8">
+                    <input class="form-control" placeholder="Enter Search!" name="search_word" id="search_keyword"
+                        value="">
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary" formaction="/manag/manag_notice_main" formmethod="get"
+                        id="검색" onclick="performSearch()">검색</button>
+                </div>
+                <div style="text-align: end;">
+                    <a class="btn btn-success" href="/manag/manag_program_write" formmethod="get">글쓰기</a>
+                </div>
+            </div>
+
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th width="60px">번호</th>
+                    <th>프로그램명</th>
+                    <th>작성날짜 </th>
+                    <th>상세보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for program in programs %}
+                <td>{{loop.index}}</td>
+                <td>{{program.program_title}}</td>
+                <td>{{program.program_date}}</td>
+                <td><button formmethod="get" formaction="/manag/manag_program_reply/{{program.id}}">상세보기</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item ">
+                    <button type="submit" class="page-link"
+                        formaction="/manag/manag_program_main/{{pagination.first_page}}?">
+                        맨 처음
+                    </button>
+
+                </li>
+                <li class="page-item">
+                    <button type="submit" class="page-link"
+                        formaction="/manag/manag_program_main/{{pagination.previous_page}}">이전</button>
+                </li>
+                {% for page_num in pagination.current_page_range %}
+                <li class="page-item">
+                    <button type="submit" class="page-link"
+                        formaction="/manag/manag_program_main/{{ page_num }}?">
+                        {{page_num}}
+                    </button>
+                </li>
+                {% endfor %}
+                <li class="page-item">
+                    <button type="submit" class="page-link"
+                        formaction="/manag/manag_program_main{{ pagination.next_page }}?">다음</button>
+                </li>
+                <li class="page-item">
+                    <button type="submit" class="page-link"
+                        formaction="/manag/manag_program_main{{ pagination.last_page }}?">
+                        맨 끝
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </form>
 </main>
+
+
 {% endblock main %}

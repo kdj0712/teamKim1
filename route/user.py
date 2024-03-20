@@ -1,18 +1,15 @@
-from fastapi import APIRouter
-from fastapi import HTTPException
+from fastapi import APIRouter, HTTPException, Request, FastAPI
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
-from fastapi import FastAPI
+from datetime import datetime
+from beanie import PydanticObjectId
 
 app = FastAPI()
 router = APIRouter()
 
 from database.connection import Database
-
-from models.member import members
+from models.user_member import members
 collection_member = Database(members)
-
 
 templates = Jinja2Templates(directory="templates/")
 
@@ -33,8 +30,8 @@ async def user_login(request:Request):
 
 # 로그인 체킹 페이지
 @router.get("/user_logincheck", response_class=HTMLResponse) 
-async def mypage(request:Request):
-    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+async def mypage(request:Request,user_id:PydanticObjectId ):
+    return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request,'user_id':PydanticObjectId})
 
 @router.post("/user_logincheck", response_class=HTMLResponse) 
 async def mypage(request:Request):
@@ -56,7 +53,7 @@ async def mypage(request:Request):
     if logcheck:
         return templates.TemplateResponse(name="mainpage.html", context={'request':request})
     else: 
-        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request})
+        return templates.TemplateResponse(name="user/user_logincheck.html", context={'request':request,'user_id':PydanticObjectId})
 
 #### -------------------------------------------------------------------------------------------------------
 
@@ -153,6 +150,10 @@ async def mypage(request:Request):
 async def mypage(request:Request ):
     form_data = await request.form()
     dict_form_data = dict(form_data)
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d")
+    # 이 시간을 item 객체의 'ques_time' 속성에 저장한다.
+    dict_form_data['join_date'] = formatted_time
     inputID = dict_form_data['user_ID']
     inputEmail = dict_form_data['user_email']
 
@@ -235,3 +236,52 @@ async def mypage(request:Request):
     return templates.TemplateResponse(name="user/user_privacypolicy.html", context={'request':request})
 
 #### -------------------------------------------------------------------------------------------------------
+
+# 찜 목록
+@router.get("/user_mypage_like", response_class=HTMLResponse) 
+async def mypage_like_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_like.html", context={'request':request})
+
+@router.post("/user_mypage_like", response_class=HTMLResponse) 
+async def mypage_like_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_like.html", context={'request':request})
+
+# 내가 쓴 글
+
+@router.get("/user_mypage_post", response_class=HTMLResponse) 
+async def mypage_post_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_post.html", context={'request':request})
+
+@router.post("/user_mypage_post", response_class=HTMLResponse) 
+async def mypage_post_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_post.html", context={'request':request})
+
+# 계정관리인증화면
+@router.get("/user_mypage_account_check", response_class=HTMLResponse) 
+async def mypage_account_check_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_account_check.html", context={'request':request})
+
+@router.post("/user_mypage_account_check", response_class=HTMLResponse) 
+async def mypage_account_check_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_account_check.html", context={'request':request})
+
+
+# 계정관리 수정화면
+@router.get("/user_mypage_account_reply/{object_id}") 
+async def mypage_account_reply_get(request:Request,object_id : PydanticObjectId):
+    user = await collection_member.get(object_id)
+    return templates.TemplateResponse(name="user/user_mypage_account_reply.html", context={'request':request,"user" : user})
+
+@router.post("/user_mypage_account_reply", response_class=HTMLResponse) 
+async def mypage_account_reply_post(request:Request):
+    await request.form()
+    return templates.TemplateResponse(name="user/user_mypage_account_reply.html", context={'request':request})
+
+# 프로그램 신청내역 화면
+@router.get("/user_mypage_program", response_class=HTMLResponse) 
+async def mypage_program_get(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_program.html", context={'request':request})
+
+@router.post("/user_mypage_program", response_class=HTMLResponse) 
+async def mypage_program_post(request:Request):
+    return templates.TemplateResponse(name="user/user_mypage_program.html", context={'request':request})

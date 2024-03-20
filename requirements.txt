@@ -31,3 +31,5 @@ pydantic[email]
 transformers
 torch
 tensorflow
+google-cloud-storage
+aiohttp

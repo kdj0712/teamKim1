@@ -1,0 +1,100 @@
+[
+    {
+        "community_type": "타입1",
+        "community_subject": "주제1",
+        "community_title": "제목1",
+        "community_related_diseases": "관련 질환1",
+        "community_content": "내용1",
+        "community_writer": "작성자1",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입2",
+        "community_subject": "주제2",
+        "community_title": "제목2",
+        "community_related_diseases": "관련 질환2",
+        "community_content": "내용2",
+        "community_writer": "작성자2",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입3",
+        "community_subject": "주제3",
+        "community_title": "제목3",
+        "community_related_diseases": "관련 질환3",
+        "community_content": "내용3",
+        "community_writer": "작성자3",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입4",
+        "community_subject": "주제4",
+        "community_title": "제목4",
+        "community_related_diseases": "관련 질환4",
+        "community_content": "내용4",
+        "community_writer": "작성자4",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입5",
+        "community_subject": "주제5",
+        "community_title": "제목5",
+        "community_related_diseases": "관련 질환5",
+        "community_content": "내용5",
+        "community_writer": "작성자5",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입6",
+        "community_subject": "주제6",
+        "community_title": "제목6",
+        "community_related_diseases": "관련 질환6",
+        "community_content": "내용6",
+        "community_writer": "작성자6",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입7",
+        "community_subject": "주제7",
+        "community_title": "제목7",
+        "community_related_diseases": "관련 질환7",
+        "community_content": "내용7",
+        "community_writer": "작성자7",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입8",
+        "community_subject": "주제8",
+        "community_title": "제목8",
+        "community_related_diseases": "관련 질환8",
+        "community_content": "내용8",
+        "community_writer": "작성자8",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입9",
+        "community_subject": "주제9",
+        "community_title": "제목9",
+        "community_related_diseases": "관련 질환9",
+        "community_content": "내용9",
+        "community_writer": "작성자9",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입10",
+        "community_subject": "주제10",
+        "community_title": "제목10",
+        "community_related_diseases": "관련 질환10",
+        "community_content": "내용10",
+        "community_writer": "작성자10",
+        "community_date": "2023-12-25"
+    },
+    {
+        "community_type": "타입11",
+        "community_subject": "주제11",
+        "community_title": "제목11",
+        "community_related_diseases": "관련 질환11",
+        "community_content": "내용11",
+        "community_writer": "작성자11",
+        "community_date": "2023-12-25"
+    }]
