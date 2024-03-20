@@ -52,3 +52,11 @@ async def empo_community_function(
 @router.post("/empo_community", response_class=HTMLResponse) 
 async def empo_community_function(request:Request):
     return templates.TemplateResponse(name="empo/empo_community.html", context={'request':request})
+
+@router.get("/empo_community_write", response_class=HTMLResponse) 
+async def empo_community_write_function(request:Request):
+    return templates.TemplateResponse(name="empo/empo_community_write.html", context={'request':request})
+
+@router.post("/empo_community_write", response_class=HTMLResponse) 
+async def empo_community_write_function(request:Request):
+    return templates.TemplateResponse(name="empo/empo_community_write.html", context={'request':request})

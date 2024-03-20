@@ -14,7 +14,7 @@
 {% endblock %}
 
 <main class="col-md-9 col-lg-10 px-md-4">
-  <form action="" method="POST" id="myForm">
+  <form action="" method="POST" id="form_first">
       <div class="mb-3">
 
           <label for="notice_title">제목</label>
@@ -27,7 +27,7 @@
           <div>
               <label>공지 내용</label>
               <!-- Quill 편집기를 적용할 div 요소 -->
-              <input type="hidden" name="editorContent" id="editorContent" required>
+              <input type="hidden" name="notice_content" id="editorContent" required>
               <div id="editor"></div>
           </div>
 

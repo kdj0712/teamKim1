@@ -164,9 +164,7 @@ async def program_main_function(request:Request):
         context={'request':request, 'programs': programs})
 
 @router.get("/manag_program_write", response_class=HTMLResponse) 
-async def program_write_function(request:Request):
-    
-    
+async def program_write_function(request:Request):    
     return templates.TemplateResponse(name="manag/program/manag_program_write.html", context={'request':request})
 
 @router.post("/manag_program_write", response_class=HTMLResponse) 
@@ -497,7 +495,7 @@ async def notice_main_function(
         pass
     else:
         notice_list = notice(**dict_form_data)
-        await collection_QnA.save(notice_list)
+        await collection_manag_notice.save(notice_list)
     
      ## db 불러오기 + 페이지네이션
     
