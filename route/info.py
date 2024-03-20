@@ -120,11 +120,7 @@ async def disease_list(request: Request, page_number: int = 1, key_name: Optiona
 async def institution(request:Request):
     return templates.TemplateResponse(name="info/info_raredisease_nondata.html", context={'request':request})
 
-from flask import Flask, send_file
-@router.post('/download')
-def download_file():
-    path_to_file = "data/csv/[헬프라인]희귀질환목록_2024_03_20_10_34_05.xlsx"
-    return send_file(path_to_file, as_attachment=True)
+
 
 
 
