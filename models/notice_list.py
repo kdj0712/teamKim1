@@ -9,6 +9,6 @@ class notice(Document):
     notice_date: Optional[datetime] = None
     notice_type: Optional[str] = None
     notice_content: Optional[str] = None
-  
+    
     class Settings:
         name = "notice_list"

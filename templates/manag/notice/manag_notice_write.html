@@ -14,7 +14,7 @@
 {% endblock %}
 
 <main class="col-md-9 col-lg-10 px-md-4">
-  <form action="" method="POST" id="myForm">
+  <form action="" method="POST" id="form_first">
       <div class="mb-3">
 
           <label for="notice_title">제목</label>
@@ -25,13 +25,13 @@
           <input type="" class="form-control" name="notice_type" id="notice_type" required>
 
           <div>
-              <label>프로그램 내용</label>
+              <label>공지 내용</label>
               <!-- Quill 편집기를 적용할 div 요소 -->
-              <input type="hidden" name="editorContent" id="editorContent" required>
+              <input type="hidden" name="notice_content" id="editorContent" required>
               <div id="editor"></div>
           </div>
 
-          <button class="btn btn-primary" type="submit" formaction="/manag/manag_notice_main" formmethod="post">글쓰기</button>
+          <button class="btn btn-primary" type="submit" formaction="/manag/manag_notice_write" formmethod="post">글쓰기</button>
           <a href="/manag/manag_notice_main" class="btn btn-danger">취소</a>
       </div>
   </form>

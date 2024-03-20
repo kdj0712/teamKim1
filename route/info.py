@@ -17,6 +17,9 @@ api_key = os.getenv("API_KEY")
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/app/teamKim/macro-atom-415806-fd4035d471e1.json"
 router = APIRouter()
 
+from fastapi.staticfiles import StaticFiles
+router.mount("/data/csv", StaticFiles(directory="data/csv/"), name="static_csv")
+
 from database.connection import Database
 from models.info_rarediseases import diseases
 collection_disease = Database(diseases)
@@ -41,7 +44,7 @@ def load_pickle_from_gcs(bucket_name, file_name):
     return pickle.loads(pickle_data)
 bucket_name = 'savehomes'
 file_name = 'search_symptoms.pkl'
-vectorizer = load_pickle_from_gcs(bucket_name, file_name)
+# vectorizer = load_pickle_from_gcs(bucket_name, file_name)
 
 with open('data/pkl/vectorizer.pkl', 'rb') as file:
     vectorizer = pickle.load(file)
@@ -116,6 +119,11 @@ async def disease_list(request: Request, page_number: int = 1, key_name: Optiona
 @router.get("/info_raredisease_nondata", response_class=HTMLResponse) 
 async def institution(request:Request):
     return templates.TemplateResponse(name="info/info_raredisease_nondata.html", context={'request':request})
+
+
+
+
+
 
 #### -------------------------------------------------------------------------------------------------------
 

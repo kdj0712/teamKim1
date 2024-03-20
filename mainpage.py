@@ -90,15 +90,6 @@ async def news_recomment(request:Request):
 
 
 
-
-@app.post("/")
-@app.get("/")
+@app.get("/rarefield")
 async def root(request:Request):
-
-    return templates.TemplateResponse("mainpage.html",{'request':request})
-   
-
-@app.post("/")
-async def root(request:Request):
-    return templates.TemplateResponse("mainpage.html",{'request':request})
-
+    return templates.TemplateResponse("mainpage_business.html",{'request':request})

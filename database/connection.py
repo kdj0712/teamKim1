@@ -10,6 +10,7 @@ from models.trend_news import news_trends
 from models.other_QnA import QnA
 from models.notice_list import notice
 from models.program_list import program
+from models.empo_community import community
 
 import os
 
@@ -27,7 +28,7 @@ class Settings(BaseSettings):
         if self.DATABASE_URL is not None:
             client = AsyncIOMotorClient(self.DATABASE_URL)
             await init_beanie(database=client.get_default_database(),
-                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA, program, notice])
+                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA, program, notice, community])
 
     class Config:
         env_file = ".env"

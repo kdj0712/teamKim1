@@ -4,7 +4,7 @@ from beanie import Document, Link
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
-class program(Document):
+class community(Document):
     community_type: Optional[str] = None
     community_subject: Optional[str] = None
     community_title: Optional[str] = None
