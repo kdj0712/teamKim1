@@ -7,27 +7,38 @@ from database.connection import Database
 from beanie import PydanticObjectId
 from pydantic import BaseModel, Field, EmailStr
 
+# db 연결
 from models.academicinfo import academicinfo
-from models.info_rarediseases import diseases
-from models.institution import Institutions
-from models.trend_news import news_trends as news
-from models.user_member import members
-from models.other_QnA import QnA
-from models.notice_list import notice
-from models.program_list import program
 collection_acade = Database(academicinfo)
+
+from models.info_rarediseases import diseases
 collection_dise = Database(diseases)
+
+from models.institution import Institutions
 collection_insti = Database(Institutions)
+
+from models.trend_news import news_trends as news
 collection_trend = Database(news)
-collection_member = Database(members)    
+
+from models.user_member import members
+collection_member = Database(members)
+
+from models.other_QnA import QnA
 collection_QnA = Database(QnA)
+
+from models.notice_list import notice
 collection_manag_notice = Database(notice)
+
+from models.program_list import program
 collection_manag_program = Database(program)
 
+from models.empo_community import community
+collection_empo_community = Database(community)
+
+# 라우터 연결
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
-
 
 #### -------------------------------------------------------------------------------------------------------
 
@@ -81,6 +92,7 @@ async def list(
     User_list, pagination = await collection_member.getsbyconditionswithpagination(
     conditions, page_number
     )
+    
     return templates.TemplateResponse(
     name="manag/user/manag_user_main.html",
     context={'request': request, 'user_list': User_list, 'pagination': pagination,'search_word' : search_word},
@@ -90,13 +102,34 @@ async def list(
 
 # community_main
 
+@router.get("/manag_user_main/{page_number}", response_class=HTMLResponse)
 @router.get("/manag_community_main", response_class=HTMLResponse) 
-async def community(request:Request):
-    return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
+async def community_main_function(
+    request:Request,
+    page_number: Optional[int] = 1
+    ):
+    
+    conditions = {}
+    
+    community_list, pagination = await collection_empo_community.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(
+        name="manag/community/manag_community_main.html", 
+        context={'request':request, 'pagination': pagination, 'communitys': community_list})
 
 @router.post("/manag_community_main", response_class=HTMLResponse) 
-async def community(request:Request):
-    return templates.TemplateResponse(name="manag/community/manag_community_main.html", context={'request':request})
+async def community_main_function(request:Request):
+    
+    await request.form()
+    dict(await request.form())
+    
+    community_list = await collection_empo_community.get_all()
+        
+    return templates.TemplateResponse(
+        name="manag/community/manag_community_main.html", 
+        context={'request':request, 'communitys': community_list})
 
 #### -------------------------------------------------------------------------------------------------------
 
@@ -126,7 +159,9 @@ async def program_main_function(request:Request):
     
     programs = await collection_manag_program.get_all()
     
-    return templates.TemplateResponse(name="manag/program/manag_program_main.html", context={'request':request, 'programs': programs})
+    return templates.TemplateResponse(
+        name="manag/program/manag_program_main.html", 
+        context={'request':request, 'programs': programs})
 
 @router.get("/manag_program_write", response_class=HTMLResponse) 
 async def program_write_function(request:Request):
