@@ -3,11 +3,14 @@ from typing import Any, List, Optional
 from beanie import init_beanie, PydanticObjectId
 
 from models.academicinfo import academicinfo
-from models.disease import diseases
+from models.info_rarediseases import diseases
 from models.institution import Institutions
-from models.member import members
-from models.trend import trends
-from models.QnA import QnA
+from models.user_member import members
+from models.trend_news import news_trends
+from models.other_QnA import QnA
+from models.notice_list import notice
+from models.program_list import program
+
 import os
 
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -19,11 +22,12 @@ from utils.paginations import Paginations
 class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
     container_prefix: Optional[str] = None
+    API_KEY : Optional[str] = None
     async def initialize_database(self):
         if self.DATABASE_URL is not None:
             client = AsyncIOMotorClient(self.DATABASE_URL)
             await init_beanie(database=client.get_default_database(),
-                              document_models=[academicinfo, diseases, Institutions, members, trends, QnA])
+                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA, program, notice])
 
     class Config:
         env_file = ".env"
@@ -87,24 +91,28 @@ class Database:
         return False
 
     # column 값으로 여러 Documents 가져오기
-    async def getsbyconditions(self, conditions:dict) -> Any:
+    async def getsbyconditions(self, conditions:dict) -> [Any]:
         documents = await self.model.find(conditions).to_list()  # find({})
         if documents:
             return documents
-        return False    
+        return []    
+    
+    async def getsbyconditions_top4(self, conditions:dict) -> [Any]:
+        documents = await self.model.find(conditions).sort('news_when').limit(4).to_list(length=4)  # find({})
+        if documents:
+            return documents
+        return []
     
     async def getsbyconditionswithpagination(self
-                                             , conditions:dict, page_number) -> Any:
+                                             , conditions:dict, page_number, records_per_page=10) -> [Any]:
         # find({})
         total = await self.model.find(conditions).count()
-        pagination = Paginations(total_records=total, current_page=page_number)
+        pagination = Paginations(total_records=total, current_page=page_number, records_per_page=records_per_page)
         documents = await self.model.find(conditions).skip(pagination.start_record_number-1).limit(pagination.records_per_page).to_list()
         if documents:
             return documents, pagination
-        return False  
+        return documents, pagination  
     
-
-
 
 if __name__ == '__main__':
     settings = Settings()

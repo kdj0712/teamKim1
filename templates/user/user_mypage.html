@@ -1,10 +1,79 @@
 {% extends "mainpage.html"%}
 
 {% block main_container %}
-
-<div class="container">
-    <p>마이페이지</p>
+{{ user }}
+<body>
+    <div class="m-5 container row justify-content-between">
+        <div class="col-2">
+            <span class="fw-bold fs-3" id="user_name">사용자</span><span>님</span>
+        </div>
+        <div class="col-2 fs-10 mt-2">
+            <span>가입일 : </span> <span>2024.03.13</span>
+        </div>
+    </div>
+    <hr>
     
-</div>
+    <div class="row ms-5">
+        <ul class="col-2 list-unstyled justify-content-start " style="height: 500px;">
+            <form action="/user/user_mypage" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
+                    마이페이지
+                </button>
+            </form>
+            <hr>
+            <form action="/user/user_mypage_like" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
+                    찜 목록
+                </button>
+            </form>
+            <hr>
+            <form action="/user/user_mypage_post" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
+                    내가 쓴 글
+                </button>
+            </form>
+            <hr>
+            <form action="/user/user_mypage_program" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
+                    프로그램신청현황
+                </button>
+            </form>
+            <hr>
+            <form action="/user/user_mypage_account_check" method="get">
+                <button class="btn  rounded border-0 text-align-start fw-bold" style="width: 200px; background-color:beige;">
+                    계정관리
+                </button>
+            </form>
+        </ul> 
+        <main class="col-9 container ">
+            {% block user_main %}
+            <div class="container row "  style="padding: 50px;">
+                <div class="row">
+                    
+                    <div class="col-4">
+                        <div class="fs-6 fw-bold">찜한 질환</div>
+                        <div><span  class="fs-1 fw-bold">5</span><span class="fs-5 fw-light">개</span></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-6 fw-bold">찜한 프로그램</div>
+                        <div><span  class="fs-1 fw-bold">5</span><span class="fs-5 fw-light">개</span></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-6 fw-bold">신청 프로그램</div>
+                        <div><span  class="fs-1 fw-bold">5</span><span class="fs-5 fw-light">개</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            {% endblock user_main %}
+        </main>
+    </div>
+
+
+
+
+
+</body>
+
 
 {% endblock %}

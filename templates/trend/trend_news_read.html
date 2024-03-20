@@ -1,0 +1,37 @@
+{% extends "mainpage.html"%}
+
+{% block main_container %}
+
+<main class="container">
+    <div class="mt-4 mb-4">
+        <h2 style="margin-top: 100px;">{{ news.news_title }}</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 text-end">
+            언론사명 : {{ news.news_paper }}
+        </div>
+        <div class="col-12 text-end">
+            날짜 : {{ news.news_when }}
+        </div>
+    </div>
+    <hr>
+    <div class="">
+        <p class="lead" style="text-align:justify; font-size: 18px;">{{ news.news_contents }}</p>
+    </div>
+    <hr>
+    <table>
+        <tr>
+            <td> 뉴스 링크 : </td>
+            <td>
+                <a href="{{ news.news_url }}">{{ news.news_url }}</a>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <div class="row">
+        <div class="col-12 text-end">
+            <a href="/trend/trend_news" class="btn btn-primary">목록</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

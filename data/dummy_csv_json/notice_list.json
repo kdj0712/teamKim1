@@ -1,0 +1,62 @@
+[
+    {
+        "notice_title": "공지사항 1",
+        "notice_date": "2023-12-25" ,
+        "notice_type": "일반",
+        "notice_content": "첫 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 2",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "두 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 3",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "세 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 4",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "네 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 5",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "다섯 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 6",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "여섯 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 7",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "일곱 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 8",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "여덟 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 9",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "아홉 번째 공지사항입니다."
+    },
+    {
+        "notice_title": "공지사항 10",
+        "notice_date": "2023-12-25",
+        "notice_type": "일반",
+        "notice_content": "열 번째 공지사항입니다."
+    }
+]
