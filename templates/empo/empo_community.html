@@ -1,81 +1,196 @@
 {% extends "mainpage.html"%}
 
+
+
 {% block main_container %}
-<div class="container">
-    <div class="row">
+<div class="row ms-5" style="text-align: left;">
+    <ul class="col-2 list-unstyled ps-0">
+        <li class="mb-1">
+            <button class="btn btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#wonder-collapse"
+                aria-expanded="false">
+                궁금해요
+            </button>
+            <div class="collapse" id="wonder-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none ">질병정보</a>
+                    </li>
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none ">의료보험정보</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
 
-        <div class="col-7">
-            <input class="form-control" placeholder="Enter Search!" name="search_word"
-                value="{{request._query_params.word}}">
+        <li class="mb-1">
+            <button class="btn btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#recommend-collapse"
+                aria-expanded="false">
+                추천해요
+            </button>
+            <div class="collapse" id="recommend-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none">의료기관
+                            추천</a>
+                    </li>
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none">의료보조기구
+                            추천</a>
+                    </li>
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none">신약
+                            추천</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="mb-1">
+            <button class="btn btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#pride-collapse"
+                aria-expanded="false">
+                자랑해요
+            </button>
+            <div class="collapse" id="pride-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none">취업성공</a>
+                    </li>
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none">소소한
+                            행복</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="mb-1">
+            <button class="btn btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#find-collapse"
+                aria-expanded="false">
+                찾아요
+            </button>
+            <div class="collapse" id="find-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none">간병인
+                            찾기</a>
+                    </li>
+                    <li>
+                        <a href="/manag/manag_user_main" class="link-body-emphasis text-decoration-none">의료보조기구
+                            찾기</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <div class="container col-10">
+        <div class="row justify-content-center">
+            <div class="col-7">
+                <div class="row">
+                    <div class="col-3">
+                        <select class="form-control" name="" id="selected_field">
+                            <option value="">제목</option>
+                            <option value="">관련질환명</option>
+                            <option value="">지역</option>
+                            <option value="">작성날짜</option>
+                        </select>
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control" placeholder="Enter Search!" name="" id="search_keyword" value="">
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary" formaction="/manag/manag_community_main"
+                            formmethod="get" id="검색" onclick="performSearch()">검색</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-5">
-            <button type="submit" class="btn btn-primary" formaction="/other/other_QnA" formmethod="get">검색</button>
+
+        <div style="text-align: start;">
+            <button type="button" class="btn btn-primary chip-btn filter-btn mt-4">내 질환 정보만 보기</button>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="60px">번호</th>
+                        <th>커뮤니티 유형</th>
+                        <th>관련 내용</th>
+                        <th>
+                            <div>제목</div>
+                            <div class="small" style="font-size: small;">관련질환명</div>
+                        </th>
+                        <th>작성날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for community in communitys %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{community.community_type}}</td>
+                        <td>{{community.community_subject}}</td>
+                        <td>
+                            <div>{{community.community_title}}</div>
+                            <div class="small" style="font-size: x-small;">{{community.community_related_diseases}}</div>
+                        </td>
+                        <td>{{community.community_date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="p-5 mb-4 bg-body-tertiary -3">
+                <div class="container-fluid py-5">
+                    <p class="col-md-8 fs-10">추천해요 | 의료기관정보</p>
+                    <P class="display-6 fw-bold">부산 인제대학교 백병원</P>
+                    <p class="col-md-8 fs-10">질환명 : 클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)</p>
+                </div>
+            </div>
+            <div class="p-5 mb-4 bg-body-tertiary -3">
+                <div class="container-fluid py-5">
+                    <p class="col-md-8 fs-10">궁금해요 | 질병정보</p>
+                    <P class="display-6 fw-bold">궁금증이 생겼는데요</P>
+                    <p class="col-md-8 fs-10">질환명 : 클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)</p>
+                </div>
+            </div>
+            <div class="p-5 mb-4 bg-body-tertiary -3">
+                <div class="container-fluid py-5">
+                    <p class="col-md-8 fs-10">자랑해요 | 취업성공</p>
+                    <P class="display-6 fw-bold">서울시장애인일자리통합지원센터 재택 근로인 양성과정</P>
+                    <p class="col-md-8 fs-10">질환명 : 선천성 수두증, 아놀드 키아리 증후군</p>
+                </div>
+            </div>
+            <div class="p-5 mb-4 bg-body-tertiary -3">
+                <div class="container-fluid py-5">
+                    <p class="col-md-8 fs-10">찾아요 | 간병인찾기</p>
+                    <P class="display-6 fw-bold">루게릭병 환자 경험있는 간병인 찾아요</P>
+                    <p class="col-md-8 fs-10">질환명 : 루게릭병</p>
+                </div>
+            </div>
+            <!-- 페이지네이션 -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <button type="submit" class="page-link" formaction="">
+                            맨 처음
+                        </button>
+                    </li>
+                    <li class="page-item ">
+                        <button type="submit" class="page-link" formaction="">이전</button>
+                    </li>
+                    <li class="page-item ">
+                        <button type="submit" class="page-link" formaction="">
+                        </button>
+                    </li>
+                    <li class="">
+                        <button type="submit" class="page-link" formaction="">다음</button>
+                    </li>
+                    <li class="page-item ">
+                        <button type="submit" class="page-link" formaction="{}">
+                            맨 끝
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        
     </div>
+</div>
 
-    <div style="text-align: start;">
-
-        <button type="button" class="btn btn-none chip-btn filter-btn">
-            <span>서비스</span>
-        </button>
-
-        <button type="button" class="btn btn-none chip-btn filter-btn">
-            <span>지역</span>
-        </button>
-
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-            <div class="container-fluid py-5">
-                <p class="col-md-8 fs-10">추천해요 | 의료기관정보</p>
-                <P class="display-6 fw-bold">부산 인제대학교 백병원</P>
-                <p class="col-md-8 fs-10">질환명 : 클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)</p>
-            </div>
-        </div>
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-            <div class="container-fluid py-5">
-                <p class="col-md-8 fs-10">궁금해요 | 질병정보</p>
-                <P class="display-6 fw-bold">궁금증이 생겼는데요</P>
-                <p class="col-md-8 fs-10">질환명 : 클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)</p>
-            </div>
-        </div>
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-            <div class="container-fluid py-5">
-                <p class="col-md-8 fs-10">자랑해요 | 취업성공</p>
-                <P class="display-6 fw-bold">서울시장애인일자리통합지원센터 재택 근로인 양성과정</P>
-                <p class="col-md-8 fs-10">질환명 : 선천성 수두증, 아놀드 키아리 증후군</p>
-            </div>
-        </div>
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-            <div class="container-fluid py-5">
-                <p class="col-md-8 fs-10">찾아요 | 간병인찾기</p>
-                <P class="display-6 fw-bold">루게릭병 환자 경험있는 간병인 찾아요</P>
-                <p class="col-md-8 fs-10">질환명 : 루게릭병</p>
-            </div>
-        </div>
-        <!-- 페이지네이션 -->
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <button type="submit" class="page-link" formaction="">
-                        맨 처음
-                    </button>
-                </li>
-                <li class="page-item ">
-                    <button type="submit" class="page-link" formaction="">이전</button>
-                </li>
-                <li class="page-item ">
-                    <button type="submit" class="page-link" formaction="">
-                    </button>
-                </li>
-                <li class="">
-                    <button type="submit" class="page-link" formaction="">다음</button>
-                </li>
-                <li class="page-item ">
-                    <button type="submit" class="page-link" formaction="{}">
-                        맨 끝
-                    </button>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    {% endblock %}
+{% endblock %}

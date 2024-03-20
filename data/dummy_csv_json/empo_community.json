@@ -1,100 +1,37 @@
 [
     {
-        "community_type": "타입1",
-        "community_subject": "주제1",
-        "community_title": "제목1",
-        "community_related_diseases": "관련 질환1",
-        "community_content": "내용1",
-        "community_writer": "작성자1",
+        "community_type": "추천해요",
+        "community_subject": "의료기관정보",
+        "community_title": "부산 인제대학교 백병원",
+        "community_related_diseases": "클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)",
+        "community_content": "좋더라구요",
+        "community_writer": "조유경",
         "community_date": "2023-12-25"
     },
     {
-        "community_type": "타입2",
-        "community_subject": "주제2",
-        "community_title": "제목2",
-        "community_related_diseases": "관련 질환2",
+        "community_type": "궁금해요",
+        "community_subject": "질병정보",
+        "community_title": "궁금증이 생겼는데요",
+        "community_related_diseases": "클라인펠터증후군, 두 개 이상의 X염색체를 가진 남성(Q98.1)",
+        "community_content": "이 질병은,,,",
+        "community_writer": "조유경",
+        "community_date": "2023-12-23"
+    },
+    {
+        "community_type": "자랑해요",
+        "community_subject": "취업성공",
+        "community_title": "서울시장애인일자리통합지원센터 재택 근로인 양성과정",
+        "community_related_diseases": "선천성 수두증, 아놀드 키아리 증후군",
+        "community_content": "이런 과정이 있는데 ",
+        "community_writer": "오지수",
+        "community_date": "2022-02-25"
+    },
+    {
+        "community_type": "찾아요",
+        "community_subject": "간병인찾기",
+        "community_title": "루게릭병 환자 경험있는 간병인 찾아요",
+        "community_related_diseases": "루게릭병",
         "community_content": "내용2",
-        "community_writer": "작성자2",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입3",
-        "community_subject": "주제3",
-        "community_title": "제목3",
-        "community_related_diseases": "관련 질환3",
-        "community_content": "내용3",
-        "community_writer": "작성자3",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입4",
-        "community_subject": "주제4",
-        "community_title": "제목4",
-        "community_related_diseases": "관련 질환4",
-        "community_content": "내용4",
-        "community_writer": "작성자4",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입5",
-        "community_subject": "주제5",
-        "community_title": "제목5",
-        "community_related_diseases": "관련 질환5",
-        "community_content": "내용5",
-        "community_writer": "작성자5",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입6",
-        "community_subject": "주제6",
-        "community_title": "제목6",
-        "community_related_diseases": "관련 질환6",
-        "community_content": "내용6",
-        "community_writer": "작성자6",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입7",
-        "community_subject": "주제7",
-        "community_title": "제목7",
-        "community_related_diseases": "관련 질환7",
-        "community_content": "내용7",
-        "community_writer": "작성자7",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입8",
-        "community_subject": "주제8",
-        "community_title": "제목8",
-        "community_related_diseases": "관련 질환8",
-        "community_content": "내용8",
-        "community_writer": "작성자8",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입9",
-        "community_subject": "주제9",
-        "community_title": "제목9",
-        "community_related_diseases": "관련 질환9",
-        "community_content": "내용9",
-        "community_writer": "작성자9",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입10",
-        "community_subject": "주제10",
-        "community_title": "제목10",
-        "community_related_diseases": "관련 질환10",
-        "community_content": "내용10",
-        "community_writer": "작성자10",
-        "community_date": "2023-12-25"
-    },
-    {
-        "community_type": "타입11",
-        "community_subject": "주제11",
-        "community_title": "제목11",
-        "community_related_diseases": "관련 질환11",
-        "community_content": "내용11",
-        "community_writer": "작성자11",
-        "community_date": "2023-12-25"
+        "community_writer": "킹덕재",
+        "community_date": "2013-11-25"
     }]

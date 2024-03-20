@@ -18,16 +18,16 @@
         <div class="mb-3">
 
             <label for="program_title">제목</label>
-            <input type="" class="form-control" name="program_title" id="program_title" value="{{ program.program_title }}" required>
+            <input type="" class="form-control" name="program_title" id="program_title" value="{{ program.program_title }}" disabled>
 
             <!-- 커뮤니티 유형은 추후 dropdown으로 변경 -->
             <label for="program_date">작성일자</label>  
-            <input type="" class="form-control" name="program_date" id="program_date" value="{{ program.program_date }}" required>
+            <input type="" class="form-control" name="program_date" id="program_date" value="{{ program.program_date }}" disabled>
 
             <div>
                 <label for="program_content">프로그램 내용</label>
                 <!-- Quill 편집기를 적용할 div 요소 -->
-                <input type="hidden" name="editorContent" id="editorContent" required>
+                <input type="hidden" name="editorContent" id="editorContent" disabled>
                 <div id="editor" name="program_content" value="{{ program.program_content}}" ></div>
             </div>
 
