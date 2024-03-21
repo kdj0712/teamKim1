@@ -12,8 +12,25 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 from pymongo import MongoClient
 import os
-with open('data/pkl/news_title_tokenizer.pkl', "rb") as file:
-    news_title_tokenizer = pickle.load(file)
+from konlpy.tag import Okt
+okt = Okt()
+stopwords = ['서울대', '희귀질환', '희귀', '대다',  '케다', '소아', '생명', '한국', '한미','사노피', '하다', '급여', '국내', '샤이어',  '스케', '세포'
+            , '병원',  '질환',  '한독', '화이자제약',  '전달', '질병', '인하대병원',  '관리', '다국적', '환자', '지정', '치료'
+            , '오다', '헌터', '작년', '브리', '위해', '베다', '받다', '심평원', '코로나', '건보', '화순', '전남대', '실시', '자임','녹십자'
+            ] #추가 생성 필요
+f=open('./korean_stopwords_basic.txt') #기본적으로 제공되는 한국어 불용어 리스트 파일
+lines = f.readlines()
+for line in lines:
+    line = line.strip()
+    stopwords.append(line)
+f.close()
+def tokenizer(raw, pos=['Noun', 'Verb'],stopword=stopwords):
+    return [
+        word for word, tag in okt.pos(raw, norm=True, stem=True)
+        if len(word) >1 and tag in pos and word not in stopword
+    ]
+# with open('data/pkl/news_title_tokenizer.pkl', "rb") as file:
+#     news_title_tokenizer = pickle.load(file)
 with open('data/pkl/news_recommend_model.pkl', "rb") as file:
     model_test = pickle.load(file)
 
@@ -77,7 +94,7 @@ def bosascrapping(browser_name, keyword) :
             # 가지고 온 내용 수정
 
 
-            tfidfvectorizer = TfidfVectorizer(tokenizer=news_title_tokenizer, max_df=0.95, min_df=3)
+            tfidfvectorizer = TfidfVectorizer(tokenizer=tokenizer, max_df=0.95, min_df=3)
             vector_test_title = tfidfvectorizer.transform([news_title])
             news_topic = model_test.predict(vector_test_title)
 
