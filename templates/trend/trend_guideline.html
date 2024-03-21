@@ -27,8 +27,8 @@
 
     <table class="table table-hover">
         <thead>
-            <tr>
-                <th>번호</th>
+            <tr  class="text-center">
+                <th >번호</th>
                 <th>분류</th>
                 <th>제목</th>
                 <th>발령번호</th>
@@ -40,7 +40,7 @@
         <tbody>
            
             {% for guideline in guidelines %}
-            <tr onclick="location.href='/trend/trend_guideline_read/{{guideline.id}}'" style="cursor: pointer;">
+            <tr  class="text-center" onclick="location.href='/trend/trend_guideline_read/{{guideline.id}}'" style="cursor: pointer;">
                 <td>
                     {% if guideline.importance == '중요'%}
                     {{guideline.importance}}
