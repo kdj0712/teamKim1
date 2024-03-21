@@ -3,7 +3,7 @@
 {% block main_container %}
 
 <main class="container">
-    <h2>news</h2>
+    <h2>민원서식</h2>
     <div class="justify-content-center row">
         <div class="row col-7">
             <div class="col-3">
@@ -30,19 +30,26 @@
             <tr>
                 <th>번호</th>
                 <th>제목</th>
-                <th>글쓴이</th>
-                <th>시간</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>첨부파일</th>
             </tr>
         </thead>
         <tbody>
-            {% for QnA in QnAs %}
-            <tr onclick="location.href='/other/other_read/{{QnA.id}}'" style="cursor: pointer;">
+            
+            {% for document in documents %}
+            <tr onclick="location.href='/trend/trend_document_read/{{document.id}}'" style="cursor: pointer;">
                 <td>{{pagination.start_record_number + loop.index0}}</td>
-                <td id="readpage">{{QnA.ques_title}}</td>
-                <td>{{QnA.ques_writer}}</td>
-                <td>{{QnA.ques_time}}</td>
+                <td class="text-start" id="readpage">{{document.post_title}}</td>
+                <td>지금이순간</td>
+                <td>조회수</td>
+                <td>{% if document.post_file_name %}
+                    <img src="https://helpline.kdca.go.kr/cdchelp/img/contents/files.gif" alt="">
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
+            
         </tbody>
     </table>
     <nav aria-label="Page navigation">
@@ -63,7 +70,7 @@
                 <button type="submit" class="page-link" formaction="">다음</button>
             </li>
             <li class="page-item ">
-                <button type="submit" class="page-link" formaction="{}}">
+                <button type="submit" class="page-link" formaction="{}">
                     맨 끝
                 </button>
             </li>
