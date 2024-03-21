@@ -18,7 +18,7 @@ stopwords = ['서울대', '희귀질환', '희귀', '대다',  '케다', '소아
             , '병원',  '질환',  '한독', '화이자제약',  '전달', '질병', '인하대병원',  '관리', '다국적', '환자', '지정', '치료'
             , '오다', '헌터', '작년', '브리', '위해', '베다', '받다', '심평원', '코로나', '건보', '화순', '전남대', '실시', '자임','녹십자'
             ] #추가 생성 필요
-f=open('./korean_stopwords_basic.txt') #기본적으로 제공되는 한국어 불용어 리스트 파일
+f=open('/app/teamKim/data/selenium/schedular/korean_stopwords_basic.txt') #기본적으로 제공되는 한국어 불용어 리스트 파일
 lines = f.readlines()
 for line in lines:
     line = line.strip()
