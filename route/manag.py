@@ -219,8 +219,8 @@ async def QnA_list( request: Request,page_number: int = 1, key_name: Optional[st
             conditions.update({ 'ques_title': { '$in': search_word }})
 
         try:
-            QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
-            conditions, page_number)
+            QnA_list, pagination = await collection_QnA.gbcwp_reverse(
+            conditions,)
 
             return templates.TemplateResponse(
             name="manag/QnA/manag_QnA_main.html",
@@ -233,7 +233,7 @@ async def QnA_list( request: Request,page_number: int = 1, key_name: Optional[st
             pass
     else: # key_name이 없을 경우 모든 질환의 리스트를 출력
         QnA_list = await collection_QnA.get_all()
-        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(conditions, page_number)
+        QnA_list, pagination = await collection_QnA.gbcwp_reverse(conditions, page_number)
 
         return templates.TemplateResponse(
             name="manag/QnA/manag_QnA_main.html",

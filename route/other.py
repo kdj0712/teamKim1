@@ -64,7 +64,7 @@ async def QnA_function(
     pass
 
     try:
-        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
+        QnA_list, pagination = await collection_QnA.gbcwp_reverse(
         conditions, page_number
     )
         return templates.TemplateResponse(
