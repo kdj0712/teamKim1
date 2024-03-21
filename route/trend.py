@@ -138,6 +138,7 @@ async def document(request:Request, page_number: Optional[int] = 1):
 @router.post("/trend_document_read/{object_id}" ) 
 async def document(request:Request,  object_id:PydanticObjectId):
     documents = collection_trend_documents.get(object_id)
+
     return templates.TemplateResponse(name="trend/trend_document.html", context={'request':request,
                                                                                  'documents':documents})
 
