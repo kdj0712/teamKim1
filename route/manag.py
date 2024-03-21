@@ -131,6 +131,18 @@ async def community_main_function(request:Request):
         name="manag/community/manag_community_main.html", 
         context={'request':request, 'communitys': community_list})
 
+@router.get("/manag_community_read/{object_id}", response_class=HTMLResponse) 
+async def manag_community_read_function(request:Request,
+                                        object_id:PydanticObjectId):
+    
+    community_list = await collection_empo_community.get(object_id)
+        
+    return templates.TemplateResponse(name="manag/community/manag_community_read.html", context={'request':request, 'communitys':community_list})
+
+@router.post("/manag_community_read{object_id}", response_class=HTMLResponse) 
+async def manag_community_read_function(request:Request):
+    return templates.TemplateResponse(name="manag/community/manag_community_read.html", context={'request':request})
+
 #### -------------------------------------------------------------------------------------------------------
 
 # program_main

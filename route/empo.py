@@ -60,3 +60,15 @@ async def empo_community_write_function(request:Request):
 @router.post("/empo_community_write", response_class=HTMLResponse) 
 async def empo_community_write_function(request:Request):
     return templates.TemplateResponse(name="empo/empo_community_write.html", context={'request':request})
+
+@router.get("/empo_community_read/{object_id}", response_class=HTMLResponse) 
+async def empo_community_read_function(request:Request,
+                                        object_id:PydanticObjectId):
+    
+    community_list = await collection_empo_community.get(object_id)
+        
+    return templates.TemplateResponse(name="empo/empo_community_read.html", context={'request':request, 'communitys':community_list})
+
+@router.post("/empo_community_read{object_id}", response_class=HTMLResponse) 
+async def empo_community_read_function(request:Request):
+    return templates.TemplateResponse(name="empo/empo_community_read.html", context={'request':request})
