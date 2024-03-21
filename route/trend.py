@@ -118,7 +118,7 @@ async def guideline(request:Request, page_number: Optional[int] = 1):
                                                                                   'guidelines':guidelines,
                                                                                   'pagination':pagination})
 
-@router.post("/trend_guideline", response_class=HTMLResponse) 
+@router.get("/trend_guideline", response_class=HTMLResponse) 
 async def guideline(request:Request):
     return templates.TemplateResponse(name="trend/trend_guideline.html", context={'request':request})
 
@@ -135,7 +135,7 @@ async def document(request:Request, page_number: Optional[int] = 1):
                                                                                   'pagination':pagination})
 
 
-@router.post("/trend_document_read/{object_id}" ) 
+@router.get("/trend_document_read/{object_id}" ) 
 async def document(request:Request,  object_id:PydanticObjectId):
     documents = collection_trend_documents.get(object_id)
 
