@@ -36,7 +36,7 @@
     <tbody>
       {% for QnA in QnAs %}
       <tr onclick="location.href='/other/other_QnA_read/{{QnA.id}}'" style="cursor: pointer;">
-        <td>{{pagination.start_record_number + loop.index0}}</td>
+        <td>{{pagination.total_records - (pagination.start_record_number + loop.index0) + 1}}</td>
         <td id="readpage">{{QnA.ques_title}}</td>
         <td>{{QnA.ques_writer}}</td>
         <td>{{QnA.ques_time}}</td>
