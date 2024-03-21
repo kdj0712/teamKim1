@@ -8,12 +8,14 @@ from database.connection import Database
 from beanie import PydanticObjectId
 from models.trend_documents import trend_documents
 from models.trend_guideline import trend_guideline
+from models.trend_law import trend_law
 
 from models.trend_news import news_trends# mongodb 추가해서 넣어야 함
 
 collection_trend_news= Database(news_trends)
 collection_trend_guideline= Database(trend_guideline)
 collection_trend_documents= Database(trend_documents)
+collection_trend_law= Database(trend_law)
 
 router = APIRouter()
 
@@ -90,8 +92,15 @@ async def trend_news_read_function(
 # 법, 시행령, 시행규칙
 
 @router.get("/trend_law", response_class=HTMLResponse) 
-async def trend_law(request:Request):
-    return templates.TemplateResponse(name="trend/trend_law.html", context={'request':request})
+async def trend_law(request:Request,
+                    page_number: Optional[int] = 1
+                    ):
+    condition ={}
+    laws, pagination=await collection_trend_law.getsbyconditionswithpagination(condition, page_number)
+    
+    return templates.TemplateResponse(name="trend/trend_law.html", context={'request':request,
+                                                                                  'laws':laws,
+                                                                                  'pagination':pagination})
 
 @router.post("/trend_law", response_class=HTMLResponse) 
 async def trend_law(request:Request):
