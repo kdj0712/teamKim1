@@ -6,9 +6,14 @@ from typing import Optional
 from datetime import datetime
 from database.connection import Database
 from beanie import PydanticObjectId
+from models.trend_documents import trend_documents
+from models.trend_guideline import trend_guideline
 
 from models.trend_news import news_trends# mongodb 추가해서 넣어야 함
+
 collection_trend_news= Database(news_trends)
+collection_trend_guideline= Database(trend_guideline)
+collection_trend_documents= Database(trend_documents)
 
 router = APIRouter()
 
@@ -97,8 +102,12 @@ async def trend_law(request:Request):
 # 고시, 지침
 
 @router.get("/trend_guideline", response_class=HTMLResponse) 
-async def guideline(request:Request):
-    return templates.TemplateResponse(name="trend/trend_guideline.html", context={'request':request})
+async def guideline(request:Request, page_number: Optional[int] = 1):
+    condition ={}
+    guidelines, pagination=await collection_trend_guideline.getsbyconditionswithpagination(condition, page_number)
+    return templates.TemplateResponse(name="trend/trend_guideline.html", context={'request':request,
+                                                                                  'guidelines':guidelines,
+                                                                                  'pagination':pagination})
 
 @router.post("/trend_guideline", response_class=HTMLResponse) 
 async def guideline(request:Request):
@@ -109,12 +118,19 @@ async def guideline(request:Request):
 # 민원서식
 
 @router.get("/trend_document", response_class=HTMLResponse) 
-async def document(request:Request):
-    return templates.TemplateResponse(name="trend/trend_document.html", context={'request':request})
+async def document(request:Request, page_number: Optional[int] = 1):
+    condition ={}
+    documents, pagination=await collection_trend_documents.getsbyconditionswithpagination(condition, page_number)
+    return templates.TemplateResponse(name="trend/trend_document.html", context={'request':request,
+                                                                                  'documents':documents,
+                                                                                  'pagination':pagination})
 
-@router.post("/trend_document", response_class=HTMLResponse) 
-async def document(request:Request):
-    return templates.TemplateResponse(name="trend/trend_document.html", context={'request':request})
+
+@router.post("/trend_document_read/{object_id}" ) 
+async def document(request:Request,  object_id:PydanticObjectId):
+    documents = collection_trend_documents.get(object_id)
+    return templates.TemplateResponse(name="trend/trend_document.html", context={'request':request,
+                                                                                 'documents':documents})
 
 #### -------------------------------------------------------------------------------------------------------
 

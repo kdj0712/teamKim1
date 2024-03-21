@@ -1,0 +1,49 @@
+{% extends "mainpage.html"%}
+
+{% block main_container %}
+
+<h2>민원서식</h2>
+<form action="" class="p-5">
+
+  <div class="justify-content-start text-start">
+    <div class="fw-bold fs-5">
+      {{ document.post_title }}
+    </div>
+
+    <hr>
+
+    <div class="p-5 rounded">
+      <div class="col-md-6">
+        <p class="lead">첨부파일 <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Ficon-icons.com%2Fko%2F%25EC%2595%2584%25EC%259D%25B4%25EC%25BD%2598%2F%25EC%25B2%25A8%25EB%25B6%2580-%25ED%258C%258C%25EC%259D%25BC%2F79877&psig=AOvVaw0tg5_FZWUx_8aekH7ohJy8&ust=1711076281250000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMieyYGuhIUDFQAAAAAdAAAAABAE" alt=""> {{ document.post_file_name }}</p>
+      </div>
+    </div>
+    <div>
+
+    </div>
+    <div>
+      답변
+    </div>
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <p class="card-text mb-auto">{{ QnAs.ques_answer }}</p>
+      </div>
+    </div>
+    <div style="text-align: end;" class="p-2">
+      <button class="btn btn-primary" type="submit" formaction="/other/other_QnA_main" formmethod="get">목록</button>
+    </div>
+
+
+
+
+
+    <!-- </div>
+<hr>
+<textarea type="" class="form-control text-box" name="ques_answer" id="content" placeholder="답글은 최대 1개씩만 달 수 있습니다. 이 부분은 나중에 관리자 페이지로 이동할 예정"></textarea>
+<br>
+<div style="text-align: end;">
+<button class="btn btn-primary" type="submit" formaction="/other/other_reply/{{QnAs.id}}" formmethod="post">답글달기</button>
+<button class="btn btn-danger" type="submit" formaction="/other/other_delete/{{QnAs.id}}" formmethod="post">글 삭제</button>
+</div> -->
+</form>
+
+{% endblock main_container%}

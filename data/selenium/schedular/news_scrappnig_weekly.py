@@ -48,7 +48,7 @@ def bosascrapping(browser_name, keyword) :
     one_week_date = one_week_date.strftime('%Y-%m-%d')
 
     ## 상세검색
-    browser = webdriver.Chrome()
+    browser = webdriver.Chrome(options=chrome_options)
     browser.get(browser_name)
     browser.find_element(By.CSS_SELECTOR, "div.user-etc > div.search-list > span > a").click() # 상세 검색
     time.sleep(1)

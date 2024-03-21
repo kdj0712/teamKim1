@@ -15,6 +15,19 @@
             font-family: "Noto Sans KR", sans-serif;
             font-optical-sizing: auto;
         }
+
+        #field {
+            font-size:larger;
+            font-weight: bold;
+        }
+        
+        header > div *{
+            text-decoration: none; color: black;
+            text-decoration-line: none;
+            
+
+        ;}
+
     </style>
 </head>
 
@@ -22,8 +35,7 @@
 
     <header style="background-color: #d5e7fd;">
         <div class="container-fluid">
-            <div
-                class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom navbar navbar-expand-lg bd-navbar sticky-top justify-content-center">
+            <div class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom navbar navbar-expand-lg bd-navbar sticky-top justify-content-center">
 
                 <a href="/"
                     class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -39,17 +51,17 @@
                     <li class="nav-item"><a href="/user/user_mypage" class="nav-link text-secondary fw-bold">마이페이지</a>
                     </li>
 
-                    <div class="dropdown-start">
+                    <div class="dropdown-start dropstart">
                         <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://ssl.gstatic.com/gb/images/bar/al-icon.png" alt="">
                         </a>
                         <div class="aside in dropdown-menu container" aria-labelledby="dropdownMenuLink"
                             id="m_menu_aside" style="width: 1920px;">
-                            <nav id="m_nav" role="navigation" class="row">
-                                <ul class="th1 col-2 ">
-                                    최신마당
-                                    <li class="menu_li dropdown-item">
+                            <nav id="m_nav" role="navigation" class="row justify-content-center">
+                                <ul class="th1 col-2 text-decoration-none">
+                                    <div id="field">최신마당</div>
+                                    <li class="menu_li dropdown-item ">
                                         <a href="/trend/trend_news" target="_self" title="" width="100px">
                                             뉴스</a>
                                     </li>
@@ -75,7 +87,7 @@
                                     </li>
                                 </ul>
                                 <ul class="th1 col-2">
-                                    정보마당
+                                    <div id="field">정보마당</div>
                                     <li class="menu_li dropdown-item">
                                         <a href="/info/info_raredisease" target="_self" title="">
                                             희귀질환정보검색</a>
@@ -92,7 +104,8 @@
                                     </li>
                                 </ul>
                                 <ul class="th1 col-2">
-                                    참여마당
+                                    <div id="field">참여마당</div>
+
                                     <li class="menu_li dropdown-item">
                                         <a href="/empo/empo_community" target="_self" title="">
                                             커뮤니티</a>
@@ -104,7 +117,8 @@
                                     </li>
                                 </ul>
                                 <ul class="th1 col-2">
-                                    공지마당
+                                    <div id="field">공지마당</div>
+
                                     <li class="menu_li dropdown-item">
                                         <a href="/other/other_notice" target="_self" title="">
                                             공지사항</a>
@@ -116,7 +130,7 @@
                                     </li>
                                 </ul>
                                 <ul class="th1 col-2">
-                                    <a href="/manag/managmain">관리자마당</a>
+                                    <a href="/manag/managmain" class="text-decoration-none" id="field">관리자마당</a>
                                     <li class="menu_li dropdown-item">
                                         <a href="/manag/manag_user_main" target="_self" title="">
                                             회원관리</a>
@@ -151,7 +165,7 @@
     </header>
 
     <main class="container ">
-        <div class=" text-center">
+        <div class="">
             {% block main_container %}
             <div style="  text-align: center   align-items-center" class="justify-content-center">
                 <img src="/data/img/unnamed.png" alt="">
@@ -169,7 +183,7 @@
                         <input class="form-control" placeholder="Enter Search!" name="search_word" id="search_word">
                     </div>
                     <div class="col-2">
-                        <button type="button" id="search_word" class="btn btn-primary" onclick="search_()">검색</button>
+                        <button type="button" id="search_word" class="btn btn-primary" onclick="search()">검색</button>
                         <br>
                     </div>
                 </div>
@@ -259,7 +273,7 @@
                     <div class="col-2">
                         <h5>고객센터</h5>
                         <ul class="nav flex-column">
-                            <li class="nav-item mb-2">대표번호 : 010-6511-589*</li>
+                            <li class="nav-item mb-2">대표번호 : 010-6511-58**</li>
                             <li class="nav-item mb-2"><a href="/other/other_QnA_main"
                                     class="nav-link p-0 text-body-secondary">QnA</a></li>
                             <li class="nav-item mb-2"><a href="/other/other_notice"
@@ -277,7 +291,7 @@
                     <div class="col-6 ">
                         <form>
                             <h5>무료 뉴스레터 구독</h5>
-                            <p>메일로 RDS 관련 소식을 받아보세요.</p>
+                            <p>메일로 RareField 관련 소식을 받아보세요.</p>
                             <div class="d-flex flex-column flex-sm-row w-100 gap-2">
                                 <label for="newsletter1" class="visually-hidden">Email address</label>
                                 <input type="email" id="newsletter1" type="text" class="form-control"
@@ -325,16 +339,18 @@
         if (search_select && search_word) {
             var formAction = '';
 
-            if (search_select === 'dise_name_kr') {
-                formAction = '/info/info_raredisease';
-            } else if (search_select === 'institution_name') {
-                formAction = '/info/info_institution';
-            }
-
+            
             // 동적으로 폼 생성하고 제출
             var form = document.createElement('form');
             form.method = 'POST';
-            form.action = formAction + '?key_name=' + encodeURIComponent(search_select) + '&search_word=' + encodeURIComponent(search_word);
+            if (search_select === 'dise_name_kr') {
+                formAction = '/info/info_raredisease'
+                form.action = formAction + '?key_name=' + encodeURIComponent(search_select) + '&search_word=' + encodeURIComponent(search_word);
+            } else if (search_select === 'institution_name') {
+                formAction = '/info/info_institution'
+                form.action = formAction + '?keyword='+ encodeURIComponent(search_word);
+            }
+            
 
             document.body.appendChild(form);
             form.submit();
