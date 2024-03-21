@@ -8,12 +8,15 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-
-
-from pymongo import MongoClient
-
+from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
+from pymongo import MongoClient
 import os
+with open('data/pkl/news_title_tokenizer.pkl', "rb") as file:
+    news_title_tokenizer = pickle.load(file)
+with open('data/pkl/news_recommend_model.pkl', "rb") as file:
+    model_test = pickle.load(file)
+
 
 # 몽고 디비 연결
 def dbconnect(collection) :
@@ -25,6 +28,8 @@ def dbconnect(collection) :
 # 뉴스 스크래핑
 
 def bosascrapping(browser_name, keyword) :
+
+
     bosa_news_coll = dbconnect('bosa_news_weekly')
 
     chrome_options = Options()
@@ -71,19 +76,10 @@ def bosascrapping(browser_name, keyword) :
 
             # 가지고 온 내용 수정
 
-            # with open('data\pkl\\news_recommend.pkl', "rb") as file:
-            #     model = pickle.load(file)
-            with open('data\pkl\\news_recommend_model.pkl', "rb") as file:
-                model_test = pickle.load(file)
 
-            
-            with open('data/pkl/news_recommend_vectorizer.pkl', "rb") as file : 
-                vector_test = pickle.load(file)
-            
-
-
-            vector_test_title = vector_test.transform(news_title)
-            answer_test = model_test.predict(vector_test_title)
+            tfidfvectorizer = TfidfVectorizer(tokenizer=news_title_tokenizer, max_df=0.95, min_df=3)
+            vector_test_title = tfidfvectorizer.transform([news_title])
+            news_topic = model_test.predict(vector_test_title)
 
             # news_topic = model([news_title])
             news_paper = '의학신문'
@@ -103,6 +99,5 @@ def bosascrapping(browser_name, keyword) :
         except StaleElementReferenceException :
             print("StaleElementReferenceException 발생. 다음 요소로 넘어갑니다")
             continue
-        
-if __name__ == "__main__" : 
-    bosascrapping("http://www.bosa.co.kr/", "희귀질환")
+
+bosascrapping("http://www.bosa.co.kr/", "희귀질환")
