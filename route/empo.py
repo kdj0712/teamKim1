@@ -49,9 +49,20 @@ async def empo_community_function(
         name="empo/empo_community.html", 
         context={'request':request, 'pagination': pagination, 'communitys': community_list})
 
+@router.post("/empo_community/{page_number}", response_class=HTMLResponse)
 @router.post("/empo_community", response_class=HTMLResponse) 
-async def empo_community_function(request:Request):
-    return templates.TemplateResponse(name="empo/empo_community.html", context={'request':request})
+async def empo_community_function(
+    request:Request,
+    page_number: Optional[int] = 1
+    ):
+    
+    conditions = {}
+    
+    community_list, pagination = await collection_empo_community.getsbyconditionswithpagination(
+    conditions, page_number
+    )
+    
+    return templates.TemplateResponse(name="empo/empo_community.html", context={'request':request, 'communitys': community_list})
 
 @router.get("/empo_community_write", response_class=HTMLResponse) 
 async def empo_community_write_function(request:Request):
