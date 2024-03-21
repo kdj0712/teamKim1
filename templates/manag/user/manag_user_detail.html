@@ -62,8 +62,8 @@
                             value="{{ User.user_postcode }}" disabled>
                         <input type="text" class="form-control" id="user_address" name="user_address"
                             value="{{ User.user_address }}" disabled>
-                        <input type="text" class="form-control" id="user_detailed_address"
-                            name="user_detailed_address" value="{{User.user_detailed_address}}" disabled>
+                        <input type="text" class="form-control" id="user_detailed_address" name="user_detailed_address"
+                            value="{{User.user_detailed_address}}" disabled>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-8">
                         <input type="text" class="form-control " name="user_birth" id="user_birth"
-                        value="{{ User.user_birth}}" disabled>
+                            value="{{ User.user_birth}}" disabled>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,8 @@
                 <div class="mb-3">
                     <div>
                         <label for="ralated_diseases">관련 질환명</label>
-                  key_name  </div>
+                        key_name
+                    </div>
                     <div class="col-8">
                         <input type="text" class="form-control " name="ralated_diseases" id="ralated_diseases"
                             value="{{ User.ralated_diseases }}" disabled>
@@ -127,6 +128,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div style="text-align: end;" class="p-2">
+            <button class="btn btn-primary" type="submit" formaction="/manag/manag_user_main"
+                formmethod="get">목록</button>
         </div>
 
 

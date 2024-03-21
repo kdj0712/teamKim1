@@ -197,12 +197,11 @@
                     {% for news in news_list %}
                     <div class=" col-2 card ms-2 me-2" style="width: 18rem;">
                         <div class="card-body">
-                            <a href="{{ news.news_urls }}" class="card-link text-decoration-none">
+                            <a href="{{ news.news_url }}" class="card-link text-decoration-none">
                                 <h5 class="card-title">{{news.news_title}}</h5>
                             </a>
                             <h6 class="card-subtitle mb-2 text-body-secondary">{{news.news_paper}}</h6>
                             <p class="card-text"></p>
-
                         </div>
                     </div>
                     {% endfor %}

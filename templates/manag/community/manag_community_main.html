@@ -27,33 +27,40 @@ RDS: 관리자마당 공지사항관리
                         formmethod="get" id="검색" onclick="performSearch()">검색</button>
                 </div>
             </div>
-
         </div>
+
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th width="60px">번호</th>
-                    <th>게시판유형 </th>
-                    <th>제목 </th>
-                    <th>연관질환명 </th>
-                    <th>작성날짜 </th>
-                    <th>상세보기</th>
+                    <th>커뮤니티 유형</th>
+                    <th>관련 내용</th>
+                    <th>
+                        <div>제목</div>
+                        <div class="small" style="font-size: small;">관련질환명</div>
+                    </th>
+                    <th>작성날짜</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% for community in communitys %}
-                <tr>
+                <tr onclick="location.href='/manag/manag_community_read/{{community.id}}'"
+                    style="cursor: pointer;">
                     <td>{{loop.index}}</td>
                     <td>{{community.community_type}}</td>
-                    <td>{{community.community_title}}</td>
-                    <td>{{community.community_related_diseases}}</td>
-                    <td>{{community.community_date}}</td>
-                    <td><button formmethod="get" formaction="/manag/manag_community_read/{{community.id}}">상세보기</button>
+                    <td>{{community.community_subject}}</td>
+                    <td>
+                        <div>{{community.community_title}}</div>
+                        <div class="small" style="font-size: x-small;">{{community.community_related_diseases}}
+                        </div>
                     </td>
+                    <td>{{community.community_date}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 <li class="page-item ">

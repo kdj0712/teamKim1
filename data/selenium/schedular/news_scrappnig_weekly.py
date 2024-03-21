@@ -8,12 +8,32 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-
-
-from pymongo import MongoClient
-
+from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
+from pymongo import MongoClient
 import os
+from konlpy.tag import Okt
+okt = Okt()
+stopwords = ['서울대', '희귀질환', '희귀', '대다',  '케다', '소아', '생명', '한국', '한미','사노피', '하다', '급여', '국내', '샤이어',  '스케', '세포'
+            , '병원',  '질환',  '한독', '화이자제약',  '전달', '질병', '인하대병원',  '관리', '다국적', '환자', '지정', '치료'
+            , '오다', '헌터', '작년', '브리', '위해', '베다', '받다', '심평원', '코로나', '건보', '화순', '전남대', '실시', '자임','녹십자'
+            ] #추가 생성 필요
+f=open('/app/teamKim/data/selenium/schedular/korean_stopwords_basic.txt') #기본적으로 제공되는 한국어 불용어 리스트 파일
+lines = f.readlines()
+for line in lines:
+    line = line.strip()
+    stopwords.append(line)
+f.close()
+def tokenizer(raw, pos=['Noun', 'Verb'],stopword=stopwords):
+    return [
+        word for word, tag in okt.pos(raw, norm=True, stem=True)
+        if len(word) >1 and tag in pos and word not in stopword
+    ]
+# with open('data/pkl/news_title_tokenizer.pkl', "rb") as file:
+#     news_title_tokenizer = pickle.load(file)
+with open('data/pkl/news_recommend_model.pkl', "rb") as file:
+    model_test = pickle.load(file)
+
 
 # 몽고 디비 연결
 def dbconnect(collection) :
@@ -25,6 +45,8 @@ def dbconnect(collection) :
 # 뉴스 스크래핑
 
 def bosascrapping(browser_name, keyword) :
+
+
     bosa_news_coll = dbconnect('bosa_news_weekly')
 
     chrome_options = Options()
@@ -41,7 +63,7 @@ def bosascrapping(browser_name, keyword) :
     one_week_date = one_week_date.strftime('%Y-%m-%d')
 
     ## 상세검색
-    browser = webdriver.Chrome()
+    browser = webdriver.Chrome(options=chrome_options)
     browser.get(browser_name)
     browser.find_element(By.CSS_SELECTOR, "div.user-etc > div.search-list > span > a").click() # 상세 검색
     time.sleep(1)
@@ -71,19 +93,10 @@ def bosascrapping(browser_name, keyword) :
 
             # 가지고 온 내용 수정
 
-            # with open('data\pkl\\news_recommend.pkl', "rb") as file:
-            #     model = pickle.load(file)
-            with open('data\pkl\\news_recommend_model.pkl', "rb") as file:
-                model_test = pickle.load(file)
 
-            
-            with open('data/pkl/news_recommend_vectorizer.pkl', "rb") as file : 
-                vector_test = pickle.load(file)
-            
-
-
-            vector_test_title = vector_test.transform(news_title)
-            answer_test = model_test.predict(vector_test_title)
+            tfidfvectorizer = TfidfVectorizer(tokenizer=tokenizer, max_df=0.95, min_df=3)
+            vector_test_title = tfidfvectorizer.transform([news_title])
+            news_topic = model_test.predict(vector_test_title)
 
             # news_topic = model([news_title])
             news_paper = '의학신문'
@@ -103,6 +116,5 @@ def bosascrapping(browser_name, keyword) :
         except StaleElementReferenceException :
             print("StaleElementReferenceException 발생. 다음 요소로 넘어갑니다")
             continue
-        
-if __name__ == "__main__" : 
-    bosascrapping("http://www.bosa.co.kr/", "희귀질환")
+
+bosascrapping("http://www.bosa.co.kr/", "희귀질환")
