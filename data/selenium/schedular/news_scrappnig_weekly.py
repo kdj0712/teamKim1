@@ -13,6 +13,8 @@ import pickle
 from pymongo import MongoClient
 import os
 from konlpy.tag import Okt
+
+
 okt = Okt()
 stopwords = ['서울대', '희귀질환', '희귀', '대다',  '케다', '소아', '생명', '한국', '한미','사노피', '하다', '급여', '국내', '샤이어',  '스케', '세포'
             , '병원',  '질환',  '한독', '화이자제약',  '전달', '질병', '인하대병원',  '관리', '다국적', '환자', '지정', '치료'
@@ -45,7 +47,6 @@ def dbconnect(collection) :
 # 뉴스 스크래핑
 
 def bosascrapping(browser_name, keyword) :
-
 
     bosa_news_coll = dbconnect('bosa_news_weekly')
 
