@@ -331,52 +331,27 @@ async def FAQ(request:Request, object_id:PydanticObjectId):
     return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request,'QnAs' : QnA})
 
 
-@router.post("/manag_QnA_read/{object_id}", response_class=HTMLResponse) 
-async def FAQ(request:Request, object_id:PydanticObjectId):
-    await request.form()
-    QnA = await collection_QnA.get(object_id)
-    return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request ,'QnAs' : QnA})
+# @router.post("/manag_QnA_read/{object_id}", response_class=HTMLResponse) 
+# async def FAQ(request:Request, object_id:PydanticObjectId):
+#     await request.form()
+#     QnA = await collection_QnA.get(object_id)
+#     return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request ,'QnAs' : QnA})
 
 # 답글 달기
-@router.post("/manag_QnA_reply/{object_id}", response_class=HTMLResponse) 
-async def FAQ(request:Request, object_id:PydanticObjectId,
+@router.post("/manag_QnA_read/{object_id}", response_class=HTMLResponse) 
+async def QnA_reply(request:Request, object_id:PydanticObjectId,
     page_number: Optional[int] = 1, 
-    ques_title: Optional[str] = None,
-    ques_writer: Optional[str] = None,
-    ques_content: Optional[str] = None,
-    ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None):
+    ques_title: Optional[str] = None):
     form_data = await request.form()
     dict_form_data = dict(form_data)
     await collection_QnA.update_one(object_id, dict_form_data)
     conditions = {}
-
-    search_word = request.query_params.get('search_word')
-  
-    if search_word:
-        conditions.update({
-            "$or": [
-                {"ques_title": {'$regex': search_word}},
-                {"ques_writer": {'$regex': search_word}},
-                {"ques_content": {'$regex': search_word}},
-                {"ques_time": {'$regex': search_word}},
-                {"ques_answer": {'$regex': search_word}},
-            ]
-        })
-    pass
-
-    if ques_title:
-        conditions.find({ 'ques_title': { '$regex': search_word }})
-    pass
     try:
-        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
-        conditions, page_number
-    )
+        QnA_list,pagination = await collection_QnA.getsbyconditionswithpagination(conditions, page_number)
         return templates.TemplateResponse(
-        name="manag/QnA/manag_QnA_manager.html",
-        context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word':search_word},
+        name="manag/QnA/manag_QnA_main.html",
+        context={'request': request, 'QnAs': QnA_list, 'pagination': pagination},
     )
-
     except:
         return templates.TemplateResponse(
         name="manag/QnA/manag_QnA_manager_nonpage.html",
