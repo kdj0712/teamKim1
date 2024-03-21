@@ -33,3 +33,4 @@ torch
 tensorflow
 google-cloud-storage
 aiohttp
+selenium
