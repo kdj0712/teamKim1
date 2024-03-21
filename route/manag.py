@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request,Query
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from typing import Optional, Union
@@ -197,62 +197,6 @@ async def program_reply_function(request:Request):
 
 #### -------------------------------------------------------------------------------------------------------
 
-# manag_QnA
-
-@router.post("/manag_QnA_main", response_class=HTMLResponse) 
-async def FAQ(request:Request,     page_number: Optional[int] = 1, 
-    ques_title: Optional[str] = None,
-    ques_writer: Optional[str] = None,
-    ques_content: Optional[str] = None,
-    ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None):
-    form_data = await request.form()
-    dict_form_data = dict(form_data)
-    current_time = datetime.now()
-
-    # 이 시간을 item 객체의 'ques_time' 속성에 저장한다.
-    dict_form_data['ques_time'] = current_time
-    if dict_form_data['ques_title'] =='':
-        pass
-    else:
-        QnAs = QnA(**dict_form_data)
-        await collection_QnA.save(QnAs)
-
-    user_dict = dict(form_data)
-    conditions = {}
-
-    search_word = request.query_params.get('search_word')
-
-    if search_word:
-        conditions.update({
-            "$or": [
-                {"dise_KCD_code": {'$regex': search_word}},
-                {"dise_group": {'$regex': search_word}},
-                {"dise_name_kr": {'$regex': search_word}},
-                {"dise_name_en": {'$regex': search_word}},
-                {"dise_support": {'$regex': search_word}},
-                {"dise_url": {'$regex': search_word}}
-            ]
-        })
-    pass
-
-    if ques_title:
-        conditions.find({ 'ques_title': { '$regex': search_word }})
-    pass
-    try:
-        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
-        conditions, page_number
-    )
-        return templates.TemplateResponse(
-        name="manag/QnA/manag_QnA_main.html",
-        context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word' : search_word},
-    )
-
-    except:
-        pass
-        # return templates.TemplateResponse(
-        # name="/manag/manag_manager_nonpage.html",
-        # context={'request': request})
 
 @router.get("/QnA/manag_QnA_manager_nonpage", response_class=HTMLResponse) 
 async def FAQ(request:Request):
@@ -262,57 +206,38 @@ async def FAQ(request:Request):
 async def FAQ(request:Request):
     return templates.TemplateResponse(name="manag/QnA/manag_QnA_manager_nonpage.html", context={'request':request})
 
+@router.post("/manag_QnA_main", response_class=HTMLResponse) 
 @router.get("/manag_QnA_main/{page_number}")
 @router.get("/manag_QnA_main") # 검색 with pagination
-async def list(
-    request: Request,
-    page_number: Optional[int] = 1, 
-    ques_title: Optional[str] = None,
-    ques_writer: Optional[str] = None,
-    ques_content: Optional[str] = None,
-    ques_time: Optional[datetime] = None,
-    ques_answer: Optional[str] = None
-):
-    # db.answers.find({'name':{ '$regex': '김' }})
-    # { 'name': { '$regex': user_dict.word } }
-    
-    user_dict = dict(request._query_params)
+async def QnA_list( request: Request,page_number: int = 1, key_name: Optional[str] = Query(None), search_word: Optional[str] = Query(None)):
+    await request.form()
     conditions = {}
+    key_name = request.query_params.get('key_name')
     search_word = request.query_params.get('search_word')
+    if key_name and search_word:
+        if search_word == 'ques_title': # 희귀질환명으로 검색하는 로직
+            conditions.update({ 'ques_title': { '$in': search_word }})
 
-    if search_word:
-        conditions.update({
-            "$or": [
-                {"dise_KCD_code": {'$regex': search_word}},
-                {"dise_group": {'$regex': search_word}},
-                {"dise_name_kr": {'$regex': search_word}},
-                {"dise_name_en": {'$regex': search_word}},
-                {"dise_support": {'$regex': search_word}},
-                {"dise_url": {'$regex': search_word}}
-            ]
-        })
+        try:
+            QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
+            conditions, page_number)
 
-    pass
+            return templates.TemplateResponse(
+            name="manag/QnA/manag_QnA_main.html",
+            context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'key_name':key_name,'search_word' : search_word})
 
-    if ques_title:
-        conditions.find({ 'ques_title': { '$regex': search_word }})
-    pass
+        except:
+            return templates.TemplateResponse(
+            name="manag/QnA/manag_QnA_manager_nonpage.html",
+            context={'request': request})
+            pass
+    else: # key_name이 없을 경우 모든 질환의 리스트를 출력
+        QnA_list = await collection_QnA.get_all()
+        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(conditions, page_number)
 
-    try:
-        QnA_list, pagination = await collection_QnA.getsbyconditionswithpagination(
-        conditions, page_number
-    )
         return templates.TemplateResponse(
-        name="manag/QnA/manag_QnA_main.html",
-        context={'request': request, 'QnAs': QnA_list, 'pagination': pagination,'search_word' : search_word},
-    )
-
-    except:
-        return templates.TemplateResponse(
-        name="manag/QnA/manag_QnA_manager_nonpage.html",
-        context={'request': request})
-        pass
-
+            name="manag/QnA/manag_QnA_main.html",
+            context={'request': request, 'QnAs': QnA_list, 'pagination': pagination})
 # 글쓰기 창
 @router.get("/manag_QnA_write", response_class=HTMLResponse) 
 async def FAQ(request:Request):
@@ -328,35 +253,17 @@ async def FAQ(request:Request):
 async def FAQ(request:Request, object_id:PydanticObjectId):
     dict(request._query_params)
     QnA = await collection_QnA.get(object_id)
-    return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request,'QnAs' : QnA})
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request,'QnAs' : QnA,'object_id':object_id})
 
 
-# @router.post("/manag_QnA_read/{object_id}", response_class=HTMLResponse) 
-# async def FAQ(request:Request, object_id:PydanticObjectId):
-#     await request.form()
-#     QnA = await collection_QnA.get(object_id)
-#     return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request ,'QnAs' : QnA})
-
-# 답글 달기
 @router.post("/manag_QnA_read/{object_id}", response_class=HTMLResponse) 
-async def QnA_reply(request:Request, object_id:PydanticObjectId,
-    page_number: Optional[int] = 1, 
-    ques_title: Optional[str] = None):
+async def FAQ(request:Request, object_id:PydanticObjectId):
     form_data = await request.form()
     dict_form_data = dict(form_data)
     await collection_QnA.update_one(object_id, dict_form_data)
-    conditions = {}
-    try:
-        QnA_list,pagination = await collection_QnA.getsbyconditionswithpagination(conditions, page_number)
-        return templates.TemplateResponse(
-        name="manag/QnA/manag_QnA_main.html",
-        context={'request': request, 'QnAs': QnA_list, 'pagination': pagination},
-    )
-    except:
-        return templates.TemplateResponse(
-        name="manag/QnA/manag_QnA_manager_nonpage.html",
-        context={'request': request},
-    )
+    QnA = await collection_QnA.get(object_id)
+    return templates.TemplateResponse(name="manag/QnA/manag_QnA_read.html", context={'request':request ,'QnAs' : QnA})
+
         
 # 글 삭제
 @router.post("/manag_QnA_delete/{object_id}", response_class=HTMLResponse) 

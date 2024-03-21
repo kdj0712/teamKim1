@@ -7,7 +7,7 @@
     <div class="col-1 fw-bold fs-2 text-start">QnA</div>
     <div class="col-3">
       <select class="form-control" name="key_name">
-        <option value="dise_name_kr" {{ 'selected' if request._query_params.key_name=='dise_name_kr' else '' }}>제목
+        <option value="ques_title" {{ 'selected' if request._query_params.key_name=='ques_title' else '' }}>제목
         </option>
       </select>
     </div>
@@ -54,30 +54,30 @@
     <ul class="pagination justify-content-center">
       <li class="page-item {{ '' if pagination.has_previous_block else 'disabled' }}">
         <button type="submit" class="page-link"
-          formaction="/other/other_read/{{pagination.first_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+          formaction="/other/other_QnA_main/{{pagination.first_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">
           맨 처음
         </button>
 
       </li>
       <li class="page-item {{ '' if pagination.has_previous_page else 'disabled' }}">
         <button type="submit" class="page-link"
-          formaction="/other/other_read/{{pagination.previous_page}}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">이전</button>
+          formaction="/other/other_QnA_main/{{pagination.previous_page}}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">이전</button>
       </li>
       {% for page_num in pagination.current_page_range %}
       <li class="page-item {{ 'active' if page_num == pagination.current_page else '' }}">
         <button type="submit" class="page-link"
-          formaction="/other/other_read/{{ page_num }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+          formaction="/other/other_QnA_main/{{ page_num }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">
           {{page_num}}
         </button>
       </li>
       {% endfor %}
       <li class="page-item {{ '' if pagination.has_next_page else 'disabled' }}">
         <button type="submit" class="page-link"
-          formaction="/other/other_read/{{ pagination.next_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">다음</button>
+          formaction="/other/other_QnA_main/{{ pagination.next_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">다음</button>
       </li>
       <li class="page-item {{ '' if pagination.has_next_block else 'disabled' }}">
         <button type="submit" class="page-link"
-          formaction="/other/other_read/{{ pagination.last_page }}?key_name={{ request._query_params.key_name|urlencode }}&search_word={{ search_word }}">
+          formaction="/other/other_QnA_main/{{ pagination.last_page }}?{% if request._query_params.key_name %}key_name={{ request._query_params.key_name|urlencode }}{% endif %}{% if request._query_params.search_word %}&search_word={{ request._query_params.search_word|urlencode }}{% endif %}" formmethod="get">
           맨 끝
         </button>
       </li>
