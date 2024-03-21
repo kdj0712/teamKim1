@@ -3,7 +3,7 @@
 {% block main_container %}
 
 <main class="container">
-    <h2>news</h2>
+    <h2>법/시행령/시행규칙</h2>
     <div class="justify-content-center row">
         <div class="row col-7">
             <div class="col-3">
@@ -26,21 +26,19 @@
     </div>
 
     <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>시간</th>
-            </tr>
-        </thead>
         <tbody>
-            {% for QnA in QnAs %}
-            <tr onclick="location.href='/other/other_read/{{QnA.id}}'" style="cursor: pointer;">
-                <td>{{pagination.start_record_number + loop.index0}}</td>
-                <td id="readpage">{{QnA.ques_title}}</td>
-                <td>{{QnA.ques_writer}}</td>
-                <td>{{QnA.ques_time}}</td>
+            {% for law in laws %}
+            <tr onclick="location.href='{{law.link}}'" style="cursor: pointer;">
+                <td>{{loop.index}}</td>
+                <td>
+                    <div>{{law.law_name}}</div>
+                    <div class="row">
+                        <div class="col">공포번호 : {{law.promulgation_number}}</div>
+                        <div class="col">공포일자 : {{law.promulgation_date}}</div>
+                        <div class="col">시행일자 : {{law.start_date}}</div>
+                    </div>
+                </td>
+
             </tr>
             {% endfor %}
         </tbody>

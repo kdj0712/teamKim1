@@ -2,6 +2,8 @@ from typing import Any, List, Optional
 
 from beanie import init_beanie, PydanticObjectId
 
+import random
+
 from models.academicinfo import academicinfo
 from models.info_rarediseases import diseases
 from models.institution import Institutions
@@ -13,6 +15,7 @@ from models.program_list import program
 from models.empo_community import community
 from models.trend_documents import trend_documents
 from models.trend_guideline import trend_guideline
+from models.trend_law import trend_law
 
 import os
 
@@ -30,7 +33,7 @@ class Settings(BaseSettings):
         if self.DATABASE_URL is not None:
             client = AsyncIOMotorClient(self.DATABASE_URL)
             await init_beanie(database=client.get_default_database(),
-                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA, program, notice, community, trend_documents, trend_guideline])
+                              document_models=[academicinfo, diseases, Institutions, members, news_trends, QnA, program, notice, community, trend_documents, trend_guideline, trend_law])
 
     class Config:
         env_file = ".env"
@@ -100,11 +103,19 @@ class Database:
             return documents
         return []    
     
-    async def getsbyconditions_top4(self, conditions:dict) -> [Any]:
-        documents = await self.model.find(conditions).sort('news_when').limit(4).to_list(length=4)  # find({})
-        if documents:
-            return documents
-        return []
+    # async def getsbyconditions_top4(self, conditions:dict) -> [Any]:
+    #     documents = await self.model.find(conditions).sort('news_when').limit(4).to_list(length=4)  # find({})
+    #     if documents:
+    #         return documents
+    #     return []
+
+    # 뉴스 추천 상위 12개 중 random으로 보여주기
+    async def getsbyconditions_top4(self, conditions: dict) -> [Any]:
+        documents = await self.model.find(conditions).sort('news_when').limit(12).to_list(length=12)  # find({})
+        random.shuffle(documents)  # 불러온 데이터를 랜덤하게 섞습니다.
+        result = [documents[i:i+4] for i in range(0, len(documents), 4)]  # 리스트를 4개씩 묶어서 결과를 생성합니다.
+        i = random.randrange(0,3)
+        return result[i]
     
     async def getsbyconditionswithpagination(self
                                              , conditions:dict, page_number, records_per_page=10) -> [Any]:
